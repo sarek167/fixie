@@ -2,3 +2,5 @@ fixieAuth/user_management/__pycache__
 fixieAuth/user_management/migrations
 fixieAuth/db.sqlite3
 fixieAuth/fixieAuth/__pycache__
+fixieAuth/.venv
+fixieAuth/db.sqlite3

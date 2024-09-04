@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "user_management",
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'user_management.CustomUser'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -127,19 +130,22 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = 6379
+
 # Konfiguracja cache przy użyciu Redis
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",  # Redis działa na localhost i domyślnym porcie 6379
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}/1",  # Redis działa na localhost i domyślnym porcie 6379
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": None,  # Jeśli Redis ma hasło, wpisz je tutaj
         }
     }
 }
 
 # Opcjonalne ustawienia dotyczące sesji
 SESSION_COOKIE_SECURE = False  # Używaj True, jeśli używasz HTTPS
-SESSION_COOKIE_HTTPONLY = True  # Zapewnia, że ciasteczko sesji jest dostępne tylko przez HTTP
+SESSION_COOKIE_HTTPONLY = False  # Zapewnia, że ciasteczko sesji jest dostępne tylko przez HTTP
 SESSION_COOKIE_AGE = 3600 
+
