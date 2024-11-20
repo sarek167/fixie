@@ -1,6 +1,6 @@
-fixieAuth/user_management/__pycache__
-fixieAuth/user_management/migrations
-fixieAuth/db.sqlite3
-fixieAuth/fixieAuth/__pycache__
-fixieAuth/.venv
-fixieAuth/db.sqlite3
+backend/fixieAuth/user_management/__pycache__
+backend/fixieAuth/user_management/migrations
+backend/fixieAuth/db.sqlite3
+backend/fixieAuth/fixieAuth/__pycache__
+backend/fixieAuth/.venv
+backend/fixieAuth/db.sqlite3
