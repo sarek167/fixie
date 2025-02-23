@@ -28,6 +28,7 @@ class LoginView(APIView):
     @api_view(['POST'])
     def login(request):
         serializer = LoginSerializer(data = request.data)
+        request.data._mutable = True
         verified_data = serializer.verify(request.data)
         user = verified_data['user']
 
