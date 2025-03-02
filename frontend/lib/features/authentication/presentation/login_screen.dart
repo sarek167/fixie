@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/features/authentication/logic/auth.dart';
-import 'package:frontend/core/services/auth_service.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:frontend/features/authentication/logic/auth.dart';
+// import 'package:frontend/core/services/auth_service.dart';
 import 'package:frontend/features/authentication/presentation/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -9,9 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => AuthenticationCubit(authService: AuthService()),
-      child:Scaffold(
+    return Scaffold(
         backgroundColor: Colors.teal,
         body: Center(
           child: SingleChildScrollView(
@@ -53,7 +51,6 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
         ),
-      )
     );
   }
 }

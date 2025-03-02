@@ -4,6 +4,7 @@ import 'package:frontend/core/services/auth_service.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
+import 'package:frontend/features/home/presentation/home_screen.dart';
 
 
 void main() {
@@ -45,8 +46,9 @@ class MyApp extends StatelessWidget {
       routes: {
         "/login": (context) => LoginScreen(),
         "/register": (context) => RegisterScreen(),
+        "/home": (context) => HomeScreen()
       },
-      home: LoginScreen()
+      home: HomeScreen()
     );
   }
 }

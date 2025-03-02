@@ -29,5 +29,6 @@ class LoginSerializer(serializers.ModelSerializer):
         user = authenticate(email=data['email'], password=data['password'])
         if user and user.is_active:
             data['user'] = user
+            print("POPRAWNIE W SERIAL")
             return data
         raise serializers.ValidationError("Incorrect password or email")

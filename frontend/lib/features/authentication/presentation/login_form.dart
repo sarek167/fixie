@@ -21,7 +21,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            Navigator.pushReplacementNamed(context, '/register'); // TO DO: add home page - constant
+            Navigator.pushReplacementNamed(context, '/home'); // TO DO: add home page - constant
           }
           if (state is AuthenticationFailure) {
             ScaffoldMessenger.of(context).showSnackBar(

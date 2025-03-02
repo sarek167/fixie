@@ -40,9 +40,10 @@ class LoginView(APIView):
     def login(request):
         serializer = LoginSerializer(data = request.data)
         # request.data._mutable = True
+        print("W logowaniu")
         verified_data = serializer.verify(request.data)
         user = verified_data['user']
-
+        print("PO WERYFIKACJI")
         session_id = str(uuid.uuid4())
         redis_inst.set(user.id, session_id, settings.SESSION_COOKIE_AGE)
         print(redis_inst.get(user.id))
