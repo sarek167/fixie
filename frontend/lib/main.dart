@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/services/auth_service.dart';
+import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthenticationCubit(authService: AuthService())),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

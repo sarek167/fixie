@@ -20,7 +20,18 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            return Response({"message": "User registered successfuly", "user_id": user.id}, status=status.HTTP_201_CREATED)
+            session_id = str(uuid.uuid4())
+            redis_inst.set(user.id, session_id, settings.SESSION_COOKIE_AGE)
+            response = Response({"message": "User registered successfuly", "user_id": user.id}, status=status.HTTP_201_CREATED)
+            response.set_cookie(
+                key='session_id',
+                value=session_id,
+                httponly=settings.SESSION_COOKIE_HTTPONLY,
+                secure=settings.SESSION_COOKIE_SECURE,
+                samesite='Lax'
+            )
+            return response
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
@@ -28,14 +39,13 @@ class LoginView(APIView):
     @api_view(['POST'])
     def login(request):
         serializer = LoginSerializer(data = request.data)
-        request.data._mutable = True
+        # request.data._mutable = True
         verified_data = serializer.verify(request.data)
         user = verified_data['user']
 
         session_id = str(uuid.uuid4())
-        redis_inst.set(session_id, user.id, settings.SESSION_COOKIE_AGE)
-
-        print(cache.get(session_id))
+        redis_inst.set(user.id, session_id, settings.SESSION_COOKIE_AGE)
+        print(redis_inst.get(user.id))
         response = Response({"message": "Login succesful"}, status=status.HTTP_200_OK)
         response.set_cookie(
             key='session_id',

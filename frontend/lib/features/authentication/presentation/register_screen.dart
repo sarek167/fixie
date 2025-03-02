@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_form.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -30,12 +31,17 @@ class RegisterScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, "/login");
                   },
-                  child: const Text(
+                  child: Text(
                     "Masz już konto? Zaloguj się",
-                    style: TextStyle(
+                    style:
+                    TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
+                      decoration:
+                      TextDecoration.underline,
+                      decorationColor: Colors.white,
+                      decorationThickness: 2,
                     ),
                   ),
                 ),
