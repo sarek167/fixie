@@ -32,7 +32,11 @@ class _RegisterFormState extends State<RegisterForm> {
         return;
       }
       print("Rejestracja użytkownika: ${_emailController.text}");
-      // Tutaj wywołanie funkcji rejestracji (np. Firebase lub API)
+      final email = _emailController.text;
+      final username = _nameController.text;
+      final password = _passwordController.text;
+      BlocProvider.of<AuthenticationCubit>(context)
+          .register(email, username, password);
     }
   }
 
@@ -63,17 +67,30 @@ class _RegisterFormState extends State<RegisterForm> {
               PasswordTextField(
                 controller: _passwordController, labelText: "Hasło",),
               const SizedBox(height: 15),
-              PasswordTextField(controller: _confirmPasswordController,
-                  labelText: "Powtórz hasło"),
+              TextFormField(
+                controller: _confirmPasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Powtórz hasło",
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Wpisz ponownie hasło!";
+                  }
+                  if (value != _passwordController.text) {
+                    return "Hasła się nie zgadzają!";
+                  }
+                  return null;
+                },
+              ),
               const SizedBox(height: 20),
               CustomButton(
                 text: "ZAREJESTRUJ",
                 onPressed: () {
-                  final email = _emailController.text;
-                  final username = _nameController.text;
-                  final password = _passwordController.text;
-                  BlocProvider.of<AuthenticationCubit>(context)
-                      .register(email, username, password);
+                  _register();
                 },
                 backgroundColor: Colors.red,
                 width: 250,
