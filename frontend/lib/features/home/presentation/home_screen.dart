@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: ColorConstants.backgroundColor,
       appBar: CustomAppBar(),
       body: Center(
         child: SingleChildScrollView(
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: ColorConstants.whiteColor,
                   ),
                 ),
               ],

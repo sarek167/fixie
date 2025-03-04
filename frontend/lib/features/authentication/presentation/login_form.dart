@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:frontend/widgets/email_text_field.dart';
@@ -46,10 +47,10 @@ class _LoginFormState extends State<LoginForm> {
                     BlocProvider.of<AuthenticationCubit>(context)
                         .login(email, password);
                   },
-                  backgroundColor: Colors.red,
+                  backgroundColor: ColorConstants.darkColor,
                   width: 250,
                   height: 50,
-                  textColor: Colors.white,
+                  textColor: ColorConstants.whiteColor,
                   fontSize: 18,
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'register_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,7 +9,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: ColorConstants.backgroundColor,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -21,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: ColorConstants.whiteColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -35,12 +36,12 @@ class RegisterScreen extends StatelessWidget {
                     "Masz już konto? Zaloguj się",
                     style:
                     TextStyle(
-                      color: Colors.white,
+                      color: ColorConstants.whiteColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       decoration:
                       TextDecoration.underline,
-                      decorationColor: Colors.white,
+                      decorationColor: ColorConstants.whiteColor,
                       decorationThickness: 2,
                     ),
                   ),

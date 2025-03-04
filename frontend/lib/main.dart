@@ -5,7 +5,7 @@ import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
 import 'package:frontend/features/home/presentation/home_screen.dart';
-
+import 'package:frontend/core/constants/app_routes.dart';
 
 void main() {
   runApp(
@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       routes: {
-        "/login": (context) => LoginScreen(),
-        "/register": (context) => RegisterScreen(),
-        "/home": (context) => HomeScreen()
+        AppRouteConstants.loginRoute: (context) => LoginScreen(),
+        AppRouteConstants.registerRoute: (context) => RegisterScreen(),
+        AppRouteConstants.homeRoute: (context) => HomeScreen()
       },
       home: HomeScreen()
     );

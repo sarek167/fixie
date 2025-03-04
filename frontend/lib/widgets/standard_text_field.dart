@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 
 class StandardTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -17,7 +18,7 @@ class StandardTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: ColorConstants.whiteColor,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
       ),
       validator: (value) {

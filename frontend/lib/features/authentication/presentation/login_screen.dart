@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:frontend/features/authentication/logic/auth.dart';
-// import 'package:frontend/core/services/auth_service.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/features/authentication/presentation/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: ColorConstants.backgroundColor,
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -23,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: ColorConstants.whiteColor,
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -36,12 +34,12 @@ class LoginScreen extends StatelessWidget {
                     child: const Text(
                       "Nie masz konta? Zarejestruj się",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: ColorConstants.whiteColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         decoration:
                         TextDecoration.underline,
-                        decorationColor: Colors.white,
+                        decorationColor: ColorConstants.whiteColor,
                         decorationThickness: 2,
                       ),
                     ),

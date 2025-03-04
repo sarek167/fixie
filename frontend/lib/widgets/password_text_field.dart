@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 
 class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -25,7 +26,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       decoration: InputDecoration(
         labelText: widget.labelText,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: ColorConstants.whiteColor,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
         suffixIcon: IconButton(
           icon: Icon(_isObscured ? Icons.visibility : Icons.visibility_off),

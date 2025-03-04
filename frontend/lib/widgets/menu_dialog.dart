@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/widgets/button.dart';
 
 class CustomMenu extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomMenu extends StatelessWidget {
           width: 250, // Ustaw szerokość menu
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.teal,
+            color: ColorConstants.backgroundColor,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
@@ -24,7 +25,7 @@ class CustomMenu extends StatelessWidget {
               const Text(
                 "USERNAME", //TO DO zmienić na nazwę aktualnego użytkownika
                 style: TextStyle(
-                  color: Colors.white,
+                  color: ColorConstants.whiteColor,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
@@ -32,7 +33,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                 text: "AVATAR",
-                backgroundColor: Colors.orange,
+                backgroundColor: ColorConstants.lightColor,
                 onPressed: () {
                   Navigator.pushNamed(context, '/home');
                 }
@@ -40,7 +41,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "KALENDARZ ZADAŃ",
-                  backgroundColor: Colors.orange,
+                  backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -48,7 +49,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "ŚCIEŻKI ZADAŃ",
-                  backgroundColor: Colors.orange,
+                  backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -56,7 +57,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "MÓJ DZIENNIK",
-                  backgroundColor: Colors.orange,
+                  backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -64,7 +65,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "STUDNIA WIEDZY",
-                  backgroundColor: Colors.orange,
+                  backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -72,7 +73,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "SEKCJA SOS",
-                  backgroundColor: Colors.orange,
+                  backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -80,7 +81,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 100),
               CustomButton(
                   text: "KONTO",
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: ColorConstants.semiLightColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
@@ -88,7 +89,7 @@ class CustomMenu extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                   text: "WYLOGUJ SIĘ",
-                  backgroundColor: Colors.red,
+                  backgroundColor: ColorConstants.darkColor,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   }
