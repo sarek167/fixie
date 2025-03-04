@@ -13,11 +13,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(Icons.menu, color: ColorConstants.whiteColor, size: 32,),
         onPressed: () {
-          showDialog(
+          showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
             builder: (context) => const CustomMenu(),
           );
-          // Obsługa menu
         },
       ),
       actions: [

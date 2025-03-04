@@ -7,6 +7,8 @@ class ColorConstants {
   static const Color darkColor = Colors.red;
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Colors.black26;
+  static const Color lightBackgroundColor = Colors.tealAccent;
+  static const Color veryLightColor = Colors.yellow;
 }
 
 class FontConstants {
