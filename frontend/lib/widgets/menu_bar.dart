@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               '17', // Przykładowa liczba streak'u
               style: TextStyle(
                 color: ColorConstants.whiteColor,
-                fontSize: 24,
+                fontSize: FontConstants.headerFontSize,
                 fontWeight: FontWeight.bold,
               ),
             ),

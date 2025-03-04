@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
                 const Text(
                   "EKRAN GŁÓWNY",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: FontConstants.headerFontSize,
                     fontWeight: FontWeight.bold,
                     color: ColorConstants.whiteColor,
                   ),

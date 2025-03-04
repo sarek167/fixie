@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'register_form.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -20,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
                 const Text(
                   "WITAJ W FIXIE!",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: FontConstants.headerFontSize,
                     fontWeight: FontWeight.bold,
                     color: ColorConstants.whiteColor,
                   ),
@@ -30,14 +30,14 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, "/login");
+                    Navigator.pushNamed(context, AppRouteConstants.loginRoute);
                   },
                   child: Text(
                     "Masz już konto? Zaloguj się",
                     style:
                     TextStyle(
                       color: ColorConstants.whiteColor,
-                      fontSize: 14,
+                      fontSize: FontConstants.smallFontSize,
                       fontWeight: FontWeight.w600,
                       decoration:
                       TextDecoration.underline,

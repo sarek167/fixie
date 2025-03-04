@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/widgets/button.dart';
 
@@ -8,11 +9,11 @@ class CustomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent, // Przezroczyste tło
+      backgroundColor: Colors.transparent,
       child: Align(
-        alignment: Alignment.centerLeft, // Przesunięcie do lewej
+        alignment: Alignment.centerLeft,
         child: Container(
-          width: 250, // Ustaw szerokość menu
+          width: 300,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: ColorConstants.backgroundColor,
@@ -26,7 +27,7 @@ class CustomMenu extends StatelessWidget {
                 "USERNAME", //TO DO zmienić na nazwę aktualnego użytkownika
                 style: TextStyle(
                   color: ColorConstants.whiteColor,
-                  fontSize: 22,
+                  fontSize: FontConstants.headerFontSize,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -35,7 +36,7 @@ class CustomMenu extends StatelessWidget {
                 text: "AVATAR",
                 backgroundColor: ColorConstants.lightColor,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/home');
+                  Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                 }
               ),
               const SizedBox(height: 20),
@@ -43,7 +44,7 @@ class CustomMenu extends StatelessWidget {
                   text: "KALENDARZ ZADAŃ",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 20),
@@ -51,7 +52,7 @@ class CustomMenu extends StatelessWidget {
                   text: "ŚCIEŻKI ZADAŃ",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 20),
@@ -59,7 +60,7 @@ class CustomMenu extends StatelessWidget {
                   text: "MÓJ DZIENNIK",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 20),
@@ -67,7 +68,7 @@ class CustomMenu extends StatelessWidget {
                   text: "STUDNIA WIEDZY",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 20),
@@ -75,7 +76,7 @@ class CustomMenu extends StatelessWidget {
                   text: "SEKCJA SOS",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 100),
@@ -83,7 +84,7 @@ class CustomMenu extends StatelessWidget {
                   text: "KONTO",
                   backgroundColor: ColorConstants.semiLightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
               const SizedBox(height: 20),
@@ -91,7 +92,7 @@ class CustomMenu extends StatelessWidget {
                   text: "WYLOGUJ SIĘ",
                   backgroundColor: ColorConstants.darkColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                   }
               ),
             ],

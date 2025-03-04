@@ -8,3 +8,14 @@ class ColorConstants {
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Colors.black26;
 }
+
+class FontConstants {
+  static const String buttonFontFamily = "Roboto";
+  static const String headerFontFamily = "Roboto";
+  static const String standardFontFamily = "Roboto";
+
+  static const double buttonFontSize = 18;
+  static const double headerFontSize = 24;
+  static const double standardFontSize = 18;
+  static const double smallFontSize = 14;
+}

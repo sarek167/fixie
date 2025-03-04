@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/features/authentication/presentation/login_form.dart';
 
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
                   const Text(
                     "WITAJ PONOWNIE!",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: FontConstants.headerFontSize,
                       fontWeight: FontWeight.bold,
                       color: ColorConstants.whiteColor,
                     ),
@@ -29,13 +30,13 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/register');
+                      Navigator.pushNamed(context, AppRouteConstants.registerRoute);
                     },
                     child: const Text(
                       "Nie masz konta? Zarejestruj się",
                       style: TextStyle(
                         color: ColorConstants.whiteColor,
-                        fontSize: 14,
+                        fontSize: FontConstants.smallFontSize,
                         fontWeight: FontWeight.w600,
                         decoration:
                         TextDecoration.underline,
