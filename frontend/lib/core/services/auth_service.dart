@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/core/constants/api_endpoints.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   final Dio _dio = Dio();
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   Future<Response> login(String email, String password) async {
     final response = await _dio.post(
@@ -12,6 +14,7 @@ class AuthService {
         'password': password,
       },
     );
+    print(response);
     return response;
   }
 
@@ -28,6 +31,23 @@ class AuthService {
         'email': email,
         'username': username,
         'password': password,
+      },
+    );
+    return response;
+  }
+
+  Future<Response> logout(String accessToken, String refreshToken) async{
+    final response = await _dio.post(
+      EndpointConstants.logoutEndpoint,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': "Bearer $accessToken"
+        },
+      ),
+      data: {
+        'refresh_token': refreshToken
       },
     );
     return response;

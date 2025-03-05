@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/widgets/button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/services/auth_service.dart';
 
 class CustomMenu extends StatelessWidget {
   const CustomMenu({super.key});
@@ -102,7 +105,12 @@ class CustomMenu extends StatelessWidget {
                         text: "WYLOGUJ SIĘ",
                         backgroundColor: ColorConstants.darkColor,
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                          BlocProvider.of<AuthenticationCubit>(context).logout();
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouteConstants.loginRoute,
+                              (route) => false
+                          );
                         }
                     ),
                   ]
