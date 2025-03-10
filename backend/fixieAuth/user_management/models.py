@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, **extra_fields):
         if not (email and password):
-            raise ValueError("User data is required to create account: email, username, first_name, last_name, password")
+            raise ValueError("User data is required to create account: email, username, password")
         email = self.normalize_email(email)
         user = self.model(email = email, username=username, **extra_fields)
         user.set_password(password)
@@ -32,7 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "first_name", "last_name"]
+    REQUIRED_FIELDS = ["username"]
 
     objects = CustomUserManager()
 

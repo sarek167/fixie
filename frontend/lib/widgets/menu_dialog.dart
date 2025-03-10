@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
+import 'package:frontend/features/authentication/logic/user_storage.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/core/services/auth_service.dart';
+import 'package:frontend/features/authentication/logic/user_storage.dart';
 
 class CustomMenu extends StatelessWidget {
   const CustomMenu({super.key});
@@ -34,13 +36,31 @@ class CustomMenu extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 100),
-                const Text(
-                  "USERNAME", //TO DO zmienić na nazwę aktualnego użytkownika
-                  style: TextStyle(
-                    color: ColorConstants.whiteColor,
-                    fontSize: FontConstants.headerFontSize,
-                    fontWeight: FontWeight.bold,
-                  ),
+                FutureBuilder<User?>(
+                  future: UserStorage().getUser(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // Ładowanie
+                    }
+                    if (snapshot.hasError || snapshot.data == null) {
+                      return const Text(
+                        "Nieznany użytkownik",
+                        style: TextStyle(
+                          color: ColorConstants.whiteColor,
+                          fontSize: FontConstants.headerFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
+                    return Text(
+                      snapshot.data!.username, // Nazwa użytkownika
+                      style: TextStyle(
+                        color: ColorConstants.whiteColor,
+                        fontSize: FontConstants.headerFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
