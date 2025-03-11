@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/services/auth_service.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
+import 'package:frontend/features/authentication/presentation/profile_modify_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
 import 'package:frontend/features/home/presentation/home_screen.dart';
 import 'package:frontend/core/constants/app_routes.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRouteConstants.loginRoute: (context) => LoginScreen(),
         AppRouteConstants.registerRoute: (context) => RegisterScreen(),
-        AppRouteConstants.homeRoute: (context) => HomeScreen()
+        AppRouteConstants.homeRoute: (context) => HomeScreen(),
+        AppRouteConstants.profileModifyRoute: (context) => ProfileModifyScreen()
       },
       home: LoginScreen()
     );

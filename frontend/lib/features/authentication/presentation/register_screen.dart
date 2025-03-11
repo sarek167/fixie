@@ -18,7 +18,7 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "WITAJ W FIXIE!",
+                  "WITAJ !",
                   style: TextStyle(
                     fontSize: FontConstants.headerFontSize,
                     fontWeight: FontWeight.bold,
