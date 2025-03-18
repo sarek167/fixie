@@ -6,59 +6,70 @@ class CardItem extends StatelessWidget{
   final String? imageUrl;
   final String text;
   final Color? backgroundColor;
+  final double height;
+  final double borderRadius;
+  final double backgroundDarkening;
+  final String routeName;
 
-  CardItem({
+  const CardItem({
+    super.key,
     this.imageUrl,
     required this.text,
-    this.backgroundColor
+    this.backgroundColor,
+    this.height = 250,
+    this.borderRadius = 15,
+    this.backgroundDarkening = 0.5,
+    required this.routeName
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: imageUrl != null
-              ? ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.4), // Przyciemnienie
-              BlendMode.darken,
-            ),
-            child: Image.network(
-              imageUrl!,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          routeName
+        );
+      },
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(borderRadius),
+            child: imageUrl != null
+                ? ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                ColorConstants.blackColor.withValues(alpha: backgroundDarkening),
+                BlendMode.darken,
+              ),
+              child: Image.network(
+                imageUrl!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: height,
+              ),
+            )
+                : Container(
               width: double.infinity,
-              height: 250,
-            ),
-          )
-              : Container(
-            width: double.infinity,
-            height: 250,
-            decoration: BoxDecoration(
-              color: backgroundColor ?? Colors.grey, // Tło jako kolor
-              borderRadius: BorderRadius.circular(15),
+              height: height,
+              decoration: BoxDecoration(
+                color: backgroundColor ?? ColorConstants.blackColor,
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
             ),
           ),
-        ),
-        Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 28, // ✅ Duży tekst
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  color: Colors.black.withOpacity(0.8),
-                  blurRadius: 6,
-                ),
-              ],
+          Center(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: FontConstants.headerFontSize,
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.whiteColor,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      )
     );
   }
 }

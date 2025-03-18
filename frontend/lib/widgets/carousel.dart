@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/widgets/card.dart';
 
 class CustomImageCarousel extends StatefulWidget {
   final List<CardItem> slides;
+  final Color slideBackgroundColor;
+  final Color slideTextColor;
+  final String text;
+  final double height;
+  final Color indicatorColor;
 
   const CustomImageCarousel({
-    Key? key,
+    super.key,
     required this.slides,
-  }) : super(key: key);
+    this.slideBackgroundColor = ColorConstants.darkColor,
+    this.slideTextColor = ColorConstants.whiteColor,
+    required this.text,
+    this.height = 250,
+    this.indicatorColor = ColorConstants.lightColor
+  });
 
   @override
   _CustomImageCarouselState createState() => _CustomImageCarouselState();
@@ -20,16 +31,16 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.teal[800],
+      color: widget.slideBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "TWOJE ŚCIEŻKI",
+            widget.text,
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 22,
+              color: widget.slideTextColor,
+              fontSize: FontConstants.headerFontSize,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -41,11 +52,14 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
               return CardItem(
                 imageUrl: slide.imageUrl,
                 text: slide.text,
+                height: slide.height,
                 backgroundColor: slide.backgroundColor,
+                backgroundDarkening: slide.backgroundDarkening,
+                routeName: slide.routeName,
               );
             },
             options: CarouselOptions(
-              height: 250,
+              height: widget.height,
               enlargeCenterPage: true,
               enableInfiniteScroll: true,
               viewportFraction: 0.75,
@@ -76,7 +90,7 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(4),
-            color: _currentIndex == index ? Colors.orange : Colors.white,
+            color: _currentIndex == index ? widget.indicatorColor : Colors.white,
           ),
         );
       }).toList(),
