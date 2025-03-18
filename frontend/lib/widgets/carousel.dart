@@ -56,6 +56,7 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
                 backgroundColor: slide.backgroundColor,
                 backgroundDarkening: slide.backgroundDarkening,
                 routeName: slide.routeName,
+                textColor: slide.textColor,
               );
             },
             options: CarouselOptions(

@@ -10,6 +10,7 @@ class CardItem extends StatelessWidget{
   final double borderRadius;
   final double backgroundDarkening;
   final String routeName;
+  final Color textColor;
 
   const CardItem({
     super.key,
@@ -19,7 +20,8 @@ class CardItem extends StatelessWidget{
     this.height = 250,
     this.borderRadius = 15,
     this.backgroundDarkening = 0.5,
-    required this.routeName
+    required this.routeName,
+    this.textColor = ColorConstants.whiteColor
   });
 
   @override
@@ -64,7 +66,7 @@ class CardItem extends StatelessWidget{
               style: TextStyle(
                 fontSize: FontConstants.headerFontSize,
                 fontWeight: FontWeight.bold,
-                color: ColorConstants.whiteColor,
+                color: textColor,
               ),
             ),
           ),

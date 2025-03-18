@@ -18,13 +18,36 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomImageCarousel(
-                  text: "TWOJE ŚCIEŻKI",
-                  indicatorColor: ColorConstants.lightBackgroundColor,
+                  text: "ZNAJDŹ SWOJE ŚCIEŻKI",
+                  slideBackgroundColor: ColorConstants.semiLightColor,
+                  indicatorColor: ColorConstants.blackColor,
                   slides: [
                     CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
                     CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
-                    CardItem(routeName: "/login", backgroundColor: ColorConstants.lightColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                    CardItem(routeName: "/login", backgroundColor: ColorConstants.semiLightColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                  ],
+                ),
+                CustomImageCarousel(
+                  text: "CO CHODZI CI PO GŁOWIE",
+                  slideBackgroundColor: ColorConstants.lightColor,
+                  indicatorColor: ColorConstants.blackColor,
+                  slides: [
+                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
+                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                  ],
+                ),
+                CustomImageCarousel(
+                  text: "DOWIEDZ SIĘ WIĘCEJ",
+                  slideBackgroundColor: ColorConstants.veryLightColor,
+                  indicatorColor: ColorConstants.blackColor,
+                  slides: [
+                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=5', text: "Zdjęcie 1"),
+                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=6', text: "Zdjęcie 2"),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
                   ],
                 ),
               ],

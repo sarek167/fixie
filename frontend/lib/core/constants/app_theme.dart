@@ -8,7 +8,7 @@ class ColorConstants {
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Colors.black26;
   static const Color lightBackgroundColor = Colors.tealAccent;
-  static const Color veryLightColor = Colors.yellow;
+  static const Color veryLightColor = Color(0xFFF2CB05);
   static const Color greyColor = Colors.blueGrey;
 }
 
@@ -19,6 +19,7 @@ class FontConstants {
 
   static const double buttonFontSize = 18;
   static const double headerFontSize = 24;
+  static const double largeHeaderFontSize = 36;
   static const double standardFontSize = 18;
   static const double smallFontSize = 14;
 }
