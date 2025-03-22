@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/widgets/card.dart';
 import 'package:frontend/widgets/carousel.dart';
 import 'package:frontend/widgets/expandable_card_grid.dart';
@@ -27,7 +28,13 @@ class TaskScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
+              TaskPathWidget(
+                nodes: [
+                  TaskNode(text: "14.07", color: ColorConstants.darkColor),
+                  TaskNode(text: "DZIŚ", color: ColorConstants.lightBackgroundColor, flag: true),
+                  TaskNode(text: "15.07", color: ColorConstants.darkColor),
+                ],
+              ),
               CustomImageCarousel(
                 text: "ZNAJDŹ SWOJE ŚCIEŻKI",
                 slideBackgroundColor: ColorConstants.lightColor,
