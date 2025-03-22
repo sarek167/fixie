@@ -4,4 +4,5 @@ class AppRouteConstants {
   static const String registerRoute = "/register";
   static const String taskRoute = "/tasks";
   static const String singleTaskRoute = "/task";
+  static const String pathRoute = "/path";
 }

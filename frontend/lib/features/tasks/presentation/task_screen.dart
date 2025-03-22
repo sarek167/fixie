@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/widgets/card.dart';
@@ -40,19 +41,19 @@ class TaskScreen extends StatelessWidget {
                 slideBackgroundColor: ColorConstants.lightColor,
                 indicatorColor: ColorConstants.blackColor,
                 slides: [
-                  CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
-                  CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
-                  CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                  CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                  CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
+                  CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
+                  CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                  CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
                 ],
               ),
               ExpandableCardGrid(
                   title: "polecamy",
                   initialCards: [
-                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
-                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
-                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                    CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                    CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
+                    CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
+                    CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                    CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
                   ],
               )
             ],

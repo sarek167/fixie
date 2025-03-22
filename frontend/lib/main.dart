@@ -6,6 +6,7 @@ import 'package:frontend/features/authentication/presentation/login_screen.dart'
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
 import 'package:frontend/features/home/presentation/home_screen.dart';
 import 'package:frontend/core/constants/app_routes.dart';
+import 'package:frontend/features/tasks/presentation/path_screen.dart';
 import 'package:frontend/features/tasks/presentation/task_screen.dart';
 import 'package:frontend/features/tasks/presentation/single_task_screen.dart';
 
@@ -50,7 +51,8 @@ class MyApp extends StatelessWidget {
         AppRouteConstants.registerRoute: (context) => RegisterScreen(),
         AppRouteConstants.homeRoute: (context) => HomeScreen(),
         AppRouteConstants.taskRoute: (context) => TaskScreen(),
-        AppRouteConstants.singleTaskRoute: (context) => SingleTaskScreen()
+        AppRouteConstants.singleTaskRoute: (context) => SingleTaskScreen(),
+        AppRouteConstants.pathRoute: (context) => PathScreen()
       },
       home: HomeScreen()
     );
