@@ -31,8 +31,8 @@ class TaskScreen extends StatelessWidget {
               TaskPathWidget(
                 nodes: [
                   TaskNode(text: "14.07", color: ColorConstants.darkColor),
-                  TaskNode(text: "DZIŚ", color: ColorConstants.lightBackgroundColor, flag: true),
-                  TaskNode(text: "15.07", color: ColorConstants.darkColor),
+                  TaskNode(text: "15.07", color: ColorConstants.lightBackgroundColor),
+                  TaskNode(text: "DZIŚ", color: ColorConstants.darkColor, flag: true),
                 ],
               ),
               CustomImageCarousel(

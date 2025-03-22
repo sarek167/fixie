@@ -1,41 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'dart:math';
 import 'package:frontend/core/constants/app_theme.dart';
 
 
 class TaskPathWidget extends StatelessWidget {
   final List<TaskNode> nodes;
+  final double spacing;
+  final double circleOffset;
 
-  TaskPathWidget({required this.nodes});
+  const TaskPathWidget({
+    super.key,
+    required this.nodes,
+    this.spacing = 100,
+    this.circleOffset = 75
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
       width: screenWidth,
-      height: 100 * (nodes.length + 1),
+      height: spacing * (nodes.length + 1),
       child: Stack(
         children: [
           CustomPaint(
-            painter: TaskPathPainter(nodes: nodes, width: screenWidth),
+            painter: TaskPathPainter(nodes: nodes, width: screenWidth, spacing: spacing, circleOffset: circleOffset),
           ),
           ..._buildIcons(nodes, screenWidth),
+          ..._buildTappableCircles(context, nodes, screenWidth)
         ],
       )
     );
   }
 
+  List<Widget> _buildTappableCircles(BuildContext context, List<TaskNode> nodes, double width) {
+    return List.generate(nodes.length, (i) {
+      final node = nodes[i];
+      final double x = width / 2 + (i % 2 == 0 ? -circleOffset : circleOffset);
+      final double y = spacing * (i + 1);
+
+      return Positioned(
+        left: x - FontConstants.largeHeaderFontSize,
+        top: y - FontConstants.largeHeaderFontSize,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AppRouteConstants.singleTaskRoute); // << tu trasa
+          },
+          child: Container(
+            width: FontConstants.largeHeaderFontSize * 2,
+            height: FontConstants.largeHeaderFontSize * 2,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: node.color,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              node.text,
+              style: TextStyle(
+                color: ColorConstants.whiteColor,
+                fontWeight: FontWeight.bold,
+                fontSize: FontConstants.standardFontSize,
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
   List<Widget> _buildIcons(List<TaskNode> nodes, double width) {
     return List.generate(nodes.length, (i) {
       if (!nodes[i].flag) return SizedBox.shrink();
-      final double x = width / 2 + (i % 2 == 0 ? -50 : 50);
-      final double y = 100 * (i + 1);
+      final double x = width / 2 + (i % 2 == 0 ? - circleOffset : circleOffset);
+      final double y = spacing * (i + 1);
       return Positioned(
         left: x + FontConstants.largeHeaderFontSize - (FontConstants.largeHeaderFontSize / 4),
         top: y - FontConstants.largeHeaderFontSize,
         child: Transform.rotate(
           angle: pi / 4,
-          child: Icon(Icons.flag, color: Colors.white, size: FontConstants.largeHeaderFontSize),
+          child: Icon(Icons.flag, color: nodes[i].color, size: FontConstants.largeHeaderFontSize),
         ),
       );
     });
@@ -57,8 +101,19 @@ class TaskNode {
 class TaskPathPainter extends CustomPainter {
   final List<TaskNode> nodes;
   final double width;
+  final double spacing;
+  final int dashLength;
+  final int gapLength;
+  final double circleOffset;
 
-  TaskPathPainter({required this.nodes, required this.width});
+  TaskPathPainter({
+    required this.nodes,
+    required this.width,
+    required this.spacing,
+    this.dashLength = 10,
+    this.gapLength = 5,
+    required this.circleOffset
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -69,32 +124,11 @@ class TaskPathPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final positions = List.generate(nodes.length, (i) => Offset(
-        width / 2 + (i % 2 == 0 ? -50 : 50),
-        100 * (i + 1)
+        width / 2 + (i % 2 == 0 ? -circleOffset : circleOffset),
+        spacing * (i + 1)
     ));
     for (int i = 0; i < positions.length - 1; i++) {
       _drawDashedLine(canvas, paint, positions[i], positions[i + 1]);
-    }
-    for (int i = 0; i < nodes.length; i++) {
-      final node = nodes[i];
-      final position = positions[i];
-      final circlePaint = Paint()
-        ..color = node.color;
-      canvas.drawCircle(position, FontConstants.largeHeaderFontSize, circlePaint);
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: node.text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: FontConstants.standardFontSize,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-      );
-      textPainter.layout();
-      textPainter.paint(
-          canvas, position - Offset(textPainter.width / 2, textPainter.height / 2));
     }
   }
 
@@ -102,7 +136,6 @@ class TaskPathPainter extends CustomPainter {
     double dx = end.dx - start.dx;
     double dy = end.dy - start.dy;
     double distance = sqrt(dx * dx + dy * dy);
-    double dashLength = 10, gapLength = 5;
     double dashCount = distance / (dashLength + gapLength);
 
     for (int i = 0; i < dashCount; i++) {
@@ -113,6 +146,8 @@ class TaskPathPainter extends CustomPainter {
       canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
     }
   }
+
+
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
