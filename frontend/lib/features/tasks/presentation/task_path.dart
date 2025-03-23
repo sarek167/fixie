@@ -8,12 +8,14 @@ class TaskPathWidget extends StatelessWidget {
   final List<TaskNode> nodes;
   final double spacing;
   final double circleOffset;
+  final double nodeSize;
 
   const TaskPathWidget({
     super.key,
     required this.nodes,
     this.spacing = 100,
-    this.circleOffset = 75
+    this.circleOffset = 75,
+    this.nodeSize = FontConstants.largeHeaderFontSize
   });
 
   @override
@@ -27,29 +29,37 @@ class TaskPathWidget extends StatelessWidget {
           CustomPaint(
             painter: TaskPathPainter(nodes: nodes, width: screenWidth, spacing: spacing, circleOffset: circleOffset),
           ),
-          ..._buildIcons(nodes, screenWidth),
-          ..._buildTappableCircles(context, nodes, screenWidth)
+          ..._buildIcons(nodes, screenWidth, nodeSize),
+          ..._buildTappableCircles(context, nodes, screenWidth, nodeSize)
         ],
       )
     );
   }
 
-  List<Widget> _buildTappableCircles(BuildContext context, List<TaskNode> nodes, double width) {
+  List<Widget> _buildTappableCircles(BuildContext context, List<TaskNode> nodes, double width, double size) {
     return List.generate(nodes.length, (i) {
       final node = nodes[i];
       final double x = width / 2 + (i % 2 == 0 ? -circleOffset : circleOffset);
       final double y = spacing * (i + 1);
 
+      if (node.isTrophy) {
+        return Positioned(
+          left: x - size,
+          top: y - size,
+          child: Icon(Icons.emoji_events, color: Colors.amber, size: 2 * size),
+        );
+      }
+
       return Positioned(
-        left: x - FontConstants.largeHeaderFontSize,
-        top: y - FontConstants.largeHeaderFontSize,
+        left: x - size,
+        top: y - size,
         child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, AppRouteConstants.singleTaskRoute); // << tu trasa
           },
           child: Container(
-            width: FontConstants.largeHeaderFontSize * 2,
-            height: FontConstants.largeHeaderFontSize * 2,
+            width: size * 2,
+            height: size * 2,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: node.color,
@@ -69,17 +79,17 @@ class TaskPathWidget extends StatelessWidget {
     });
   }
 
-  List<Widget> _buildIcons(List<TaskNode> nodes, double width) {
+  List<Widget> _buildIcons(List<TaskNode> nodes, double width, double size) {
     return List.generate(nodes.length, (i) {
       if (!nodes[i].flag) return SizedBox.shrink();
       final double x = width / 2 + (i % 2 == 0 ? - circleOffset : circleOffset);
       final double y = spacing * (i + 1);
       return Positioned(
-        left: x + FontConstants.largeHeaderFontSize - (FontConstants.largeHeaderFontSize / 4),
-        top: y - FontConstants.largeHeaderFontSize,
+        left: x + size - (size / 4),
+        top: y - size,
         child: Transform.rotate(
           angle: pi / 4,
-          child: Icon(Icons.flag, color: nodes[i].color, size: FontConstants.largeHeaderFontSize),
+          child: Icon(Icons.flag, color: nodes[i].color, size: size),
         ),
       );
     });
@@ -90,11 +100,13 @@ class TaskNode {
   final String text;
   final Color color;
   final bool flag;
+  final bool isTrophy;
 
   TaskNode({
     required this.text,
     required this.color,
-    this.flag = false
+    this.flag = false,
+    this.isTrophy = false
   });
 }
 
