@@ -1,0 +1,43 @@
+CREATE TABLE tasks (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    category VARCHAR(100),
+    difficulty INT,
+    type VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE task_paths (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE task_path_assignments (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    task_id INT NOT NULL,
+    path_id INT NOT NULL,
+    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE,
+    FOREIGN KEY (path_id) REFERENCES task_paths(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_tasks (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    task_id INT NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('pending', 'in_progress', 'completed', 'skipped')),
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
+);
+
+CREATE TABLE popular_paths (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    path_id INT NOT NULL,
+    FOREIGN KEY (path_id) REFERENCES task_paths(id) ON DELETE CASCADE
+);
