@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         AppRouteConstants.singleTaskRoute: (context) => SingleTaskScreen(),
         AppRouteConstants.pathRoute: (context) => PathScreen()
       },
-      home: HomeScreen()
+      home: LoginScreen()
     );
   }
 }
