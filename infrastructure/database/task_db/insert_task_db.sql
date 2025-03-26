@@ -71,7 +71,7 @@ VALUES
 
 
 -- Dodanie ścieżek
-INSERT INTO task_paths (title, description)
+INSERT INTO paths (title, description)
 VALUES
 ('Ścieżka wdzięczności', 'Zestaw zadań pomagających zauważać pozytywne rzeczy wokół siebie.'),
 ('Ścieżka uważności', 'Zadania skoncentrowane na rozwijaniu obecności tu i teraz.'),
@@ -80,7 +80,7 @@ VALUES
 
 
 -- Przypisania zadań do ścieżek
-INSERT INTO task_path_assignments (task_id, path_id)
+INSERT INTO task_path (task_id, path_id)
 VALUES
 (1, 1),
 (2, 2),
@@ -113,3 +113,10 @@ INSERT INTO popular_paths (path_id)
 VALUES
 (1), -- Ścieżka wdzięczności
 (3); -- Ścieżka emocji
+
+INSERT INTO user_paths (user_id, path_id, completed_at)
+VALUES
+(1, 1, NULL),                          -- rozpoczęta, ale nieukończona
+(1, 2, '2024-03-15 10:20:00'),         -- ukończona ścieżka uważności
+(6, 3, NULL),                          -- w trakcie ścieżki emocji
+(6, 4, '2024-03-20 18:45:00');    
