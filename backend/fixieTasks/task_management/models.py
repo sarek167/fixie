@@ -13,8 +13,11 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        db_table = "tasks"
 
-class TaskPath(models.Model):
+
+class Path(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,14 +25,20 @@ class TaskPath(models.Model):
 
     def __str__(self):
         return self.title
+        
+    class Meta:
+        db_table = "paths"
 
 
-class TaskPathAssignment(models.Model):
+class TaskPath(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='path_assignments')
-    path = models.ForeignKey(TaskPath, on_delete=models.CASCADE, related_name='task_assignments')
+    path = models.ForeignKey(Path, on_delete=models.CASCADE, related_name='task_assignments')
 
     def __str__(self):
         return f'{self.task.title} in {self.path.title}'
+
+    class Meta:
+        db_table = "task_path"
 
 
 class UserTask(models.Model):
@@ -50,9 +59,29 @@ class UserTask(models.Model):
     def __str__(self):
         return f'Task {self.task.id} for user {self.user_id}'
 
+    class Meta:
+        db_table = "user_tasks"
+
 
 class PopularPath(models.Model):
-    path = models.ForeignKey(TaskPath, on_delete=models.CASCADE, related_name='popular_entries')
+    path = models.ForeignKey(Path, on_delete=models.CASCADE, related_name='popular_entries')
 
     def __str__(self):
         return f'Popular Path: {self.path.title}'
+
+    class Meta:
+        db_table = "popular_paths"
+
+class UserPath(models.Model):
+    user_id = models.IntegerField()
+    path = models.ForeignKey(Path, on_delete=models.CASCADE, related_name='user_paths')
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'User {self.user_id} in path {self.path.title}'
+
+    class Meta:
+        db_table = "user_paths"
+
