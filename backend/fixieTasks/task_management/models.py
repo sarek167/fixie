@@ -20,6 +20,8 @@ class Task(models.Model):
 class Path(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
+    image_url = models.CharField(max_length=500)
+    color_hex = models.CharField(max_length=7)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -60,15 +60,21 @@ class CardItem extends StatelessWidget{
             ),
           ),
           Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: FontConstants.headerFontSize,
-                fontWeight: FontWeight.bold,
-                color: textColor,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                overflow: TextOverflow.visible,
+                style: TextStyle(
+                  fontSize: FontConstants.headerFontSize,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
-            ),
+            )
           ),
         ],
       )

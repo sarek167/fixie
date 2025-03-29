@@ -6,7 +6,7 @@ class ColorConstants {
   static const Color semiLightColor = Colors.deepOrange;
   static const Color darkColor = Colors.red;
   static const Color whiteColor = Colors.white;
-  static const Color blackColor = Colors.black26;
+  static const Color blackColor = Colors.black;
   static const Color lightBackgroundColor = Colors.tealAccent;
   static const Color veryLightColor = Color(0xFFF2CB05);
   static const Color greyColor = Colors.blueGrey;

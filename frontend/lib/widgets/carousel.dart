@@ -91,7 +91,7 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(4),
-            color: _currentIndex == index ? widget.indicatorColor : Colors.white,
+            color: _currentIndex == index ? widget.indicatorColor : ColorConstants.whiteColor,
           ),
         );
       }).toList(),

@@ -71,12 +71,12 @@ VALUES
 
 
 -- Dodanie ścieżek
-INSERT INTO paths (title, description)
+INSERT INTO paths (title, description, image_url, color_hex)
 VALUES
-('Ścieżka wdzięczności', 'Zestaw zadań pomagających zauważać pozytywne rzeczy wokół siebie.'),
-('Ścieżka uważności', 'Zadania skoncentrowane na rozwijaniu obecności tu i teraz.'),
-('Ścieżka emocji', 'Pomaga rozumieć, nazywać i akceptować swoje emocje.'),
-('Ścieżka rozwoju osobistego', 'Wyzwania, które wspierają rozwój i odkrywanie nowych pasji.');
+('Ścieżka wdzięczności', 'Zestaw zadań pomagających zauważać pozytywne rzeczy wokół siebie.', NULL, '#F6D776'),
+('Ścieżka uważności', 'Zadania skoncentrowane na rozwijaniu obecności tu i teraz.', 'https://picsum.photos/500/300?random=1', NULL),
+('Ścieżka emocji', 'Pomaga rozumieć, nazywać i akceptować swoje emocje.', 'https://picsum.photos/500/300?random=2', NULL),
+('Ścieżka rozwoju osobistego', 'Wyzwania, które wspierają rozwój i odkrywanie nowych pasji.', NULL, NULL);
 
 
 -- Przypisania zadań do ścieżek

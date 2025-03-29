@@ -5,7 +5,11 @@ from utils.jwt_utils import decode_jwt
 def jwt_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        auth_header = request.headers.get("Authorization")
+        print("W DEKORATORZE")
+        auth_header = request.META.get("HTTP_AUTHORIZATION")
+
+        # auth_header = request.headers.get("Authorization")
+        print(auth_header)
         if not auth_header or not auth_header.startswith("Bearer"):
             return JsonResponse({"error": "Token not found"}, status=401)
         token = auth_header.split(" ")[1]
