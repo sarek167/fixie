@@ -1,21 +1,25 @@
-class PathCard {
+class PathModel {
   final String title;
+  final String description;
   final String backgroundType;
   final String backgroundValue;
 
-  PathCard({
+  PathModel({
     required this.title,
+    this.description = "",
     required this.backgroundType,
-    required this.backgroundValue
+    required this.backgroundValue,
   });
 
-  factory PathCard.fromJson(Map<String, dynamic> json) {
-    return PathCard(
-      title: json['title'],
+  factory PathModel.fromJson(Map<String, dynamic> json) {
+    return PathModel(
+      title: json['title'] ?? "",
+      description: json['description'] ?? "",
       backgroundType: json['background_type'] ?? 'default',
       backgroundValue: json['background_value'] ?? '#FFFFFF',
     );
   }
+
   bool get isImage => backgroundType == 'image';
   bool get isColor => backgroundType == 'color';
   bool get isDefault => backgroundType == 'default';

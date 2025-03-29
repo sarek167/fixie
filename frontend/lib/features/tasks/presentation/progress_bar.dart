@@ -45,8 +45,7 @@ class ProgressBar extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: FontConstants.headerFontSize,
           ),
-        ),
-        const SizedBox(height: 20),
+        )
       ],
     );
   }

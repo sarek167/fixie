@@ -30,7 +30,10 @@ class CardItem extends StatelessWidget{
       onTap: () {
         Navigator.pushNamed(
           context,
-          routeName
+          routeName,
+          arguments: {
+            'title': text
+          }
         );
       },
       child: Stack(

@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from .models import UserPath, Path, PopularPath
+from .serializers import PathSerializer
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
@@ -49,3 +50,18 @@ class PopularPathsView(APIView):
         } for popular_path in popular_paths]
         print(paths_data)
         return JsonResponse({"popular_paths": paths_data})
+
+
+@method_decorator(jwt_required, name='dispatch')
+class PathByTitleView(APIView):
+    def get(self, request):
+        title = request.GET.get("title")
+        if not title:
+            return Response({"error": "Brak parametru 'title'"}, status=400)
+        try:
+            path = Path.objects.get(title = title)
+            print(path)
+            serializer = PathSerializer(path)
+            return JsonResponse(serializer.data, status=200)
+        except Path.DoesNotExist:
+            return JsonResponse({"error": "Path does not exist"}, status=404)

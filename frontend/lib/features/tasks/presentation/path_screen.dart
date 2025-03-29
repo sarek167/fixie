@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/services/path_service.dart';
 import 'package:frontend/features/tasks/presentation/progress_bar.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/widgets/menu_bar.dart';
@@ -18,31 +19,64 @@ class PathScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstants.backgroundColor,
-      appBar: CustomAppBar(),
-      body: Center(
-        child:SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "NAZWA\nŚCIEŻKI",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: ColorConstants.whiteColor,
-                  fontSize: FontConstants.largeHeaderFontSize,
-                  fontWeight: FontWeight.bold,
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final title = args['title'];
+    print(title);
+
+    return FutureBuilder(
+      future: PathService.getPathByTitle(title),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+          body: Center(child: Text("Error: ${snapshot.error}"))
+          );
+        } else {
+          final path = snapshot.data!;
+          return Scaffold(
+            backgroundColor: ColorConstants.backgroundColor,
+            appBar: CustomAppBar(),
+            body: Center(
+              child:SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      path.title.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: ColorConstants.whiteColor,
+                        fontSize: FontConstants.largeHeaderFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        path.description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: ColorConstants.whiteColor,
+                          fontSize: FontConstants.standardFontSize,
+                        )
+                      )
+                    ),
+                    const SizedBox(height: 20),
+                    ProgressBar(nodes: nodes),
+                    TaskPathWidget(
+                      nodes: nodes,
+                    ),
+                  ],
                 ),
               ),
-              TaskPathWidget(
-                nodes: nodes,
-              ),
-              ProgressBar(nodes: nodes)
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        }
+      }
     );
   }
 }
