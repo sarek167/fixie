@@ -1,16 +1,16 @@
-class UserPath {
+class PathCard {
   final String title;
   final String backgroundType;
   final String backgroundValue;
 
-  UserPath({
+  PathCard({
     required this.title,
     required this.backgroundType,
     required this.backgroundValue
   });
 
-  factory UserPath.fromJson(Map<String, dynamic> json) {
-    return UserPath(
+  factory PathCard.fromJson(Map<String, dynamic> json) {
+    return PathCard(
       title: json['title'],
       backgroundType: json['background_type'] ?? 'default',
       backgroundValue: json['background_value'] ?? '#FFFFFF',

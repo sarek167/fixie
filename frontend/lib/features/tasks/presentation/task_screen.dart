@@ -39,43 +39,57 @@ class TaskScreen extends StatelessWidget {
                 ],
               ),
               FutureBuilder(
-                  future: PathService.getUserPaths(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else {
-                      return CustomImageCarousel(
-                        text: "ZNAJDŹ SWOJE ŚCIEŻKI",
-                        slideBackgroundColor: ColorConstants.lightColor,
-                        indicatorColor: ColorConstants.darkColor,
-                        slides: [
-                          ...snapshot.data!.map((path) => CardItem(
-                            routeName: AppRouteConstants.pathRoute,
-                            textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
-                            text: path.title,
-                            imageUrl: path.isImage ? path.backgroundValue : null,
-                            backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
-                            // backgroundDarkening: 0.2,
-                          )),
-                          // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
-                          // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
-                          // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                          // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
-                        ],
-                      );
-                    }
-                  }),
-
-              ExpandableCardGrid(
-                  title: "polecamy",
-                  initialCards: [
-                    CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
-                    CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
-                    CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski"),
-                    CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony"),
-                  ],
+                future: PathService.getUserPaths(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    return CustomImageCarousel(
+                      text: "ZNAJDŹ SWOJE ŚCIEŻKI",
+                      slideBackgroundColor: ColorConstants.lightColor,
+                      indicatorColor: ColorConstants.darkColor,
+                      slides: [
+                        ...snapshot.data!.map((path) => CardItem(
+                          routeName: AppRouteConstants.pathRoute,
+                          textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                          text: path.title,
+                          imageUrl: path.isImage ? path.backgroundValue : null,
+                          backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
+                          // backgroundDarkening: 0.2,
+                        )),
+                        // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
+                        // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
+                        // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                        // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                      ],
+                    );
+                  }
+                }),
+              FutureBuilder(
+                future: PathService.getPopularPaths(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    return ExpandableCardGrid(
+                      title: "polecamy",
+                        initialCards: [
+                        ...snapshot.data!.map((path) => CardItem(
+                          routeName: AppRouteConstants.pathRoute,
+                          textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                          text: path.title,
+                          imageUrl: path.isImage ? path.backgroundValue : null,
+                          backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
+                          // backgroundDarkening: 0.2,
+                        )),
+                      ]
+                    );
+                  }
+                }
               )
             ],
           ),

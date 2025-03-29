@@ -4,12 +4,21 @@ import 'package:frontend/core/services/token_service.dart';
 import 'package:frontend/features/tasks/data/path_model.dart';
 
 class PathService {
-  static Future<List<UserPath>> getUserPaths() async {
+  static Future<List<PathCard>> getUserPaths() async {
     final response = await TokenClient.client.get(EndpointConstants.getUserPathsEndpoint);
     final data = response.data;
     print(data);
-    return (data['user_path'] as List)
-        .map((e) => UserPath.fromJson(e))
+    return (data['user_paths'] as List)
+        .map((e) => PathCard.fromJson(e))
+        .toList();
+  }
+
+  static Future<List<PathCard>> getPopularPaths() async {
+    final response = await TokenClient.client.get(EndpointConstants.getPopularPathsEndpoint);
+    final data = response.data;
+    print(data);
+    return (data['popular_paths'] as List)
+        .map((e) => PathCard.fromJson(e))
         .toList();
   }
 }

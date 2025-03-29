@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import UserPath, Path
+from .models import UserPath, Path, PopularPath
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
@@ -26,4 +26,26 @@ class UserPathsView(APIView):
             )
         } for user_path in user_paths]
         print(paths_data)
-        return JsonResponse({"user_path": paths_data})
+        return JsonResponse({"user_paths": paths_data})
+
+@method_decorator(jwt_required, name='dispatch')
+class PopularPathsView(APIView):
+    def get(self, request):
+        popular_paths_assignments = PopularPath.objects.all()[:4]
+        popular_paths = [Path.objects.get(id=assignment.path_id) for assignment in popular_paths_assignments]
+        print(f"PATHS: {popular_paths[0]}")
+        paths_data = [{
+            "title": popular_path.title,
+            "background_type": (
+                "image" if popular_path.image_url else
+                "color" if popular_path.color_hex else
+                "default"
+            ),
+            "background_value": (
+                popular_path.image_url or
+                popular_path.color_hex or
+                "#FFFFFF"
+            )
+        } for popular_path in popular_paths]
+        print(paths_data)
+        return JsonResponse({"popular_paths": paths_data})
