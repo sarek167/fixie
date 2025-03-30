@@ -22,11 +22,10 @@ class PathService {
         .toList();
   }
 
-  static Future<PathModel> getPathByTitle(String title) async {
+  static Future<PathModelWithTasks> getPathByTitle(String title) async {
     final response = await TokenClient.client.get("${EndpointConstants.getPathByTitleEndpoint}?title=$title");
     if (response.statusCode == 200) {
-      final data = response.data;
-      return PathModel.fromJson(data);
+      return PathModelWithTasks.fromJson(response.data);
     } else {
       throw Exception("Error while getting path data");
     }

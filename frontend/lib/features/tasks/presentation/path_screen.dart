@@ -4,18 +4,19 @@ import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
 import 'package:frontend/features/tasks/presentation/progress_bar.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
+import 'package:frontend/features/tasks/logic/get_node_color_by_status.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
 class PathScreen extends StatelessWidget {
   PathScreen({super.key});
-  final List<TaskNode> nodes = [
-    TaskNode(text: "1", color: ColorConstants.lightBackgroundColor),
-    TaskNode(text: "2", color: ColorConstants.lightBackgroundColor),
-    TaskNode(text: "3", color: ColorConstants.darkColor, flag: true),
-    TaskNode(text: "4", color: ColorConstants.darkColor),
-    TaskNode(text: "5", color: ColorConstants.darkColor),
-    TaskNode(text: "", color: Colors.transparent, isTrophy: true)
-  ];
+  // final List<TaskNode> nodes = [
+  //   TaskNode(text: "1", color: ColorConstants.lightBackgroundColor),
+  //   TaskNode(text: "2", color: ColorConstants.lightBackgroundColor),
+  //   TaskNode(text: "3", color: ColorConstants.darkColor, flag: true),
+  //   TaskNode(text: "4", color: ColorConstants.darkColor),
+  //   TaskNode(text: "5", color: ColorConstants.darkColor),
+  //   TaskNode(text: "", color: Colors.transparent, isTrophy: true)
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,19 @@ class PathScreen extends StatelessWidget {
           );
         } else {
           final path = snapshot.data!;
+          print("Snapshot data: ${snapshot.data}");
+          final List<TaskNode> nodes = path.tasks.asMap().entries.map((entry) {
+            final index = entry.key;
+            final task = entry.value;
+            print("TASKI");
+            print(path.tasks);
+            return TaskNode(
+              text: "${index + 1}",
+              color: getColorByStatus(task.status),
+              flag: task.status == "in_progress",
+            );
+          }).toList();
+          nodes.add(TaskNode(text: "", color: Colors.transparent, isTrophy: true));
           return Scaffold(
             backgroundColor: ColorConstants.backgroundColor,
             appBar: CustomAppBar(),

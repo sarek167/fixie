@@ -51,10 +51,15 @@ class TokenClient {
       final response = await _dio.post(EndpointConstants.refreshTokenSuffix, data: jsonEncode({'refresh': refreshToken}));
       if (response.statusCode == 200) {
         final access = response.data['access'];
+        final newRefresh = response.data['refresh'];
         await _storage.write(key: 'access_token', value: access);
+        if (newRefresh != null) {
+          await _storage.write(key: 'refresh_token', value: newRefresh);
+        }
         return access;
       }
     } catch (e) {
+      print("Token refresh failed: $e");
       return null;
     }
     return null;

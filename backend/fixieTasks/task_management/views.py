@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import UserPath, Path, PopularPath
-from .serializers import PathSerializer
+from .models import UserPath, Path, PopularPath, TaskPath, UserTask
+from .serializers import PathSerializer, UserTaskSerializer, TaskSerializer
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
@@ -60,8 +60,29 @@ class PathByTitleView(APIView):
             return Response({"error": "Brak parametru 'title'"}, status=400)
         try:
             path = Path.objects.get(title = title)
+            path_tasks = [path_task.task for path_task in TaskPath.objects.filter(path_id = path.id)]
+            user_tasks = {
+                ut.task_id: ut
+                for ut in UserTask.objects.filter(task_id__in=[t.id for t in path_tasks], user_id=request.user_id)
+            }
             print(path)
-            serializer = PathSerializer(path)
-            return JsonResponse(serializer.data, status=200)
+            print([path_task.title for path_task in path_tasks])
+            print(user_tasks)
+            path_serializer = PathSerializer(path)
+            tasks_data = []
+            for task in path_tasks:
+                task_data = TaskSerializer(task).data
+                user_task = user_tasks.get(task.id)
+                if user_task:
+                    task_data["status"] = user_task.status
+                else:
+                    task_data["status"] = "pending"
+                tasks_data.append(task_data)
+            data = {
+                "path": path_serializer.data,
+                "tasks": tasks_data
+            }
+            print(data)
+            return JsonResponse(data, status=200)
         except Path.DoesNotExist:
             return JsonResponse({"error": "Path does not exist"}, status=404)
