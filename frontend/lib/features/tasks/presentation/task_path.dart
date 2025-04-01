@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_routes.dart';
 import 'dart:math';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/features/tasks/presentation/single_task_screen.dart';
 
 
 class TaskPathWidget extends StatelessWidget {
@@ -55,7 +56,12 @@ class TaskPathWidget extends StatelessWidget {
         top: y - size,
         child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, AppRouteConstants.singleTaskRoute); // << tu trasa
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SingleTaskScreen(task: node)
+                ),
+            );
           },
           child: Container(
             width: size * 2,
@@ -101,12 +107,20 @@ class TaskNode {
   final Color color;
   final bool flag;
   final bool isTrophy;
+  final String title;
+  final String description;
+  final String category;
+  final int difficulty;
 
   TaskNode({
     required this.text,
     required this.color,
     this.flag = false,
-    this.isTrophy = false
+    this.isTrophy = false,
+    this.title = "",
+    this.description = "",
+    this.category = "",
+    this.difficulty = 3,
   });
 }
 

@@ -47,6 +47,10 @@ class PathScreen extends StatelessWidget {
               text: "${index + 1}",
               color: getColorByStatus(task.status),
               flag: task.status == "in_progress",
+              title: task.title,
+              description: task.description,
+              category: task.category,
+              difficulty: task.difficulty
             );
           }).toList();
           nodes.add(TaskNode(text: "", color: Colors.transparent, isTrophy: true));
