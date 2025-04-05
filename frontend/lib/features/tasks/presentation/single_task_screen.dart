@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:frontend/widgets/menu_bar.dart';
@@ -68,6 +69,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                       borderRadius: BorderRadius.circular(16)
                     ),
                     child: TextField(
+                      controller: textController,
                       maxLines: null,
                       expands: true,
                       style: TextStyle(
@@ -106,7 +108,16 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                   )
                 ),
               SizedBox(height: 20),
-              CustomButton(text: "Zatwierdź", onPressed: () => {}) // TODO: add onPressed
+              CustomButton(
+                text: "Zatwierdź",
+                onPressed: () async {
+                  final success = await TaskService.submitAnswer(widget.task, textController.text, checkboxValue);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(success ? "Zapisano!" : "Coś poszło nie tak"))
+                  );
+                  if (success) Navigator.pop(context);
+                  }
+                )
             ],
           )
         )

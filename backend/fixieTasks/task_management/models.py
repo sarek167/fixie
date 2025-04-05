@@ -79,6 +79,7 @@ class UserTaskAnswer(models.Model):
 
     user_id = models.IntegerField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='user_answers')
+    checkbox_answer = models.BooleanField(blank=True, null=True)
     text_answer = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
     answered_at = models.DateTimeField(auto_now_add=True)

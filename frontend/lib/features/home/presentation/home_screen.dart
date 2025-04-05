@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                   slideBackgroundColor: ColorConstants.semiLightColor,
                   indicatorColor: ColorConstants.blackColor,
                   slides: [
-                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
+                    CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/id/237/500/300', text: "Zdjęcie 1"),
                     CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
                     CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
                     CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),

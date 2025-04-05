@@ -44,6 +44,7 @@ class PathScreen extends StatelessWidget {
             print("TASKI");
             print(path.tasks);
             return TaskNode(
+              id: task.id,
               text: "${index + 1}",
               color: getColorByStatus(task.status),
               flag: task.status == "in_progress",
@@ -54,7 +55,7 @@ class PathScreen extends StatelessWidget {
               answerType: task.answerType
             );
           }).toList();
-          nodes.add(TaskNode(text: "", color: Colors.transparent, isTrophy: true, answerType: "checkbox"));
+          nodes.add(TaskNode(id: -1, text: "", color: Colors.transparent, isTrophy: true, answerType: "checkbox"));
           return Scaffold(
             backgroundColor: ColorConstants.backgroundColor,
             appBar: CustomAppBar(),

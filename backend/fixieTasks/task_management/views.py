@@ -6,6 +6,7 @@ from utils.decorators import jwt_required
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
+from django.utils.timezone import now
 
 @method_decorator(jwt_required, name='dispatch')
 class UserPathsView(APIView):
@@ -86,3 +87,28 @@ class PathByTitleView(APIView):
             return JsonResponse(data, status=200)
         except Path.DoesNotExist:
             return JsonResponse({"error": "Path does not exist"}, status=404)
+
+@method_decorator(jwt_required, name='dispatch')
+class UserTaskAnswerView(APIView):
+    def post(self, request):
+        data = request.data
+        if data.get("text_answer") or data.get("checkbox_answer"): 
+            status = "completed" 
+        else:
+            print("IN PROGRESS")
+            print(data.get("text_answer"))
+            status = "in_progress"
+        print(f"STATUS: {status}")
+        answer, created = UserTaskAnswer.objects.update_or_create(
+            user_id = request.user_id,
+            task_id = data["task_id"],
+            defaults = {
+                'text_answer': data.get("text_answer"),
+                'checkbox_answer': data.get("checkbox_answer"),
+                'status': status,
+                'answered_at': now()
+            }
+
+        )
+        print(answer)
+        return JsonResponse({"id": answer.id, "created": created, "status": "saved"}, status=200)

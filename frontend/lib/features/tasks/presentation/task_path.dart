@@ -103,6 +103,7 @@ class TaskPathWidget extends StatelessWidget {
 }
 
 class TaskNode {
+  final int id;
   final String text;
   final Color color;
   final bool flag;
@@ -114,6 +115,7 @@ class TaskNode {
   final String answerType;
 
   TaskNode({
+    required this.id,
     required this.text,
     required this.color,
     this.flag = false,
