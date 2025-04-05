@@ -111,6 +111,7 @@ class TaskNode {
   final String description;
   final String category;
   final int difficulty;
+  final String answerType;
 
   TaskNode({
     required this.text,
@@ -121,6 +122,7 @@ class TaskNode {
     this.description = "",
     this.category = "",
     this.difficulty = 3,
+    required this.answerType,
   });
 }
 

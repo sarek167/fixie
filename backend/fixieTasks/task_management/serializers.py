@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Path
+from .models import Path, Task, UserTaskAnswer
 
 class PathSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,8 +11,6 @@ class PathSerializer(serializers.ModelSerializer):
             'color_hex',
         ]
 
-from rest_framework import serializers
-from .models import Task, UserTask
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,26 +22,33 @@ class TaskSerializer(serializers.ModelSerializer):
             'category',
             'difficulty',
             'type',
+            'date_for_daily',
+            'answer_type',
             'created_at',
             'updated_at'
         ]
+    def validate(self, data):
+        task = data.get('task') or self.instance.task
+        answer_type = task.answer_type
 
+        if answer_type == 'text' and not data.get('text_answer'):
+            raise serializers.ValidationError("This task requires a text answer.")
+        if answer_type == 'checkbox' and data.get('checkbox_answer') is None:
+            raise serializers.ValidationError("This task requires a checkbox answer.")
 
-class UserTaskSerializer(serializers.ModelSerializer):
-    task = TaskSerializer(read_only=True)  # Jeśli chcesz zagnieżdżony obiekt zadania
-    task_id = serializers.PrimaryKeyRelatedField(
-        queryset=Task.objects.all(), source='task', write_only=True
-    )
+        return data
 
+class UserTaskAnswerSerializer(serializers.ModelSerializer):
+    task = TaskSerializer(read_only=True)
+    task_id = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all(), write_only=True)
     class Meta:
-        model = UserTask
+        model = UserTaskAnswer
         fields = [
             'id',
             'user_id',
-            'task',
             'task_id',
+            'text_answer',
+            'checkbox_answer',
             'status',
-            'assigned_at',
-            'completed_at',
-            'updated_at'
+            'answered_at'
         ]

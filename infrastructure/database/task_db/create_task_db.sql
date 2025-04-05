@@ -1,3 +1,5 @@
+USE tasks_db;
+
 CREATE TABLE tasks (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -5,6 +7,8 @@ CREATE TABLE tasks (
     category VARCHAR(100),
     difficulty INT,
     type VARCHAR(50),
+    date_for_daily DATE NULL,
+    answer_type VARCHAR(20) NOT NULL CHECK (answer_type IN ('text', 'checkbox')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -27,14 +31,14 @@ CREATE TABLE task_path (
     FOREIGN KEY (path_id) REFERENCES paths(id) ON DELETE CASCADE
 );
 
-CREATE TABLE user_tasks (
+CREATE TABLE user_task_answers (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     task_id INT NOT NULL,
-    status VARCHAR(50) NOT NULL CHECK (status IN ('pending', 'in_progress', 'completed', 'skipped')),
-    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    completed_at TIMESTAMP NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    text_answer TEXT,
+    checkbox_answer BOOLEAN,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('in_progress', 'completed')),
+    answered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
 );
 

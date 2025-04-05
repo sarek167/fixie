@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import UserPath, Path, PopularPath, TaskPath, UserTask
-from .serializers import PathSerializer, UserTaskSerializer, TaskSerializer
+from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer
+from .serializers import PathSerializer, TaskSerializer, UserTaskAnswerSerializer
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
@@ -63,7 +63,7 @@ class PathByTitleView(APIView):
             path_tasks = [path_task.task for path_task in TaskPath.objects.filter(path_id = path.id)]
             user_tasks = {
                 ut.task_id: ut
-                for ut in UserTask.objects.filter(task_id__in=[t.id for t in path_tasks], user_id=request.user_id)
+                for ut in UserTaskAnswer.objects.filter(task_id__in=[t.id for t in path_tasks], user_id=request.user_id)
             }
             print(path)
             print([path_task.title for path_task in path_tasks])

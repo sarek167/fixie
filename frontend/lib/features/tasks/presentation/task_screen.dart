@@ -33,9 +33,9 @@ class TaskScreen extends StatelessWidget {
               ),
               TaskPathWidget(
                 nodes: [
-                  TaskNode(text: "14.07", color: ColorConstants.darkColor),
-                  TaskNode(text: "15.07", color: ColorConstants.lightBackgroundColor),
-                  TaskNode(text: "DZIŚ", color: ColorConstants.darkColor, flag: true),
+                  TaskNode(text: "14.07", color: ColorConstants.darkColor, answerType: "text"),
+                  TaskNode(text: "15.07", color: ColorConstants.lightBackgroundColor, answerType: "text"),
+                  TaskNode(text: "DZIŚ", color: ColorConstants.darkColor, flag: true, answerType: "text"),
                 ],
               ),
               FutureBuilder(

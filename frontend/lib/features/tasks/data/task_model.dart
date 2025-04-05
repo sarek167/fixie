@@ -8,6 +8,7 @@ class TaskModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
+  final String answerType;
 
   TaskModel({
     required this.id,
@@ -18,7 +19,8 @@ class TaskModel {
     this.type = 'daily',
     required this.createdAt,
     required this.updatedAt,
-    required this.status
+    required this.status,
+    required this.answerType
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class TaskModel {
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       status: json['status'] ?? 'pending',
+      answerType: json['answer_type'].toLowerCase() ?? "text"
     );
   }
 }

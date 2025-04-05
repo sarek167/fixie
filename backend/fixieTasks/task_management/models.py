@@ -2,11 +2,17 @@ from django.db import models
 
 
 class Task(models.Model):
+    ANSWER_TYPE_CHOICES = [
+        ('text', 'Text'),
+        ('checkbox', 'Checkbox'),
+    ]
     title = models.CharField(max_length=255)
     description = models.TextField()
     category = models.CharField(max_length=100, blank=True, null=True)
     difficulty = models.IntegerField(blank=True, null=True)
     type = models.CharField(max_length=50, blank=True, null=True)
+    date_for_daily = models.DateField(blank=True, null=True) 
+    answer_type = models.CharField(max_length=20, choices=ANSWER_TYPE_CHOICES, default='checkbox')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -43,28 +49,6 @@ class TaskPath(models.Model):
         db_table = "task_path"
 
 
-class UserTask(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('skipped', 'Skipped'),
-    ]
-
-    user_id = models.IntegerField()
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='user_tasks')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
-    assigned_at = models.DateTimeField(auto_now_add=True)
-    completed_at = models.DateTimeField(blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'Task {self.task.id} for user {self.user_id}'
-
-    class Meta:
-        db_table = "user_tasks"
-
-
 class PopularPath(models.Model):
     path = models.ForeignKey(Path, on_delete=models.CASCADE, related_name='popular_entries')
 
@@ -87,3 +71,20 @@ class UserPath(models.Model):
     class Meta:
         db_table = "user_paths"
 
+class UserTaskAnswer(models.Model):
+    STATUS_CHOICES = [
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+    ]
+
+    user_id = models.IntegerField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='user_answers')
+    text_answer = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+    answered_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Answer by user {self.user_id} for task {self.task.id}'
+
+    class Meta:
+        db_table = "user_task_answers"

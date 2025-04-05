@@ -50,10 +50,11 @@ class PathScreen extends StatelessWidget {
               title: task.title,
               description: task.description,
               category: task.category,
-              difficulty: task.difficulty
+              difficulty: task.difficulty,
+              answerType: task.answerType
             );
           }).toList();
-          nodes.add(TaskNode(text: "", color: Colors.transparent, isTrophy: true));
+          nodes.add(TaskNode(text: "", color: Colors.transparent, isTrophy: true, answerType: "checkbox"));
           return Scaffold(
             backgroundColor: ColorConstants.backgroundColor,
             appBar: CustomAppBar(),

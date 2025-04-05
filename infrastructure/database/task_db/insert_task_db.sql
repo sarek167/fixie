@@ -1,122 +1,167 @@
--- Dodanie zadań
-INSERT INTO tasks (title, description, category, difficulty, type)
-VALUES
-('3 rzeczy, za które jesteś dziś wdzięczny/a',
- 'Zapisz 3 rzeczy, które dziś sprawiły Ci radość lub były dla Ciebie ważne.',
- 'Wdzięczność', 2, 'daily'),
+USE tasks_db;
 
-('Spacer na świeżym powietrzu',
- 'Idź na minimum 15-minutowy spacer. Zwróć uwagę na to, co widzisz, słyszysz i czujesz.',
- 'Mindfulness', 2, 'daily'),
+-- Ścieżki
+INSERT INTO paths (title, description, image_url, color_hex) VALUES
+('Ścieżka wdzięczności', 'Zadania pomagające zauważać pozytywne rzeczy.', 'https://picsum.photos/500/300?random=1', '#220465'),
+('Ścieżka relaksu', 'Zadania wspomagające redukcję stresu i napięcia.', 'https://picsum.photos/500/300?random=2', '#446938'),
+('Ścieżka uważności', 'Ćwiczenia rozwijające obecność tu i teraz.', 'https://picsum.photos/500/300?random=3', '#708334'),
+('Ścieżka samoakceptacji', 'Zadania wzmacniające pozytywne myślenie o sobie.', 'https://picsum.photos/500/300?random=4', '#293018'),
+('Ścieżka rozwoju', 'Zadania pomagające rozwijać nowe umiejętności i pasje.', 'https://picsum.photos/500/300?random=5', '#374944'),
+('Ścieżka emocji', 'Pomaga nazywać i akceptować emocje.', 'https://picsum.photos/500/300?random=6', '#798876'),
+('Ścieżka relacji', 'Zadania poprawiające relacje z innymi.', 'https://picsum.photos/500/300?random=7', '#493851'),
+('Ścieżka ciała', 'Zadania skupione na zdrowiu fizycznym i ruchu.', 'https://picsum.photos/500/300?random=8', '#648492'),
+('Ścieżka offline', 'Zadania ograniczające nadmiar bodźców cyfrowych.', 'https://picsum.photos/500/300?random=9', '#830945'),
+('Ścieżka ekspresji', 'Zadania pobudzające kreatywność i ekspresję.', 'https://picsum.photos/500/300?random=10', '#539823');
 
-('Ćwiczenie oddechowe 4-7-8',
- 'Wdech przez 4 sekundy, zatrzymanie oddechu na 7 sekund, wydech przez 8 sekund. Powtórz 4 razy.',
- 'Relaksacja', 1, 'daily'),
+-- Zadania ścieżek
+INSERT INTO tasks (title, description, category, difficulty, type, date_for_daily, answer_type) VALUES
+('Zadanie 1', 'Opis zadania 1, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 1', 3, 'path', NULL, 'checkbox'),
+('Zadanie 2', 'Opis zadania 2, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 2', 3, 'path', NULL, 'text'),
+('Zadanie 3', 'Opis zadania 3, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 3', 2, 'path', NULL, 'text'),
+('Zadanie 4', 'Opis zadania 4, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 4', 1, 'path', NULL, 'checkbox'),
+('Zadanie 5', 'Opis zadania 5, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 5', 4, 'path', NULL, 'checkbox'),
+('Zadanie 6', 'Opis zadania 6, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 6', 2, 'path', NULL, 'text'),
+('Zadanie 7', 'Opis zadania 7, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 7', 1, 'path', NULL, 'checkbox'),
+('Zadanie 8', 'Opis zadania 8, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 8', 3, 'path', NULL, 'checkbox'),
+('Zadanie 9', 'Opis zadania 9, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 9', 1, 'path', NULL, 'checkbox'),
+('Zadanie 10', 'Opis zadania 10, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 0', 1, 'path', NULL, 'checkbox'),
+('Zadanie 11', 'Opis zadania 11, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 1', 4, 'path', NULL, 'checkbox'),
+('Zadanie 12', 'Opis zadania 12, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 2', 2, 'path', NULL, 'checkbox'),
+('Zadanie 13', 'Opis zadania 13, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 3', 1, 'path', NULL, 'checkbox'),
+('Zadanie 14', 'Opis zadania 14, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 4', 3, 'path', NULL, 'checkbox'),
+('Zadanie 15', 'Opis zadania 15, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 5', 4, 'path', NULL, 'text'),
+('Zadanie 16', 'Opis zadania 16, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 6', 4, 'path', NULL, 'checkbox'),
+('Zadanie 17', 'Opis zadania 17, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 7', 1, 'path', NULL, 'text'),
+('Zadanie 18', 'Opis zadania 18, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 8', 1, 'path', NULL, 'checkbox'),
+('Zadanie 19', 'Opis zadania 19, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 9', 2, 'path', NULL, 'text'),
+('Zadanie 20', 'Opis zadania 20, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 0', 3, 'path', NULL, 'checkbox'),
+('Zadanie 21', 'Opis zadania 21, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 1', 1, 'path', NULL, 'text'),
+('Zadanie 22', 'Opis zadania 22, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 2', 1, 'path', NULL, 'checkbox'),
+('Zadanie 23', 'Opis zadania 23, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 3', 2, 'path', NULL, 'checkbox'),
+('Zadanie 24', 'Opis zadania 24, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 4', 3, 'path', NULL, 'checkbox'),
+('Zadanie 25', 'Opis zadania 25, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 5', 1, 'path', NULL, 'checkbox'),
+('Zadanie 26', 'Opis zadania 26, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 6', 4, 'path', NULL, 'text'),
+('Zadanie 27', 'Opis zadania 27, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 7', 4, 'path', NULL, 'checkbox'),
+('Zadanie 28', 'Opis zadania 28, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 8', 3, 'path', NULL, 'checkbox'),
+('Zadanie 29', 'Opis zadania 29, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 9', 4, 'path', NULL, 'checkbox'),
+('Zadanie 30', 'Opis zadania 30, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 0', 2, 'path', NULL, 'text'),
+('Zadanie 31', 'Opis zadania 31, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 1', 1, 'path', NULL, 'text'),
+('Zadanie 32', 'Opis zadania 32, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 2', 3, 'path', NULL, 'checkbox'),
+('Zadanie 33', 'Opis zadania 33, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 3', 2, 'path', NULL, 'checkbox'),
+('Zadanie 34', 'Opis zadania 34, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 4', 1, 'path', NULL, 'text'),
+('Zadanie 35', 'Opis zadania 35, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 5', 2, 'path', NULL, 'text'),
+('Zadanie 36', 'Opis zadania 36, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 6', 3, 'path', NULL, 'text'),
+('Zadanie 37', 'Opis zadania 37, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 7', 2, 'path', NULL, 'text'),
+('Zadanie 38', 'Opis zadania 38, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 8', 2, 'path', NULL, 'text'),
+('Zadanie 39', 'Opis zadania 39, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 9', 3, 'path', NULL, 'text'),
+('Zadanie 40', 'Opis zadania 40, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 0', 2, 'path', NULL, 'checkbox'),
+('Zadanie 41', 'Opis zadania 41, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 1', 4, 'path', NULL, 'text'),
+('Zadanie 42', 'Opis zadania 42, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 2', 2, 'path', NULL, 'text'),
+('Zadanie 43', 'Opis zadania 43, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 3', 3, 'path', NULL, 'text'),
+('Zadanie 44', 'Opis zadania 44, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 4', 1, 'path', NULL, 'text'),
+('Zadanie 45', 'Opis zadania 45, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 5', 2, 'path', NULL, 'checkbox'),
+('Zadanie 46', 'Opis zadania 46, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 6', 2, 'path', NULL, 'checkbox'),
+('Zadanie 47', 'Opis zadania 47, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 7', 4, 'path', NULL, 'text'),
+('Zadanie 48', 'Opis zadania 48, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 8', 4, 'path', NULL, 'checkbox'),
+('Zadanie 49', 'Opis zadania 49, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 9', 3, 'path', NULL, 'checkbox'),
+('Zadanie 50', 'Opis zadania 50, skup się na sobie i spróbuj wykonać to ćwiczenie uważnie.', 'Kategoria 0', 4, 'path', NULL, 'checkbox');
 
-('Zrób coś miłego dla siebie',
- 'Zrób jedną małą rzecz tylko dla siebie – może to być kawa, kąpiel, chwila ciszy, odcinek serialu.',
- 'Self-care', 1, 'daily'),
-
-('Zapisz swoje emocje z dzisiejszego dnia',
- 'Usiądź spokojnie i przez 10 minut napisz, co dziś czujesz i co mogło na to wpłynąć.',
- 'Journaling', 3, 'daily'),
-
-('Wypróbuj nową aktywność',
- 'Znajdź w internecie lub przypomnij sobie aktywność, której jeszcze nie próbowałeś/aś – i ją zrób.',
- 'Nowe hobby', 3, 'path'),
-
-('Wybacz sobie jedną rzecz',
- 'Pomyśl o jednej rzeczy, która Ci nie wyszła, i spróbuj spojrzeć na siebie z wyrozumiałością.',
- 'Akceptacja', 4, 'path'),
-
-('Napisz list do przyszłego siebie',
- 'Opisz, co czujesz teraz i czego życzysz sobie za rok. Zapisz go i schowaj.',
- 'Refleksja', 3, 'path'),
-
-('Zrób coś kreatywnego',
- 'Narysuj coś, napisz krótki wiersz, ułóż kolaż – cokolwiek twórczego.',
- 'Ekspresja', 2, 'path'),
-
-('Dzień offline',
- 'Spróbuj przez minimum 3 godziny nie korzystać z żadnych mediów społecznościowych.',
- 'Detoks cyfrowy', 4, 'path'),
-
-('Zadzwoń do bliskiej osoby',
- 'Zadzwoń do kogoś, z kim dawno nie rozmawiałeś/aś. Nawet na chwilę.',
- 'Relacje', 2, 'daily'),
-
-('Medytacja z przewodnikiem',
- 'Włącz krótką medytację prowadzoną (np. z YouTube) i poświęć na nią 10 minut.',
- 'Mindfulness', 2, 'daily'),
-
-('Zadbaj o sen',
- 'Zaplanuj wieczór tak, by położyć się wcześniej. Unikaj ekranu min. 30 minut przed snem.',
- 'Zdrowie fizyczne', 3, 'daily'),
-
-('Zrób listę rzeczy, które lubisz w sobie',
- 'Wypisz min. 5 rzeczy, które cenisz w sobie – cechy, umiejętności, zachowania.',
- 'Poczucie własnej wartości', 4, 'path'),
-
-('Napisz, co byś powiedział/a przyjacielowi w tej samej sytuacji',
- 'Masz trudny dzień? Zapisz, co powiedział(a)byś bliskiej osobie, która czuje to samo.',
- 'Współczucie do siebie', 3, 'path'),
-
-('Ustal jedną małą rzecz, którą dziś zrobisz tylko dla siebie',
- 'Nie musi być spektakularna – może to być chwila spokoju, ulubiona herbata, porządek na biurku.',
- 'Self-care', 1, 'daily'),
-
-('Zapisz swoje sukcesy z ostatniego tygodnia',
- 'Nawet małe rzeczy – ukończone zadanie, sprzątnięcie pokoju, rozmowa z kimś.',
- 'Motywacja', 2, 'daily');
-
-
--- Dodanie ścieżek
-INSERT INTO paths (title, description, image_url, color_hex)
-VALUES
-('Ścieżka wdzięczności', 'Zestaw zadań pomagających zauważać pozytywne rzeczy wokół siebie.', NULL, '#F6D776'),
-('Ścieżka uważności', 'Zadania skoncentrowane na rozwijaniu obecności tu i teraz.', 'https://picsum.photos/500/300?random=1', NULL),
-('Ścieżka emocji', 'Pomaga rozumieć, nazywać i akceptować swoje emocje.', 'https://picsum.photos/500/300?random=2', NULL),
-('Ścieżka rozwoju osobistego', 'Wyzwania, które wspierają rozwój i odkrywanie nowych pasji.', NULL, NULL);
-
-
+-- Zadania codzienne
+INSERT INTO tasks (title, description, category, difficulty, type, date_for_daily, answer_type) VALUES
+('Codzienne zadanie 1', 'To jest opis codziennego zadania numer 1. Wykonaj je uważnie.', 'DailyKategoria 0', 2, 'daily', '2025-03-29', 'text'),
+('Codzienne zadanie 2', 'To jest opis codziennego zadania numer 2. Wykonaj je uważnie.', 'DailyKategoria 1', 3, 'daily', '2025-03-30', 'checkbox'),
+('Codzienne zadanie 3', 'To jest opis codziennego zadania numer 3. Wykonaj je uważnie.', 'DailyKategoria 2', 3, 'daily', '2025-03-31', 'text'),
+('Codzienne zadanie 4', 'To jest opis codziennego zadania numer 4. Wykonaj je uważnie.', 'DailyKategoria 3', 1, 'daily', '2025-04-01', 'text'),
+('Codzienne zadanie 5', 'To jest opis codziennego zadania numer 5. Wykonaj je uważnie.', 'DailyKategoria 4', 2, 'daily', '2025-04-02', 'text'),
+('Codzienne zadanie 6', 'To jest opis codziennego zadania numer 6. Wykonaj je uważnie.', 'DailyKategoria 0', 4, 'daily', '2025-04-03', 'checkbox'),
+('Codzienne zadanie 7', 'To jest opis codziennego zadania numer 7. Wykonaj je uważnie.', 'DailyKategoria 1', 4, 'daily', '2025-04-04', 'checkbox'),
+('Codzienne zadanie 8', 'To jest opis codziennego zadania numer 8. Wykonaj je uważnie.', 'DailyKategoria 2', 1, 'daily', '2025-04-05', 'checkbox'),
+('Codzienne zadanie 9', 'To jest opis codziennego zadania numer 9. Wykonaj je uważnie.', 'DailyKategoria 3', 3, 'daily', '2025-04-06', 'checkbox'),
+('Codzienne zadanie 10', 'To jest opis codziennego zadania numer 10. Wykonaj je uważnie.', 'DailyKategoria 4', 2, 'daily', '2025-04-07', 'text'),
+('Codzienne zadanie 11', 'To jest opis codziennego zadania numer 11. Wykonaj je uważnie.', 'DailyKategoria 0', 1, 'daily', '2025-04-08', 'checkbox'),
+('Codzienne zadanie 12', 'To jest opis codziennego zadania numer 12. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-04-09', 'checkbox'),
+('Codzienne zadanie 13', 'To jest opis codziennego zadania numer 13. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-04-10', 'text'),
+('Codzienne zadanie 14', 'To jest opis codziennego zadania numer 14. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-04-11', 'checkbox'),
+('Codzienne zadanie 15', 'To jest opis codziennego zadania numer 15. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-04-12', 'checkbox');
 -- Przypisania zadań do ścieżek
-INSERT INTO task_path (task_id, path_id)
-VALUES
-(1, 1),
-(2, 2),
-(3, 2),
-(5, 3),
-(6, 4),
-(7, 3),
+INSERT INTO task_path (task_id, path_id) VALUES
+(1, 10),
+(2, 9),
+(3, 3),
+(4, 9),
+(5, 8),
+(6, 10),
+(7, 5),
 (8, 3),
-(9, 4),
-(10, 2),
-(11, 3),
-(12, 2),
-(13, 4),
-(14, 3),
-(15, 3),
+(9, 1),
+(10, 1),
+(11, 9),
+(12, 8),
+(13, 5),
+(14, 5),
+(15, 4),
 (16, 1),
-(17, 4);
+(17, 10),
+(18, 7),
+(19, 5),
+(20, 6),
+(21, 4),
+(22, 7),
+(23, 7),
+(24, 9),
+(25, 4),
+(26, 9),
+(27, 2),
+(28, 1),
+(29, 8),
+(30, 10),
+(31, 2),
+(32, 6),
+(33, 10),
+(34, 1),
+(35, 10),
+(36, 7),
+(37, 2),
+(38, 5),
+(39, 1),
+(40, 10),
+(41, 6),
+(42, 1),
+(43, 9),
+(44, 9),
+(45, 2),
+(46, 6),
+(47, 3),
+(48, 6),
+(49, 4),
+(50, 3);
 
 
--- Przypisania zadań do użytkownika
-INSERT INTO user_tasks (user_id, task_id, status)
+-- Przykładowe odpowiedzi użytkowników na taski (tekstowe i checkboxowe)
+INSERT INTO user_task_answers (user_id, task_id, text_answer, checkbox_answer, status)
 VALUES
-(1, 1, 'completed'),
-(1, 2, 'pending'),
-(1, 3, 'completed'),
-(1, 4, 'in_progress'),
-(1, 5, 'pending');
+(1, 3, NULL, TRUE, 'completed'),
+(1, 5, 'Czułem się dziś spokojny i zrelaksowany.', NULL, 'completed'),
+(2, 10, NULL, FALSE, 'in_progress'),
+(3, 12, 'Dzisiaj byłem wdzięczny za rodzinę i dobrą kawę.', NULL, 'completed'),
+(1, 16, 'Poświęciłam 15 minut na spacer, słuchałam śpiewu ptaków.', NULL, 'completed');
+
+
+INSERT INTO user_paths (user_id, path_id, started_at, completed_at)
+VALUES
+(1, 2, '2025-03-01 10:00:00', NULL),
+(2, 3, '2025-02-10 09:30:00', '2025-03-01 12:00:00'),
+(1, 1, '2025-03-03 08:45:00', '2025-03-08 20:00:00'),
+(3, 5, '2025-03-15 14:00:00', NULL),
+(6, 1, '2025-03-15 14:00:00', NULL),
+(6, 2, '2025-03-15 14:00:00', NULL),
+(6, 3, '2025-03-15 14:00:00', NULL),
+(6, 4, '2025-03-15 14:00:00', NULL);
 
 INSERT INTO popular_paths (path_id)
 VALUES
-(1), -- Ścieżka wdzięczności
-(3); -- Ścieżka emocji
-
-INSERT INTO user_paths (user_id, path_id, completed_at)
-VALUES
-(1, 1, NULL),                          -- rozpoczęta, ale nieukończona
-(1, 2, '2024-03-15 10:20:00'),         -- ukończona ścieżka uważności
-(6, 3, NULL),                          -- w trakcie ścieżki emocji
-(6, 4, '2024-03-20 18:45:00');    
+(1),
+(3),
+(5),
+(7),
+(8);
