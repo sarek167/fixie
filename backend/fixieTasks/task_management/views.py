@@ -13,7 +13,6 @@ class UserPathsView(APIView):
     def get(self, request):
         user_paths_assignments = UserPath.objects.filter(user_id=request.user_id)
         user_paths = [Path.objects.get(id=assignment.path_id) for assignment in user_paths_assignments]
-        print(f"PATHS: {user_paths[0]}")
         paths_data = [{
             "title": user_path.title,
             "background_type": (
@@ -27,7 +26,6 @@ class UserPathsView(APIView):
                 "#FFFFFF"
             )
         } for user_path in user_paths]
-        print(paths_data)
         return JsonResponse({"user_paths": paths_data})
 
 @method_decorator(jwt_required, name='dispatch')
@@ -35,7 +33,6 @@ class PopularPathsView(APIView):
     def get(self, request):
         popular_paths_assignments = PopularPath.objects.all()[:4]
         popular_paths = [Path.objects.get(id=assignment.path_id) for assignment in popular_paths_assignments]
-        print(f"PATHS: {popular_paths[0]}")
         paths_data = [{
             "title": popular_path.title,
             "background_type": (
@@ -49,7 +46,6 @@ class PopularPathsView(APIView):
                 "#FFFFFF"
             )
         } for popular_path in popular_paths]
-        print(paths_data)
         return JsonResponse({"popular_paths": paths_data})
 
 
@@ -62,13 +58,11 @@ class PathByTitleView(APIView):
         try:
             path = Path.objects.get(title = title)
             path_tasks = [path_task.task for path_task in TaskPath.objects.filter(path_id = path.id)]
+            path_assigned = UserPath.objects.filter(user_id = request.user_id, path_id = path.id).exists()
             user_tasks = {
                 ut.task_id: ut
                 for ut in UserTaskAnswer.objects.filter(task_id__in=[t.id for t in path_tasks], user_id=request.user_id)
             }
-            print(path)
-            print([path_task.title for path_task in path_tasks])
-            print(user_tasks)
             path_serializer = PathSerializer(path)
             tasks_data = []
             for task in path_tasks:
@@ -81,9 +75,9 @@ class PathByTitleView(APIView):
                 tasks_data.append(task_data)
             data = {
                 "path": path_serializer.data,
-                "tasks": tasks_data
+                "tasks": tasks_data,
+                "is_saved": path_assigned
             }
-            print(data)
             return JsonResponse(data, status=200)
         except Path.DoesNotExist:
             return JsonResponse({"error": "Path does not exist"}, status=404)
@@ -95,10 +89,7 @@ class UserTaskAnswerView(APIView):
         if data.get("text_answer") or data.get("checkbox_answer"): 
             status = "completed" 
         else:
-            print("IN PROGRESS")
-            print(data.get("text_answer"))
             status = "in_progress"
-        print(f"STATUS: {status}")
         answer, created = UserTaskAnswer.objects.update_or_create(
             user_id = request.user_id,
             task_id = data["task_id"],
@@ -112,3 +103,19 @@ class UserTaskAnswerView(APIView):
         )
         print(answer)
         return JsonResponse({"id": answer.id, "created": created, "status": "saved"}, status=200)
+
+@method_decorator(jwt_required, name='dispatch')
+class UserPathView(APIView):
+    def post(self, request):
+        title = request.data.get('path_title')
+        print(title)
+        path = Path.objects.get(title = title)
+        user_path, created = UserPath.objects.get_or_create(user_id=request.user_id, path=path)
+
+        if not created:
+            user_path.delete()
+            data = {"isSaved": False}
+        else:
+            data = {"isSaved": True}
+
+        return JsonResponse(data, status=200)

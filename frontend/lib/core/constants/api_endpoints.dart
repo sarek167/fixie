@@ -7,6 +7,7 @@ class EndpointConstants {
   static const String getPopularPathsEndpoint = "http://10.0.2.2:8001/task_management/get_popular_paths/";
   static const String getPathByTitleEndpoint = "http://10.0.2.2:8001/task_management/get_path_by_title";
   static const String postTaskAnswerEndpoint = "http://10.0.2.2:8001/task_management/post_task_answer/";
+  static const String postAssignPathEndpoint = "http://10.0.2.2:8001/task_management/post_assign_path/";
 
   static const String baseUserEndpoint = "http://10.0.2.2:8000/user_management/";
 

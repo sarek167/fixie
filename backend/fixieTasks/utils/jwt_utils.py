@@ -7,7 +7,6 @@ with open(settings.PUBLIC_KEY_PATH, "r") as f:
 def decode_jwt(token: str):
     try:
         payload = jwt.decode(token, PUBLIC_KEY, algorithms=["RS256"])
-        print(payload)
         return payload
     except jwt.ExpiredSignatureError:
         raise ValueError("Token expired")

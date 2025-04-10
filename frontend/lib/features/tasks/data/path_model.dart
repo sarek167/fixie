@@ -33,6 +33,7 @@ class PathModelWithTasks {
   final String backgroundType;
   final String backgroundValue;
   final List<TaskModel> tasks;
+  final bool isSaved;
 
   PathModelWithTasks({
     required this.title,
@@ -40,6 +41,7 @@ class PathModelWithTasks {
     required this.backgroundType,
     required this.backgroundValue,
     required this.tasks,
+    this.isSaved = false
   });
 
   factory PathModelWithTasks.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class PathModelWithTasks {
     final tasks = (json['tasks'] as List)
         .map((task) => TaskModel.fromJson(task))
         .toList();
+    final isSaved = json['is_saved'];
 
     return PathModelWithTasks(
       title: path['title'] ?? "",
@@ -54,6 +57,7 @@ class PathModelWithTasks {
       backgroundType: path['background_type'] ?? 'default',
       backgroundValue: path['background_value'] ?? '#FFFFFF',
       tasks: tasks,
+      isSaved: isSaved
     );
   }
 

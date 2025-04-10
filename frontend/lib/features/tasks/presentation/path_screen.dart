@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
@@ -7,16 +6,29 @@ import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/features/tasks/logic/get_node_color_by_status.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
-class PathScreen extends StatelessWidget {
-  PathScreen({super.key});
-  // final List<TaskNode> nodes = [
-  //   TaskNode(text: "1", color: ColorConstants.lightBackgroundColor),
-  //   TaskNode(text: "2", color: ColorConstants.lightBackgroundColor),
-  //   TaskNode(text: "3", color: ColorConstants.darkColor, flag: true),
-  //   TaskNode(text: "4", color: ColorConstants.darkColor),
-  //   TaskNode(text: "5", color: ColorConstants.darkColor),
-  //   TaskNode(text: "", color: Colors.transparent, isTrophy: true)
-  // ];
+class PathScreen extends StatefulWidget {
+  const PathScreen({super.key});
+
+  @override
+  State<PathScreen> createState() => _PathScreenState();
+
+}
+
+class _PathScreenState extends State<PathScreen> {
+  bool isPathAdded = false;
+  bool _initialized = false;
+
+  void togglePath(String pathTitle) async {
+    final result = await PathService.toggleUserPath(pathTitle);
+    result.fold(
+      (failure) => ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${failure.message}")),
+      ),
+      (_) => setState(() {
+        isPathAdded = !isPathAdded;
+      })
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +49,15 @@ class PathScreen extends StatelessWidget {
           );
         } else {
           final path = snapshot.data!;
+
+          if (!_initialized) {
+            isPathAdded = path.isSaved;
+            _initialized = true;
+          }
           print("Snapshot data: ${snapshot.data}");
           final List<TaskNode> nodes = path.tasks.asMap().entries.map((entry) {
             final index = entry.key;
             final task = entry.value;
-            print("TASKI");
-            print(path.tasks);
             return TaskNode(
               id: task.id,
               text: "${index + 1}",
@@ -84,6 +99,15 @@ class PathScreen extends StatelessWidget {
                           fontSize: FontConstants.standardFontSize,
                         )
                       )
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        isPathAdded ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                        size: 30,
+                        color: ColorConstants.whiteColor,
+                      ),
+                      onPressed: () => togglePath(path.title),
+                      tooltip: isPathAdded ? 'Usuń ścieżkę z moich' : 'Dodaj ścieżkę do moich',
                     ),
                     const SizedBox(height: 20),
                     ProgressBar(nodes: nodes),

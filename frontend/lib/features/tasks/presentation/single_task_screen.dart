@@ -115,7 +115,9 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(success ? "Zapisano!" : "Coś poszło nie tak"))
                   );
-                  if (success) Navigator.pop(context);
+                  if (success) {
+                    Navigator.pop(context);
+                  }
                   }
                 )
             ],
