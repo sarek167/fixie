@@ -27,4 +27,22 @@ class TaskService {
       return false;
     }
   }
+
+  static Future<int> countStreak() async {
+    try {
+      final response = await TokenClient.client.get(
+        EndpointConstants.getStreakEndpoint
+      );
+
+      if (response.statusCode == 200) {
+        return response.data["streak"];
+      } else {
+        print("Error ${response.statusCode}: ${response.data}");
+        throw Exception;
+      }
+    } catch (e) {
+      print("Error: $e");
+      return -1;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
+import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/features/tasks/presentation/progress_bar.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/features/tasks/logic/get_node_color_by_status.dart';
@@ -71,53 +72,76 @@ class _PathScreenState extends State<PathScreen> {
             );
           }).toList();
           nodes.add(TaskNode(id: -1, text: "", color: Colors.transparent, isTrophy: true, answerType: "checkbox"));
-          return Scaffold(
-            backgroundColor: ColorConstants.backgroundColor,
-            appBar: CustomAppBar(),
-            body: Center(
-              child:SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      path.title.toUpperCase(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: ColorConstants.whiteColor,
-                        fontSize: FontConstants.largeHeaderFontSize,
-                        fontWeight: FontWeight.bold,
+          return FutureBuilder(
+            future: TaskService.countStreak(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              } else if (snapshot.hasError) {
+                return Scaffold(
+                    appBar: const CustomAppBar(streak: 0),
+                    body: Center(
+                        child: Text(
+                            "Error while loading streak: ${snapshot.error}"))
+                );
+              } else {
+                final streak = snapshot.data!;
+                return Scaffold(
+                  backgroundColor: ColorConstants.backgroundColor,
+                  appBar: CustomAppBar(streak: streak,),
+                  body: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            path.title.toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorConstants.whiteColor,
+                              fontSize: FontConstants.largeHeaderFontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20),
+                              child: Text(
+                                  path.description,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: ColorConstants.whiteColor,
+                                    fontSize: FontConstants.standardFontSize,
+                                  )
+                              )
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              isPathAdded ? Icons.favorite_rounded : Icons
+                                  .favorite_border_rounded,
+                              size: 30,
+                              color: ColorConstants.whiteColor,
+                            ),
+                            onPressed: () => togglePath(path.title),
+                            tooltip: isPathAdded
+                                ? 'Usuń ścieżkę z moich'
+                                : 'Dodaj ścieżkę do moich',
+                          ),
+                          const SizedBox(height: 20),
+                          ProgressBar(nodes: nodes),
+                          TaskPathWidget(
+                            nodes: nodes,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        path.description,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: ColorConstants.whiteColor,
-                          fontSize: FontConstants.standardFontSize,
-                        )
-                      )
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        isPathAdded ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                        size: 30,
-                        color: ColorConstants.whiteColor,
-                      ),
-                      onPressed: () => togglePath(path.title),
-                      tooltip: isPathAdded ? 'Usuń ścieżkę z moich' : 'Dodaj ścieżkę do moich',
-                    ),
-                    const SizedBox(height: 20),
-                    ProgressBar(nodes: nodes),
-                    TaskPathWidget(
-                      nodes: nodes,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                );
+              }
+            }
           );
         }
       }

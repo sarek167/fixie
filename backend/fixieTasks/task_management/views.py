@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer
+from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer, Task
 from .serializers import PathSerializer, TaskSerializer, UserTaskAnswerSerializer
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
+from datetime import date, timedelta
 
 @method_decorator(jwt_required, name='dispatch')
 class UserPathsView(APIView):
@@ -119,3 +120,29 @@ class UserPathView(APIView):
             data = {"isSaved": True}
 
         return JsonResponse(data, status=200)
+
+@method_decorator(jwt_required, name='dispatch')
+class StreakView(APIView):
+    def get(self, request):
+        try:
+            today = date.today()
+            streak = 0
+
+            while True:
+                task_for_day = Task.objects.filter(date_for_daily=today).first()
+                answered = UserTaskAnswer.objects.filter(
+                    user_id = request.user_id,
+                    task=task_for_day,
+                    status='completed'
+                ).exists()
+
+                if answered:
+                    streak += 1
+                    today -= timedelta(days=1)
+                else:
+                    if today == date.today():
+                        continue
+                    break
+            return JsonResponse({"streak": streak}, status=200)
+        except Exception as e:
+            print(e)

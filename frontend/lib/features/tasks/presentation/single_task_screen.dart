@@ -23,108 +23,126 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
   Widget build(BuildContext context) {
     final task = widget.task;
 
-    return Scaffold(
-      backgroundColor: ColorConstants.backgroundColor,
-      appBar: CustomAppBar(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                task.title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: ColorConstants.whiteColor,
-                  fontSize: FontConstants.largeHeaderFontSize,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Tag(text: task.category, tagColor: ColorConstants.lightColor,),
-                  const SizedBox(width: 10),
-                  Tag(text: "Trudność: ${task.difficulty}"),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                task.description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: ColorConstants.whiteColor,
-                    fontSize: FontConstants.standardFontSize
-                ),
-              ),
-              SizedBox(height: 20),
-              if (task.answerType == "text")
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: ColorConstants.whiteColor,
-                      borderRadius: BorderRadius.circular(16)
-                    ),
-                    child: TextField(
-                      controller: textController,
-                      maxLines: null,
-                      expands: true,
-                      style: TextStyle(
-                        color: ColorConstants.blackColor,
-                        fontSize: FontConstants.standardFontSize
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Zapisz swoją odpowiedź...',
-                        hintStyle: TextStyle(
-                          color: ColorConstants.blackColor
+    return FutureBuilder(
+      future: TaskService.countStreak(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+              appBar: const CustomAppBar(streak: 0),
+              body: Center(
+                  child: Text("Error while loading streak: ${snapshot.error}"))
+          );
+        } else {
+          final streak = snapshot.data!;
+          return Scaffold(
+            backgroundColor: ColorConstants.backgroundColor,
+            appBar: CustomAppBar(streak: streak),
+            body: Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          task.title,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: ColorConstants.whiteColor,
+                            fontSize: FontConstants.largeHeaderFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Tag(text: task.category, tagColor: ColorConstants.lightColor,),
+                            const SizedBox(width: 10),
+                            Tag(text: "Trudność: ${task.difficulty}"),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          task.description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: ColorConstants.whiteColor,
+                              fontSize: FontConstants.standardFontSize
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        if (task.answerType == "text")
+                          Expanded(
+                              child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                      color: ColorConstants.whiteColor,
+                                      borderRadius: BorderRadius.circular(16)
+                                  ),
+                                  child: TextField(
+                                      controller: textController,
+                                      maxLines: null,
+                                      expands: true,
+                                      style: TextStyle(
+                                          color: ColorConstants.blackColor,
+                                          fontSize: FontConstants.standardFontSize
+                                      ),
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Zapisz swoją odpowiedź...',
+                                          hintStyle: TextStyle(
+                                              color: ColorConstants.blackColor
+                                          )
+                                      )
+                                  )
+                              )
+                          )
+                        else
+                          Transform.scale(
+                              scale: 3,
+                              child: Checkbox(
+                                value: checkboxValue,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    checkboxValue = newValue ?? false;
+                                  });
+                                },
+                                activeColor: ColorConstants.darkColor, // np. niebieski/zielony
+                                checkColor: ColorConstants.whiteColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                side: BorderSide(
+                                  color: ColorConstants.whiteColor,
+                                  width: 2,
+                                ),
+                              )
+                          ),
+                        SizedBox(height: 20),
+                        CustomButton(
+                            text: "Zatwierdź",
+                            onPressed: () async {
+                              final success = await TaskService.submitAnswer(widget.task, textController.text, checkboxValue);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(success ? "Zapisano!" : "Coś poszło nie tak"))
+                              );
+                              if (success) {
+                                Navigator.pop(context);
+                              }
+                            }
                         )
-                      )
+                      ],
                     )
-                  )
                 )
-              else
-                Transform.scale(
-                  scale: 3,
-                  child: Checkbox(
-                    value: checkboxValue,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        checkboxValue = newValue ?? false;
-                      });
-                    },
-                    activeColor: ColorConstants.darkColor, // np. niebieski/zielony
-                    checkColor: ColorConstants.whiteColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    side: BorderSide(
-                      color: ColorConstants.whiteColor,
-                      width: 2,
-                    ),
-                  )
-                ),
-              SizedBox(height: 20),
-              CustomButton(
-                text: "Zatwierdź",
-                onPressed: () async {
-                  final success = await TaskService.submitAnswer(widget.task, textController.text, checkboxValue);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(success ? "Zapisano!" : "Coś poszło nie tak"))
-                  );
-                  if (success) {
-                    Navigator.pop(context);
-                  }
-                  }
-                )
-            ],
-          )
-        )
 
-      ),
+            ),
+          );
+        }
+      }
     );
   }
 }
