@@ -6,11 +6,13 @@ import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/core/utils/hex_color.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/tasks/logic/get_node_color_by_status.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/widgets/card.dart';
 import 'package:frontend/widgets/carousel.dart';
 import 'package:frontend/widgets/expandable_card_grid.dart';
 import 'package:frontend/widgets/menu_bar.dart';
+import 'package:intl/intl.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -48,13 +50,36 @@ class TaskScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    TaskPathWidget(
-                      nodes: [
-                        TaskNode(id: 0, text: "14.07", color: ColorConstants.darkColor, answerType: "text"),
-                        TaskNode(id: 0, text: "15.07", color: ColorConstants.lightBackgroundColor, answerType: "text"),
-                        TaskNode(id: 0, text: "DZIŚ", color: ColorConstants.darkColor, flag: true, answerType: "text"),
-                      ],
+                    FutureBuilder(
+                      future: TaskService.getDailyTasks(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          final List<TaskNode> nodes = snapshot.data!.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final task = entry.value;
+                            return TaskNode(
+                                id: task.id,
+                                text: DateFormat('dd.MM').format(task.dateForDaily!),
+                                color: getColorByStatus(task.status),
+                                flag: task.status == "in_progress",
+                                title: task.title,
+                                description: task.description,
+                                category: task.category,
+                                difficulty: task.difficulty,
+                                answerType: task.answerType
+                            );
+                          }).toList();
+                          return TaskPathWidget(
+                            nodes: nodes
+                          );
+                        }
+                      }
                     ),
+
                     FutureBuilder(
                       future: PathService.getUserPaths(),
                       builder: (context, snapshot) {

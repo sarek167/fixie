@@ -51,15 +51,20 @@ class _PathScreenState extends State<PathScreen> {
           body: Center(child: Text("Error: ${snapshot.error}"))
           );
         } else {
+          print("PRZESZŁO");
           final path = snapshot.data!;
           if (!_initialized) {
             isPathAdded = path.isSaved;
             _initialized = true;
           }
-          print("Snapshot data: ${snapshot.data}");
+
+          // print("Snapshot data: ${snapshot.data}");
+
           final List<TaskNode> nodes = path.tasks.asMap().entries.map((entry) {
             final index = entry.key;
             final task = entry.value;
+            print("TASK ${task.id}: ${task.title}, ${task.description}, ${task.category}, ${task.difficulty}, ${task.answerType}");
+
             return TaskNode(
               id: task.id,
               text: "${index + 1}",

@@ -1,5 +1,6 @@
 import 'package:frontend/core/constants/api_endpoints.dart';
 import 'package:frontend/core/services/token_service.dart';
+import 'package:frontend/features/tasks/data/task_model.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 
 class TaskService {
@@ -44,6 +45,26 @@ class TaskService {
     } catch (e) {
       print("Error: $e");
       return -1;
+    }
+  }
+
+  static Future<List<TaskModel>> getDailyTasks() async {
+    try {
+      final response = await TokenClient.client.get(
+        EndpointConstants.getDailyTasksEndpoint
+      );
+      if (response.statusCode == 200) {
+        final tasks = (response.data["tasks"] as List)
+            .map((task) => TaskModel.fromJson(task))
+            .toList();
+        return tasks;
+      } else {
+        throw Exception("Error while getting tasks");
+      }
+
+    } catch (e) {
+      print("Error: $e");
+      throw Exception("Something went wrong during getting daily tasks");
     }
   }
 }

@@ -54,6 +54,7 @@ class PopularPathsView(APIView):
 class PathByTitleView(APIView):
     def get(self, request):
         title = request.GET.get("title")
+        print(title)
         if not title:
             return Response({"error": "Brak parametru 'title'"}, status=400)
         try:
@@ -154,6 +155,39 @@ class StreakView(APIView):
                 else:
                     break
             return JsonResponse({"streak": streak}, status=200)
+        except Exception as e:
+            print(e)
+            return JsonResponse({"error": e}, status=400)
+
+@method_decorator(jwt_required, name='dispatch')
+class DailyTasksView(APIView):
+    def get(self, request):
+        try:
+            today = date.today()
+            start_date = today - timedelta(days=2)
+            daily_tasks = Task.objects.filter(type="daily", date_for_daily__range=(start_date, today)).order_by("date_for_daily")
+            tasks_dict = [
+                    {
+                        "id": task.id,
+                        "title": task.title,
+                        "description": task.description,
+                        "date": task.date_for_daily.isoformat(),
+                        "category": task.category,
+                        "difficulty": task.difficulty,
+                        "answer_type": task.answer_type,
+                        "type": task.type,
+                        "date_for_daily": task.date_for_daily,
+                        "created_at": task.created_at,
+                        "updated_at": task.updated_at,
+                    }
+                    for task in daily_tasks
+                ]
+            for task in tasks_dict:
+                answer = UserTaskAnswer.objects.filter(user_id = request.user_id, task_id = task.get("id")).first()
+                task["status"] = answer.status
+            data = {"tasks": tasks_dict}
+            print(data)
+            return JsonResponse(data, status=200)
         except Exception as e:
             print(e)
             return JsonResponse({"error": e}, status=400)

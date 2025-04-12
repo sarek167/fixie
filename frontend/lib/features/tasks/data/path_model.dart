@@ -45,6 +45,7 @@ class PathModelWithTasks {
   });
 
   factory PathModelWithTasks.fromJson(Map<String, dynamic> json) {
+    print(json);
     final path = json['path'];
     final tasks = (json['tasks'] as List)
         .map((task) => TaskModel.fromJson(task))

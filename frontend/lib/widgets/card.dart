@@ -24,8 +24,11 @@ class CardItem extends StatelessWidget{
     this.textColor = ColorConstants.whiteColor
   });
 
+
+
   @override
   Widget build(BuildContext context) {
+    print("TEXT W CARD $text");
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
