@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/task_service.dart';
+import 'package:frontend/features/authentication/data/user_model.dart';
+import 'package:frontend/features/authentication/logic/user_storage.dart';
 import 'package:frontend/widgets/card.dart';
 import 'package:frontend/widgets/carousel.dart';
 import 'package:frontend/widgets/menu_bar.dart';
@@ -10,8 +12,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder(
-      future: TaskService.countStreak(),
+    return FutureBuilder<User?>(
+      future: UserStorage().getUser(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -24,10 +26,9 @@ class HomeScreen extends StatelessWidget {
             child: Text("Error while loading streak: ${snapshot.error}"))
           );
         } else {
-          final streak = snapshot.data!;
           return Scaffold(
             backgroundColor: ColorConstants.backgroundColor,
-            appBar: CustomAppBar(streak: streak,),
+            appBar: CustomAppBar(streak: snapshot.data!.streak),
             body: Center(
               child: SingleChildScrollView(
                 child: Column(

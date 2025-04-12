@@ -30,10 +30,11 @@ class TaskService {
 
   static Future<int> countStreak() async {
     try {
+      print("W STREAKU");
       final response = await TokenClient.client.get(
         EndpointConstants.getStreakEndpoint
       );
-
+      print(response.data);
       if (response.statusCode == 200) {
         return response.data["streak"];
       } else {

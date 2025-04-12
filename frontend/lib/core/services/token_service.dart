@@ -20,10 +20,13 @@ class TokenClient {
         if (!options.path.contains("token_refresh")) {
           final token = await _storage.read(key: 'access_token');
           print(token);
+          print("OPTIONS: $options");
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
         }
+        print(options.headers);
+        print(options.uri);
         return handler.next(options);
       },
       onError: (e, handler) async {

@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("W CUSTOM APP BAR ${streak}");
     return AppBar(
       backgroundColor: ColorConstants.backgroundColor,
       elevation: 0,

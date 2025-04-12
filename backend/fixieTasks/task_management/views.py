@@ -127,6 +127,17 @@ class StreakView(APIView):
         try:
             today = date.today()
             streak = 0
+            task_for_day = Task.objects.filter(date_for_daily=today).first()
+            answered = UserTaskAnswer.objects.filter(
+                user_id = request.user_id,
+                task=task_for_day,
+                status='completed'
+            ).exists()
+
+            print(answered)
+            if answered:
+                streak += 1
+            today -= timedelta(days=1)
 
             while True:
                 task_for_day = Task.objects.filter(date_for_daily=today).first()
@@ -136,13 +147,13 @@ class StreakView(APIView):
                     status='completed'
                 ).exists()
 
+                print(answered)
                 if answered:
                     streak += 1
                     today -= timedelta(days=1)
                 else:
-                    if today == date.today():
-                        continue
                     break
             return JsonResponse({"streak": streak}, status=200)
         except Exception as e:
             print(e)
+            return JsonResponse({"error": e}, status=400)

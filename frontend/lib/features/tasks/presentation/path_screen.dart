@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
 import 'package:frontend/core/services/task_service.dart';
+import 'package:frontend/features/authentication/data/user_model.dart';
+import 'package:frontend/features/authentication/logic/user_storage.dart';
 import 'package:frontend/features/tasks/presentation/progress_bar.dart';
 import 'package:frontend/features/tasks/presentation/task_path.dart';
 import 'package:frontend/features/tasks/logic/get_node_color_by_status.dart';
@@ -50,7 +52,6 @@ class _PathScreenState extends State<PathScreen> {
           );
         } else {
           final path = snapshot.data!;
-
           if (!_initialized) {
             isPathAdded = path.isSaved;
             _initialized = true;
@@ -72,8 +73,8 @@ class _PathScreenState extends State<PathScreen> {
             );
           }).toList();
           nodes.add(TaskNode(id: -1, text: "", color: Colors.transparent, isTrophy: true, answerType: "checkbox"));
-          return FutureBuilder(
-            future: TaskService.countStreak(),
+          return FutureBuilder<User?>(
+            future: UserStorage().getUser(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Scaffold(
@@ -87,7 +88,7 @@ class _PathScreenState extends State<PathScreen> {
                             "Error while loading streak: ${snapshot.error}"))
                 );
               } else {
-                final streak = snapshot.data!;
+                final streak = snapshot.data!.streak;
                 return Scaffold(
                   backgroundColor: ColorConstants.backgroundColor,
                   appBar: CustomAppBar(streak: streak,),

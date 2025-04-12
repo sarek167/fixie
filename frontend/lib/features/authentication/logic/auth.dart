@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/services/auth_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
 
@@ -40,11 +41,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         await _secureStorage.write(key: 'access_token', value: accessToken);
         await _secureStorage.write(key: 'refresh_token', value: refreshToken);
 
+        int streakResponse = await TaskService.countStreak();
+        print("W AUTH STREAK $streakResponse");
         User user = User(
             email: response.data["email"],
             username: response.data["username"],
             firstName: response.data["first_name"],
-            lastName: response.data["last_name"]
+            lastName: response.data["last_name"],
+            streak: streakResponse
         );
         UserStorage().setUser(user);
 
@@ -70,10 +74,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           await _secureStorage.write(key: 'access_token', value: accessToken);
           await _secureStorage.write(key: 'refresh_token', value: refreshToken);
           User user = User(
-              email: response.data["email"],
-              username: response.data["username"],
-              firstName: response.data["first_name"],
-              lastName: response.data["last_name"]
+            email: response.data["email"],
+            username: response.data["username"],
+            firstName: response.data["first_name"],
+            lastName: response.data["last_name"],
+            streak: 0
           );
           UserStorage().setUser(user);
           print('Rejestracja udana, token: $accessToken'); // Debugging
