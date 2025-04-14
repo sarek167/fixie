@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/services/path_service.dart';
+import 'package:frontend/core/utils/hex_color.dart';
+import 'package:frontend/features/tasks/data/path_model.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:frontend/widgets/card.dart';
 
@@ -61,7 +65,32 @@ class _ExpandableCardGridState extends State<ExpandableCardGrid>{
           ),
           const SizedBox(height: 20),
           if (showMoreButton)
-            CustomButton(text: "WIĘCEJ", onPressed: ()=>{}),
+            CustomButton(
+              text: "WIĘCEJ", 
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                List<PathModel> newPaths = await PathService.getPopularPaths(displayedCards.length);
+
+                List<CardItem> newCards = newPaths.map((path) => CardItem(
+                  routeName: AppRouteConstants.pathRoute,
+                  textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                  text: path.title,
+                  imageUrl: path.isImage ? path.backgroundValue : null,
+                  backgroundColor: path.isColor || path.isDefault
+                      ? HexColor.fromHex(path.backgroundValue)
+                      : null,
+                )).toList();
+                setState(() {
+                  displayedCards.addAll(newCards);
+                  isLoading = false;
+
+                  if (newCards.isEmpty || newCards.length < 4) {
+                    showMoreButton = false;
+                  }
+                });
+              }),
           const SizedBox(height: 20),
         ]
       )

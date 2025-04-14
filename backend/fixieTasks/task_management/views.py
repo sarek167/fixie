@@ -31,8 +31,9 @@ class UserPathsView(APIView):
 
 @method_decorator(jwt_required, name='dispatch')
 class PopularPathsView(APIView):
-    def get(self, request):
-        popular_paths_assignments = PopularPath.objects.all()[:4]
+    def post(self, request):
+        loaded_paths = request.data.get("loaded_paths_number")
+        popular_paths_assignments = PopularPath.objects.all()[loaded_paths:loaded_paths+4]
         popular_paths = [Path.objects.get(id=assignment.path_id) for assignment in popular_paths_assignments]
         paths_data = [{
             "title": popular_path.title,

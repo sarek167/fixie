@@ -16,8 +16,19 @@ class PathService {
         .toList();
   }
 
-  static Future<List<PathModel>> getPopularPaths() async {
-    final response = await TokenClient.client.get(EndpointConstants.getPopularPathsEndpoint);
+  static Future<List<PathModel>> getPopularPaths(int loadedPathsNum) async {
+    final Map<String, dynamic> body = {
+      'loaded_paths_number': loadedPathsNum
+    };
+    final response = await TokenClient.client.post(
+      EndpointConstants.getPopularPathsEndpoint,
+      data: body,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
     final data = response.data;
     print(data);
     return (data['popular_paths'] as List)

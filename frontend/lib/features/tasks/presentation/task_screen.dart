@@ -110,7 +110,7 @@ class TaskScreen extends StatelessWidget {
                         }
                       }),
                       FutureBuilder(
-                        future: PathService.getPopularPaths(),
+                        future: PathService.getPopularPaths(0),
                         builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const CircularProgressIndicator();
