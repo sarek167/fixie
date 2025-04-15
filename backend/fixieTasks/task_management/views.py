@@ -192,3 +192,26 @@ class DailyTasksView(APIView):
         except Exception as e:
             print(e)
             return JsonResponse({"error": e}, status=400)
+
+@method_decorator(jwt_required, name='dispatch')
+class DailyTasksStatusView(APIView):
+    def get(self, request):
+        try:
+            daily_tasks_ids = Task.objects.filter(type="daily").values_list("id", flat=True)
+            print(daily_tasks_ids)
+            statuses = UserTaskAnswer.objects.filter(
+                user_id=request.user_id, 
+                task_id__in=daily_tasks_ids
+                ).select_related('task')
+            print(statuses)
+            data = []
+            for status in statuses:
+                data.append({
+                    "date": status.task.date_for_daily,
+                    "status": status.status
+                })
+            print(data)
+            return JsonResponse({"tasks": data}, status=200)
+        except Exception as e:
+            print(e)
+            return JsonResponse({"error": e}, status=400)

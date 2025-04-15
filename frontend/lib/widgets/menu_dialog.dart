@@ -75,7 +75,7 @@ class CustomMenu extends StatelessWidget {
                     text: "KALENDARZ ZADAŃ",
                     backgroundColor: ColorConstants.lightColor,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                      Navigator.pushNamed(context, AppRouteConstants.calendarRoute);
                     }
                 ),
                 const SizedBox(height: 20),
