@@ -19,14 +19,10 @@ class TokenClient {
       onRequest: (options, handler) async {
         if (!options.path.contains("token_refresh")) {
           final token = await _storage.read(key: 'access_token');
-          print(token);
-          print("OPTIONS: $options");
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
         }
-        print(options.headers);
-        print(options.uri);
         return handler.next(options);
       },
       onError: (e, handler) async {
@@ -49,8 +45,6 @@ class TokenClient {
 
   static Future<String?> _refreshToken(String refreshToken) async {
     try {
-      print("REFRESH");
-      print(jsonEncode({'refresh': refreshToken}));
       final response = await _dio.post(EndpointConstants.refreshTokenSuffix, data: jsonEncode({'refresh': refreshToken}));
       if (response.statusCode == 200) {
         final access = response.data['access'];
@@ -62,7 +56,6 @@ class TokenClient {
         return access;
       }
     } catch (e) {
-      print("Token refresh failed: $e");
       return null;
     }
     return null;

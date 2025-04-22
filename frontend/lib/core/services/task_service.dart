@@ -67,4 +67,22 @@ class TaskService {
       throw Exception("Something went wrong during getting daily tasks");
     }
   }
+
+  static Future<List<Map<String, dynamic>>> getDailyTasksStatus() async {
+    try {
+      final response = await TokenClient.client.get(
+        EndpointConstants.getDailyTasksStatusEndpoint
+      );
+      if (response.statusCode == 200) {
+        final statuses = List<Map<String,dynamic>>.from(response.data["tasks"]);
+        print(statuses);
+        return statuses;
+      } else {
+        throw Exception("Error while getting statuses");
+      }
+    } catch (e) {
+      print("Error: $e");
+      throw Exception("Something went wrong during getting daily tasks statuses");
+    }
+  }
 }

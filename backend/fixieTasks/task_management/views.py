@@ -167,6 +167,7 @@ class DailyTasksView(APIView):
             today = date.today()
             start_date = today - timedelta(days=2)
             daily_tasks = Task.objects.filter(type="daily", date_for_daily__range=(start_date, today)).order_by("date_for_daily")
+            print(daily_tasks)
             tasks_dict = [
                     {
                         "id": task.id,
@@ -184,8 +185,12 @@ class DailyTasksView(APIView):
                     for task in daily_tasks
                 ]
             for task in tasks_dict:
+                print(task)
                 answer = UserTaskAnswer.objects.filter(user_id = request.user_id, task_id = task.get("id")).first()
-                task["status"] = answer.status
+                if answer:
+                    task["status"] = answer.status
+                else:
+                    task["status"] = ""
             data = {"tasks": tasks_dict}
             print(data)
             return JsonResponse(data, status=200)
