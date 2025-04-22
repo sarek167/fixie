@@ -207,7 +207,7 @@ class DailyTasksView(APIView):
                 task = Task.objects.get(date_for_daily = date)
                 serialized_task = TaskSerializer(task).data
                 print(serialized_task)
-                return JsonResponse({"task": serialized_task}, status = 200)
+                return JsonResponse(serialized_task, status = 200)
             else:
                 return JsonResponse({"error": "There is no date in a request"}, status = 401)
         except Exception as e:

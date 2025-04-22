@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/tasks/logic/navigate_to_selected_task.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -84,11 +84,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   .month,
                               startingDayOfWeek: StartingDayOfWeek
                                   .monday,
-                              onDaySelected: (selectedDay, focusedDay) {
-                                setState(() {
-                                  _selectedDay = selectedDay;
-                                });
-                                print("Wybrany dzień ${_selectedDay}");
+                              onDaySelected: (selectedDay, focusedDay) async {
+                                navigateToSelectedTask(context, selectedDay);
                               },
                               headerStyle: HeaderStyle(
                                 formatButtonVisible: false,

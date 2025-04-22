@@ -11,6 +11,7 @@ class EndpointConstants {
   static const String getStreakEndpoint = "http://10.0.2.2:8001/task_management/get_streak/";
   static const String getDailyTasksEndpoint = "http://10.0.2.2:8001/task_management/get_daily_tasks/";
   static const String getDailyTasksStatusEndpoint = "http://10.0.2.2:8001/task_management/get_daily_tasks_status/";
+  static const String getDailyTaskByDateEndpoint = "http://10.0.2.2:8001/task_management/post_daily_tasks/";
 
   static const String baseUserEndpoint = "http://10.0.2.2:8000/user_management/";
 

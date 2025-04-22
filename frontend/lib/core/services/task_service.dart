@@ -68,6 +68,23 @@ class TaskService {
     }
   }
 
+  static Future<TaskModel> getDailyTaskByDate(String date) async {
+    try {
+      final Map<String, String> body = {
+        'date': date
+      };
+      final response = await TokenClient.client.post(
+        EndpointConstants.getDailyTaskByDateEndpoint,
+        data: body
+      );
+      print(response.data);
+      return TaskModel.fromJson(response.data);
+    } catch (e) {
+      print("Error: $e");
+      throw Exception("Something went wrong during getting daily task by date");
+    }
+  }
+
   static Future<List<Map<String, dynamic>>> getDailyTasksStatus() async {
     try {
       final response = await TokenClient.client.get(
