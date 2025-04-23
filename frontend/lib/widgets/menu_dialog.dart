@@ -40,23 +40,23 @@ class CustomMenu extends StatelessWidget {
                   future: UserStorage().getUser(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator(); // Ładowanie
+                      return const CircularProgressIndicator();
                     }
                     if (snapshot.hasError || snapshot.data == null) {
                       return const Text(
                         "Nieznany użytkownik",
                         style: TextStyle(
                           color: ColorConstants.whiteColor,
-                          fontSize: FontConstants.headerFontSize,
+                          fontSize: FontConstants.largeHeaderFontSize,
                           fontWeight: FontWeight.bold,
                         ),
                       );
                     }
                     return Text(
-                      snapshot.data!.username, // Nazwa użytkownika
+                      snapshot.data!.username,
                       style: TextStyle(
                         color: ColorConstants.whiteColor,
-                        fontSize: FontConstants.headerFontSize,
+                        fontSize: FontConstants.largeHeaderFontSize,
                         fontWeight: FontWeight.bold,
                       ),
                     );
@@ -75,7 +75,7 @@ class CustomMenu extends StatelessWidget {
                     text: "KALENDARZ ZADAŃ",
                     backgroundColor: ColorConstants.lightColor,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                      Navigator.pushNamed(context, AppRouteConstants.calendarRoute);
                     }
                 ),
                 const SizedBox(height: 20),
@@ -83,7 +83,7 @@ class CustomMenu extends StatelessWidget {
                     text: "ŚCIEŻKI ZADAŃ",
                     backgroundColor: ColorConstants.lightColor,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                      Navigator.pushNamed(context, AppRouteConstants.taskRoute);
                     }
                 ),
                 const SizedBox(height: 20),

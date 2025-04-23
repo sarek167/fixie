@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), // Zaokrąglone rogi
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
         onPressed: onPressed,
