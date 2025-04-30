@@ -17,7 +17,7 @@ spec:
           image: mysql:8
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "Lemonade123!"
+              value: "root"
             - name: MYSQL_DATABASE
               value: "fixie_db"
             - name: MYSQL_USER
@@ -31,14 +31,4 @@ spec:
               mountPath: /var/lib/mysql
       volumes:
         - name: mysql-persistent-storage
-          emptyDir: {}  # W produkcji zamień na persistentVolumeClaim
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "fixie_db",
-        "USER": "fixie_user",
-        "PASSWORD": "Lemonade123!",
-        "HOST": "localhost",
-        "PORT": "3306",
-    }
-}
+          emptyDir: {}
