@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "Lemonade123!"
+            - name: MYSQL_DATABASE
+              value: "fixie_db"
+            - name: MYSQL_USER
+              value: "fixie_user"
+            - name: MYSQL_PASSWORD
+              value: "Lemonade123!"
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          emptyDir: {}  # W produkcji zamień na persistentVolumeClaim
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "fixie_db",
+        "USER": "fixie_user",
+        "PASSWORD": "Lemonade123!",
+        "HOST": "localhost",
+        "PORT": "3306",
+    }
+}
