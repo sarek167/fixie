@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fixieauth-mysql
+  name: fixietasks-mysql
 spec:
   selector:
     matchLabels:
-      app: fixieauth-mysql
+      app: fixietasks-mysql
   replicas: 1
   template:
     metadata:
       labels:
-        app: fixieauth-mysql
+        app: fixietasks-mysql
     spec:
       containers:
-        - name: fixieauth-mysql
+        - name: fixietasks-mysql
           image: mysql:8
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "root"
             - name: MYSQL_DATABASE
-              value: "fixie_db"
+              value: "tasks_db"
             - name: MYSQL_USER
               value: "fixie_user"
             - name: MYSQL_PASSWORD
               value: "Lemonade123!"
           ports:
-            - containerPort: 3306
+            - containerPort: 3307
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
