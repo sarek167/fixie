@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-r!@u*@32mc^#-m+e4!r2^s)kr&_sh=*c*pr8a=bmzve7l=j@jf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1"]
+ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1", "192.168.49.2"]
 
 
 # Application definition
@@ -86,7 +86,7 @@ DATABASES = {
         "NAME": "fixie_db",
         "USER": "fixie_user",
         "PASSWORD": "Lemonade123!",
-        "HOST": "localhost",
+        "HOST": "mysql",
         "PORT": "3306",
     }
 }
