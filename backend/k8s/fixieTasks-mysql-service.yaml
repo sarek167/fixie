@@ -7,6 +7,5 @@ spec:
     app: fixietasks-mysql
   ports:
     - protocol: TCP
-      port: 3307
-      targetPort: 3307
-  clusterIP: None
+      port: 3306
+      targetPort: 3306

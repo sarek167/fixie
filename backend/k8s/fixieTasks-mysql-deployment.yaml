@@ -21,11 +21,11 @@ spec:
             - name: MYSQL_DATABASE
               value: "tasks_db"
             - name: MYSQL_USER
-              value: "fixie_user"
+              value: "tasks_admin"
             - name: MYSQL_PASSWORD
-              value: "Lemonade123!"
+              value: "Lemonade_tasks_123!"
           ports:
-            - containerPort: 3307
+            - containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql

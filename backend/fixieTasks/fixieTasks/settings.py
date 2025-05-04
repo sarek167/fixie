@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-txwcf*i$fgkg6dgfwmvbv^f+k5#zoq71@#hx08j#ezz^3bvur5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1']
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', '192.168.49.2']
 
 
 # Application definition
@@ -78,7 +78,7 @@ DATABASES = {
         "NAME": "tasks_db",
         "USER": "tasks_admin",
         "PASSWORD": "Lemonade_tasks_123!",
-        "HOST": "localhost",
+        "HOST": "fixietasks-mysql",
         "PORT": "3306",
     }
 }

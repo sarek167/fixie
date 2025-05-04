@@ -86,7 +86,7 @@ DATABASES = {
         "NAME": "fixie_db",
         "USER": "fixie_user",
         "PASSWORD": "Lemonade123!",
-        "HOST": "mysql",
+        "HOST": "fixieauth-mysql",
         "PORT": "3306",
     }
 }
