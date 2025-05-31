@@ -78,8 +78,8 @@ DATABASES = {
         "NAME": "tasks_db",
         "USER": "tasks_admin",
         "PASSWORD": "Lemonade_tasks_123!",
-        "HOST": "fixietasks-mysql",
-        "PORT": "3306",
+        "HOST": "localhost",
+        "PORT": "3307",
     }
 }
 

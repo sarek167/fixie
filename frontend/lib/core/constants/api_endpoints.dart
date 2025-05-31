@@ -1,7 +1,7 @@
 class EndpointConstants {
-  static const String clusterIP = "192.168.49.2";
-  static const String userManagementPort = "30000";
-  static const String taskManagementPort = "30001";
+  static const String clusterIP = "10.0.2.2";
+  static const String userManagementPort = "8000";
+  static const String taskManagementPort = "8001";
   static const String loginEndpoint =
       "http://$clusterIP:$userManagementPort/user_management/login/";
   static const String registerEndpoint =

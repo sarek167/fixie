@@ -88,7 +88,19 @@ INSERT INTO tasks (title, description, category, difficulty, type, date_for_dail
 ('Codzienne zadanie 27', 'To jest opis codziennego zadania numer 27. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-04-27', 'checkbox'),
 ('Codzienne zadanie 28', 'To jest opis codziennego zadania numer 28. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-04-28', 'text'),
 ('Codzienne zadanie 29', 'To jest opis codziennego zadania numer 29. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-04-29', 'checkbox'),
-('Codzienne zadanie 30', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-04-30', 'checkbox');
+('Codzienne zadanie 30', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-04-30', 'checkbox'),
+('Codzienne zadanie 31', 'To jest opis codziennego zadania numer 25. Wykonaj je uważnie.', 'DailyKategoria 4', 2, 'daily', '2025-05-01', 'text'),
+('Codzienne zadanie 32', 'To jest opis codziennego zadania numer 26. Wykonaj je uważnie.', 'DailyKategoria 0', 1, 'daily', '2025-05-02', 'checkbox'),
+('Codzienne zadanie 33', 'To jest opis codziennego zadania numer 27. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-05-03', 'checkbox'),
+('Codzienne zadanie 34', 'To jest opis codziennego zadania numer 28. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-05-04', 'text'),
+('Codzienne zadanie 35', 'To jest opis codziennego zadania numer 29. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-05-05', 'checkbox'),
+('Codzienne zadanie 36', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-05-06', 'text'),
+('Codzienne zadanie 37', 'To jest opis codziennego zadania numer 25. Wykonaj je uważnie.', 'DailyKategoria 4', 2, 'daily', '2025-05-07', 'text'),
+('Codzienne zadanie 38', 'To jest opis codziennego zadania numer 26. Wykonaj je uważnie.', 'DailyKategoria 0', 1, 'daily', '2025-05-08', 'checkbox'),
+('Codzienne zadanie 39', 'To jest opis codziennego zadania numer 27. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-05-09', 'text'),
+('Codzienne zadanie 40', 'To jest opis codziennego zadania numer 28. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-05-10', 'text'),
+('Codzienne zadanie 41', 'To jest opis codziennego zadania numer 29. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-05-11', 'checkbox'),
+('Codzienne zadanie 42', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-05-12', 'checkbox');
 -- Przypisania zadań do ścieżek
 INSERT INTO task_path (task_id, path_id) VALUES
 (1, 10),

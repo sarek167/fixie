@@ -67,7 +67,7 @@ class CustomMenu extends StatelessWidget {
                   text: "AVATAR",
                   backgroundColor: ColorConstants.lightColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                    Navigator.pushNamed(context, AppRouteConstants.avatarRoute);
                   }
                 ),
                 const SizedBox(height: 20),
