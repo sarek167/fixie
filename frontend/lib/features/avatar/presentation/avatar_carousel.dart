@@ -1,66 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/features/avatar/data/avatar_cubit.dart';
+import 'package:frontend/features/avatar/data/avatar_option_item.dart';
 
 class AvatarCarousel extends StatelessWidget{
   final String title;
-  final List<Color>? colors;
-  final List<String>? images;
+  final String partKey;
+  final List<AvatarOptionItem> options;
 
   const AvatarCarousel({
     super.key,
     required this.title,
-    this.colors,
-    this.images,
+    required this.partKey,
+    required this.options,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> items = [];
-
-    if (colors != null && colors!.isNotEmpty) {
-      items = colors!.map((color) => GestureDetector(
-        onTap: () {
-          print("Kliknięto kolor");
-          // dodaj logikę wyboru koloru
-        },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-            border: Border.all(
-                color: Colors.white, width: 4),
-          ),
-        ),
-      )
-      ).toList();
-    } else if (images != null && images!.isNotEmpty) {
-      items = images!.map((imagePath) => GestureDetector(
-        onTap: () {
-          print("Kliknięto zdjęcie");
-          print(imagePath);
-          // dodaj logikę wyboru koloru
-        },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            border: Border.all(
-                color: Colors.white, width: 4),
-          ),
-          child: ClipOval(
-            child: Image.network(imagePath, fit: BoxFit.cover, filterQuality: FilterQuality.none,),
-          )
-        ),
-      )
-      ).toList();
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -75,7 +32,26 @@ class AvatarCarousel extends StatelessWidget{
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
-            children: items
+            children: options.map((option) {
+              return GestureDetector(
+                onTap: () => {
+                  context.read<AvatarCubit>().updatePart(partKey, option.label)
+              },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color:ColorConstants.whiteColor, width: 4),
+                    color: option.color ?? ColorConstants.whiteColor
+                  ),
+                  child: option.imageUrl != null
+                    ? ClipOval(child: Image.network(option.imageUrl!, fit: BoxFit.cover))
+                    : null,
+                )
+              );
+            }).toList(),
             ),
           )
         ),

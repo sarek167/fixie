@@ -4,12 +4,12 @@ import 'package:frontend/features/avatar/data/avatar_state.dart';
 class AvatarCubit extends Cubit<AvatarState>{
   AvatarCubit() : super(
     AvatarState(
-      skinColor: 1,
+      skinColor: "1",
       eyesColor: "blue",
       hair: "braids",
       hairColor: "black",
       topClothes: "basic",
-      topClothesColor: "green",
+      topClothesColor: "light-green",
       bottomClothes: "pants",
       bottomClothesColor: "black"
     )
@@ -19,34 +19,34 @@ class AvatarCubit extends Cubit<AvatarState>{
   void updatePart(String part, String value) {
     switch (part) {
       case "skinColor":
-        state.skinColor = value as int;
+        emit(state.copyWith(skinColor: value));
         break;
       case "eyesColor":
-        state.eyesColor = value;
+        emit(state.copyWith(eyesColor: value));
         break;
       case "hair":
-        state.hair = value;
+        emit(state.copyWith(hair: value));
         break;
       case "hairColor":
-        state.hairColor = value;
+        emit(state.copyWith(hairColor: value));
         break;
       case "topClothes":
-        state.topClothes = value;
+        emit(state.copyWith(topClothes: value));
         break;
       case "topClothesColor":
-        state.topClothesColor = value;
+        emit(state.copyWith(topClothesColor: value));
         break;
       case "bottomClothes":
-        state.bottomClothes = value;
+        emit(state.copyWith(bottomClothes: value));
         break;
       case "bottomClothesColor":
-        state.bottomClothesColor = value;
+        emit(state.copyWith(bottomClothesColor: value));
         break;
       case "lipstick":
-        state.lipstick = value as int;
+        emit(state.copyWith(lipstick: value));
         break;
       case "blush":
-        state.blush = value as int;
+        emit(state.copyWith(blush: value));
         break;
     }
     emit(state);

@@ -34,24 +34,26 @@ class AvatarWidget extends StatelessWidget {
               ),
               Transform.scale(
                 scale: 8,
-                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/top-clothes/basic-light-green.png', filterQuality: FilterQuality.none,),
+                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/top-clothes/${avatar.topClothes}-${avatar.topClothesColor}.png', filterQuality: FilterQuality.none,),
               ),
               Transform.scale(
                 scale: 8,
-                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/hair/braids-red.png', filterQuality: FilterQuality.none,),
+                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/hair/${avatar.hair}-${avatar.hairColor}.png', filterQuality: FilterQuality.none,),
               ),
               Transform.scale(
                 scale: 8,
                 child: Image.asset('lib/assets/images/eyes.png', filterQuality: FilterQuality.none,),
               ),
+              if (avatar.blush != "0")
+                Transform.scale(
+                  scale: 8,
+                  child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/blush/${avatar.blush}.png', filterQuality: FilterQuality.none,),
+                ),
+              if (avatar.lipstick != "0")
               Transform.scale(
                 scale: 8,
-                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/blush/3.png', filterQuality: FilterQuality.none,),
+                child: Image.network('https://fixieavatarimg.blob.core.windows.net/lipstick/3.png', filterQuality: FilterQuality.none,),
               ),
-              // Transform.scale(
-              //   scale: 8,
-              //   child: Image.network('https://fixieavatarimg.blob.core.windows.net/lipstick/3.png', filterQuality: FilterQuality.none,),
-              // ),
               // Transform.scale(
               //   scale: 8,
               //   scale: 8,

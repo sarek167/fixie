@@ -98,7 +98,7 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                 color: tab.backgroundColor,
                 child: ListView(
                   children: tab.carousels.map((carousel) =>
-                    AvatarCarousel(title: carousel.title, colors: carousel.colors ?? [], images: carousel.images ?? [])
+                    AvatarCarousel(title: carousel.title, partKey: carousel.partKey, options: carousel.options)
                   ).toList(),
                 ),
               );
