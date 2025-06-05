@@ -20,21 +20,21 @@ class AvatarOptions {
           AvatarOptionItem(label: "7", color: AvatarSkinColors.skin7),
           AvatarOptionItem(label: "8", color: AvatarSkinColors.skin8),
         ]),
-        AvatarCarousel(title: "WŁOSY", partKey: "hair", options: [
-          AvatarOptionItem(label: "braids", imageUrl: 'https://fixieavatarimg.blob.core.windows.net/hair/braids-red.png'),
-          AvatarOptionItem(label: "bob", imageUrl: 'https://fixieavatarimg.blob.core.windows.net/hair/bob-red.png')
-        ])
-
+        AvatarCarousel(title: "OCZY", partKey: "eyes", options: [
+          AvatarOptionItem(label: "1", color: Colors.pink),
+          AvatarOptionItem(label: "2", color: Colors.brown),
+          AvatarOptionItem(label: "3", color:Colors.orange)
+        ]),
       ]
     ),
     AvatarSingleTab(
       backgroundColor: ColorConstants.lightColor,
       carousels: [
-        AvatarCarousel(title: "OCZY", partKey: "eyes", options: [
-          AvatarOptionItem(label: "1", color: Colors.pink),
-          AvatarOptionItem(label: "2", color: Colors.brown),
-          AvatarOptionItem(label: "3", color:Colors.orange)
-        ]),      ]
+        AvatarCarousel(title: "WŁOSY", partKey: "hair", options: [
+          AvatarOptionItem(label: "braids", imageUrl: 'https://fixieavatarimg.blob.core.windows.net/hair/braids-red.png'),
+          AvatarOptionItem(label: "bob", imageUrl: 'https://fixieavatarimg.blob.core.windows.net/hair/bob-red.png')
+        ])
+     ]
     ),
     AvatarSingleTab(
       backgroundColor: ColorConstants.semiLightColor,
