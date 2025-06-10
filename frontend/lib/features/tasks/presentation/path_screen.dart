@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
-import 'package:frontend/core/services/task_service.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
 import 'package:frontend/features/tasks/presentation/progress_bar.dart';

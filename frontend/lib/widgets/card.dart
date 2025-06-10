@@ -28,7 +28,6 @@ class CardItem extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    print("TEXT W CARD $text");
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(

@@ -8,16 +8,19 @@ class AvatarCarousel extends StatelessWidget{
   final String title;
   final String partKey;
   final List<AvatarOptionItem> options;
+  final bool isColor;
 
   const AvatarCarousel({
     super.key,
     required this.title,
     required this.partKey,
     required this.options,
+    this.isColor = true
   });
 
   @override
   Widget build(BuildContext context) {
+    print("CZY JEST KOLOR: $isColor");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -33,6 +36,7 @@ class AvatarCarousel extends StatelessWidget{
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
             children: options.map((option) {
+              print(option.imageUrl);
               return GestureDetector(
                 onTap: () => {
                   context.read<AvatarCubit>().updatePart(partKey, option.label)
@@ -44,9 +48,9 @@ class AvatarCarousel extends StatelessWidget{
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color:ColorConstants.whiteColor, width: 4),
-                    color: option.color ?? ColorConstants.whiteColor
+                    color: isColor ? option.color : ColorConstants.whiteColor
                   ),
-                  child: option.imageUrl != null
+                  child: !isColor && option.imageUrl != null
                     ? ClipOval(child: Image.network(option.imageUrl!, fit: BoxFit.cover))
                     : null,
                 )

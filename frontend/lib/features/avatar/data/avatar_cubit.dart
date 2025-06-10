@@ -25,22 +25,22 @@ class AvatarCubit extends Cubit<AvatarState>{
         emit(state.copyWith(eyesColor: value));
         break;
       case "hair":
-        emit(state.copyWith(hair: value));
+        emit(state.copyWith(hair: value.split("-")[0]));
         break;
       case "hairColor":
-        emit(state.copyWith(hairColor: value));
+        emit(state.copyWith(hairColor: value.split("-")[1]));
         break;
       case "topClothes":
-        emit(state.copyWith(topClothes: value));
+        emit(state.copyWith(topClothes: value.split("-")[0]));
         break;
       case "topClothesColor":
-        emit(state.copyWith(topClothesColor: value));
+        emit(state.copyWith(topClothesColor: value.split("-")[1]));
         break;
       case "bottomClothes":
-        emit(state.copyWith(bottomClothes: value));
+        emit(state.copyWith(bottomClothes: value.split("-")[0]));
         break;
       case "bottomClothesColor":
-        emit(state.copyWith(bottomClothesColor: value));
+        emit(state.copyWith(bottomClothesColor: value.split("-")[1]));
         break;
       case "lipstick":
         emit(state.copyWith(lipstick: value));

@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .models import Reward
+from .serializers import RewardSerializer
 from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
+from collections import defaultdict
 from django.http import JsonResponse
 
 # Create your views here.
@@ -10,7 +12,12 @@ from django.http import JsonResponse
 class UserAvatarElementsView(APIView):
     def get(self, request):
         starter_elements = Reward.objects.filter(starter=True)
-        print(starter_elements)
+        grouped = defaultdict(list)
+        for elem in starter_elements:
+            serialized = RewardSerializer(elem).data
+            grouped[elem.container_name].append(serialized)
+        # print(serialized_elems[0])
+        print(grouped)
         # user_paths = [Path.objects.get(id=assignment.path_id) for assignment in user_paths_assignments]
         # paths_data = [{
         #     "title": user_path.title,
@@ -25,4 +32,4 @@ class UserAvatarElementsView(APIView):
         #         "#FFFFFF"
         #     )
         # } for user_path in user_paths]
-        return JsonResponse({"user_paths": starter_elements})
+        return JsonResponse(grouped)

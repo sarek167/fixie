@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/services/avatar_service.dart';
 import 'package:frontend/features/avatar/data/avatar_options.dart';
-import 'package:frontend/features/avatar/presentation/avatar_carousel.dart';
 import 'package:frontend/features/avatar/data/avatar_single_tab.dart';
+import 'package:frontend/features/avatar/presentation/avatar_carousel.dart';
 
 class AvatarCustomizationTabs extends StatefulWidget {
   const AvatarCustomizationTabs({super.key});
@@ -89,22 +90,70 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
           ],
         ),
 
+        FutureBuilder(
+            future: AvatarService.getAvatarOptions(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                print("W AVATAR TABS");
+                print(snapshot.data!);
+                final avatarMap = snapshot.data!;
+                final List<AvatarSingleTab> tabs = [
+                  AvatarSingleTab(
+                    backgroundColor: ColorConstants.veryLightColor,
+                    carousels: [
+                      AvatarCarousel(title: "SKÓRA", partKey: "skinColor", options: avatarMap["base"] ?? []),
+                    ],
+                  ),
+                  AvatarSingleTab(
+                    backgroundColor: ColorConstants.lightColor,
+                    carousels: [
+                      AvatarCarousel(title: "WŁOSY", partKey: "hair", options: avatarMap["hair"] ?? [], isColor: false,),
+                    ],
+                  ),
+                  AvatarSingleTab(
+                    backgroundColor: ColorConstants.semiLightColor,
+                    carousels: [
+                      AvatarCarousel(title: "OCZY", partKey: "eyes", options: avatarMap["eyes"] ?? []),
+                    ],
+                  ),
+                  const AvatarSingleTab(
+                    backgroundColor: ColorConstants.darkColor,
+                    carousels: [],
+                  ),
+                  const AvatarSingleTab(
+                    backgroundColor: ColorConstants.lightBackgroundColor,
+                    carousels: [],
+                  ),
+                ];
+                return Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
 
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: AvatarOptions.allTabs.map((tab) {
-              return Container(
-                color: tab.backgroundColor,
-                child: ListView(
-                  children: tab.carousels.map((carousel) =>
-                    AvatarCarousel(title: carousel.title, partKey: carousel.partKey, options: carousel.options)
-                  ).toList(),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
+                    children: tabs.map((tab) {
+                      return Container(
+                        color: tab.backgroundColor,
+                        child: ListView(
+                          children: tab.carousels.map((carousel) =>
+                          AvatarCarousel(
+                            title: carousel.title,
+                            partKey: carousel.partKey,
+                            options: carousel.options,
+                            isColor: carousel.isColor
+                          )
+                          ).toList(),
+                        ),
+                      );
+                    }).toList()
+                  ),
+                );
+              }
+            }
+        )
+
       ],
     );
   }
