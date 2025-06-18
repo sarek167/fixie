@@ -48,6 +48,7 @@ class AvatarState {
       blush: blush ?? this.blush,
     );
     print(state.hair);
+    print(state.eyesColor);
     return state;
   }
 }

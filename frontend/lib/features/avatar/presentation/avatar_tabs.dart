@@ -117,7 +117,7 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                   AvatarSingleTab(
                     backgroundColor: ColorConstants.semiLightColor,
                     carousels: [
-                      AvatarCarousel(title: "OCZY", partKey: "eyes", options: avatarMap["eyes"] ?? []),
+                      AvatarCarousel(title: "OCZY", partKey: "eyesColor", options: avatarMap["eyes"] ?? []),
                     ],
                   ),
                   const AvatarSingleTab(

@@ -2,7 +2,7 @@ import 'package:frontend/core/utils/hex_color.dart';
 import 'package:flutter/material.dart';
 
 class AvatarStorage {
-  static String storageName = "fixieavatarimg";
+  static const String storageName = "fixieavatarimg";
 }
 
 class AvatarSkinColors {

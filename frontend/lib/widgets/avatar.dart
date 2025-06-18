@@ -30,6 +30,10 @@ class AvatarWidget extends StatelessWidget {
               ),
               Transform.scale(
                 scale: 8,
+                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/eyes/${avatar.eyesColor}.png', filterQuality: FilterQuality.none,),
+              ),
+              Transform.scale(
+                scale: 8,
                 child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/bottom-clothes/${avatar.bottomClothes}-${avatar.bottomClothesColor}.png', filterQuality: FilterQuality.none,),
               ),
               Transform.scale(
@@ -39,10 +43,6 @@ class AvatarWidget extends StatelessWidget {
               Transform.scale(
                 scale: 8,
                 child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/hair/${avatar.hair}-${avatar.hairColor}.png', filterQuality: FilterQuality.none,),
-              ),
-              Transform.scale(
-                scale: 8,
-                child: Image.asset('lib/assets/images/eyes.png', filterQuality: FilterQuality.none,),
               ),
               if (avatar.blush != "0")
                 Transform.scale(

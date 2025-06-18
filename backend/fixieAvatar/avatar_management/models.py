@@ -32,7 +32,7 @@ class Reward(models.Model):
 
 
 class UserReward(models.Model):
-    reward_id = models.ForeignKey(Reward, on_delete=models.CASCADE)
+    reward = models.ForeignKey(Reward, on_delete=models.CASCADE)
     user_id = models.IntegerField()
     date_awarded = models.DateTimeField(auto_now_add=True)
 

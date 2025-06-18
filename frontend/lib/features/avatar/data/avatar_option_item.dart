@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/constants/avatar_storage.dart';
 import 'package:frontend/core/utils/hex_color.dart';
 
 class AvatarOptionItem {
@@ -25,7 +26,7 @@ class AvatarOptionItem {
         color: json["color_to_display"] != null
           ? HexColor(json['color_to_display'])
           : null ,
-        imageUrl: 'https://fixieavatarimg.blob.core.windows.net/${json["container_name"]}/${json["blob_name"]}.png',
+        imageUrl: 'https://${AvatarStorage.storageName}.blob.core.windows.net/${json["container_name"]}/${json["blob_name"]}.png',
     );
   }
 }
