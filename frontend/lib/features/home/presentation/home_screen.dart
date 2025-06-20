@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            backgroundColor: ColorConstants.backgroundColor,
+            backgroundColor: ColorConstants.background,
             appBar: CustomAppBar(streak: snapshot.data!.streak),
             body: Center(
               child: SingleChildScrollView(
@@ -56,12 +56,12 @@ class HomeScreen extends StatelessWidget {
                         } else {
                           return CustomImageCarousel(
                             text: "ZNAJDŹ SWOJE ŚCIEŻKI",
-                            slideBackgroundColor: ColorConstants.darkColor,
-                            indicatorColor: ColorConstants.lightColor,
+                            slideBackgroundColor: ColorConstants.dark,
+                            indicatorColor: ColorConstants.light,
                             slides: [
                               ...snapshot.data!.map((path) => CardItem(
                                 routeName: AppRouteConstants.pathRoute,
-                                textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                                textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
                                 text: path.title,
                                 imageUrl: path.isImage ? path.backgroundValue : null,
                                 backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
@@ -73,24 +73,24 @@ class HomeScreen extends StatelessWidget {
                       }),
                   CustomImageCarousel(
                     text: "CO CHODZI CI PO GŁOWIE",
-                    slideBackgroundColor: ColorConstants.lightColor,
-                    indicatorColor: ColorConstants.blackColor,
+                    slideBackgroundColor: ColorConstants.light,
+                    indicatorColor: ColorConstants.black,
                     slides: [
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor czerwony", backgroundDarkening: 0,),
                     ],
                   ),
                   CustomImageCarousel(
                     text: "DOWIEDZ SIĘ WIĘCEJ",
-                    slideBackgroundColor: ColorConstants.veryLightColor,
-                    indicatorColor: ColorConstants.blackColor,
+                    slideBackgroundColor: ColorConstants.veryLight,
+                    indicatorColor: ColorConstants.black,
                     slides: [
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=5', text: "Zdjęcie 1"),
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=6', text: "Zdjęcie 2"),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor czerwony", backgroundDarkening: 0,),
                     ],
                     ),
                   ],

@@ -38,7 +38,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         } else {
           final streak = snapshot.data!.streak;
           return Scaffold(
-            backgroundColor: ColorConstants.backgroundColor,
+            backgroundColor: ColorConstants.background,
             appBar: CustomAppBar(streak: streak,),
             body: Center(
               child: SingleChildScrollView(
@@ -49,7 +49,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       "KALENDARZ\nZADAŃ",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: ColorConstants.whiteColor,
+                        color: ColorConstants.white,
                         fontSize: FontConstants.largeHeaderFontSize,
                         fontWeight: FontWeight.bold,
                       ),
@@ -91,20 +91,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 formatButtonVisible: false,
                                 titleCentered: true,
                                 titleTextStyle: TextStyle(
-                                  color: ColorConstants.whiteColor,
+                                  color: ColorConstants.white,
                                   fontSize: FontConstants.headerFontSize,
                                   fontWeight: FontWeight.bold
                                 ),
                                 leftChevronIcon: Icon(
                                   Icons.chevron_left,
-                                  color: ColorConstants.whiteColor
+                                  color: ColorConstants.white
                                 ),
                                 rightChevronIcon: Icon(
                                   Icons.chevron_right,
-                                  color: ColorConstants.whiteColor
+                                  color: ColorConstants.white
                                 ),
                                 decoration: BoxDecoration(
-                                  color: ColorConstants.darkColor,
+                                  color: ColorConstants.dark,
                                   borderRadius: BorderRadius
                                     .only(
                                     topRight: Radius.circular(8),
@@ -115,15 +115,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               daysOfWeekHeight: FontConstants.largeHeaderFontSize,
                               daysOfWeekStyle: DaysOfWeekStyle(
                                 decoration: BoxDecoration(
-                                  color: ColorConstants.lightColor,
+                                  color: ColorConstants.light,
                                 ),
                                 weekdayStyle: TextStyle(
-                                  color: ColorConstants.whiteColor,
+                                  color: ColorConstants.white,
                                   fontSize: FontConstants.standardFontSize,
                                   fontWeight: FontWeight.bold
                                 ),
                                 weekendStyle: TextStyle(
-                                  color: ColorConstants.whiteColor,
+                                  color: ColorConstants.white,
                                   fontSize: FontConstants.standardFontSize,
                                   fontWeight: FontWeight.bold
                                 ),
@@ -138,15 +138,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: isCompleted
-                                          ? ColorConstants.lightBackgroundColor
-                                          : ColorConstants.veryLightColor,
+                                          ? ColorConstants.lightBackground
+                                          : ColorConstants.veryLight,
                                       // borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Center(
                                       child: Text(
                                         '${day.day}',
                                         style: TextStyle(
-                                          color: ColorConstants.whiteColor,
+                                          color: ColorConstants.white,
                                           fontSize: FontConstants.standardFontSize,
                                           fontWeight: FontWeight.bold
                                         )
@@ -157,13 +157,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 todayBuilder: (context, day, _) {
                                   return Container(
                                     decoration: BoxDecoration(
-                                      color: ColorConstants.lightColor,
+                                      color: ColorConstants.light,
                                     ),
                                     child: Center(
                                       child: Text(
                                         '${day.day}',
                                         style: TextStyle(
-                                          color: ColorConstants.whiteColor,
+                                          color: ColorConstants.white,
                                           fontSize: FontConstants.headerFontSize,
                                           fontWeight: FontWeight.bold
                                         )
@@ -177,7 +177,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     child: Text(
                                       '${day.day}',
                                       style: TextStyle(
-                                        color: ColorConstants.whiteColor
+                                        color: ColorConstants.white
                                       ),
                                     )
                                   );

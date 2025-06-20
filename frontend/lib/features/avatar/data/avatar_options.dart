@@ -8,7 +8,7 @@ import 'package:frontend/features/avatar/data/avatar_single_tab.dart';
 class AvatarOptions {
   static List<AvatarSingleTab> allTabs = [
     AvatarSingleTab(
-      backgroundColor: ColorConstants.veryLightColor,
+      backgroundColor: ColorConstants.veryLight,
       carousels: [
         AvatarCarousel(title: "SKÓRA", partKey: "skinColor", options: [
           AvatarOptionItem(label: "1", color: AvatarSkinColors.skin1),
@@ -28,7 +28,7 @@ class AvatarOptions {
       ]
     ),
     AvatarSingleTab(
-      backgroundColor: ColorConstants.lightColor,
+      backgroundColor: ColorConstants.light,
       carousels: [
         AvatarCarousel(title: "WŁOSY", partKey: "hair", options: [
           AvatarOptionItem(label: "braids", imageUrl: 'https://fixieavatarimg.blob.core.windows.net/hair/braids-red.png'),
@@ -37,7 +37,7 @@ class AvatarOptions {
      ]
     ),
     AvatarSingleTab(
-      backgroundColor: ColorConstants.semiLightColor,
+      backgroundColor: ColorConstants.semiLight,
       carousels: [
         AvatarCarousel(title: "BRODA", partKey: "beard", options: [
           AvatarOptionItem(label: "1", color: Colors.pink),
@@ -47,14 +47,14 @@ class AvatarOptions {
       ]
     ),
     const AvatarSingleTab(
-        backgroundColor: ColorConstants.darkColor,
+        backgroundColor: ColorConstants.dark,
         carousels: [
           // AvatarCarousel(title: "OKULARY", colors: [Colors.black, Colors.grey]),
           // AvatarCarousel(title: "NAKRYCIE GŁOWY", colors: [Colors.yellow, Colors.indigo]),
         ]
     ),
     const AvatarSingleTab(
-        backgroundColor: ColorConstants.lightBackgroundColor,
+        backgroundColor: ColorConstants.lightBackground,
         carousels: [
           // AvatarCarousel(title: "OKULARY", colors: [Colors.black, Colors.grey]),
           // AvatarCarousel(title: "NAKRYCIE GŁOWY", colors: [Colors.yellow, Colors.indigo]),

@@ -18,7 +18,7 @@ class StandardTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         filled: true,
-        fillColor: ColorConstants.whiteColor,
+        fillColor: ColorConstants.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
       ),
       validator: (value) {

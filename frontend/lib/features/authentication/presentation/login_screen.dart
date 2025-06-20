@@ -9,7 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorConstants.backgroundColor,
+        backgroundColor: ColorConstants.background,
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: FontConstants.headerFontSize,
                       fontWeight: FontWeight.bold,
-                      color: ColorConstants.whiteColor,
+                      color: ColorConstants.white,
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -35,12 +35,12 @@ class LoginScreen extends StatelessWidget {
                     child: const Text(
                       "Nie masz konta? Zarejestruj się",
                       style: TextStyle(
-                        color: ColorConstants.whiteColor,
+                        color: ColorConstants.white,
                         fontSize: FontConstants.smallFontSize,
                         fontWeight: FontWeight.w600,
                         decoration:
                         TextDecoration.underline,
-                        decorationColor: ColorConstants.whiteColor,
+                        decorationColor: ColorConstants.white,
                         decorationThickness: 2,
                       ),
                     ),

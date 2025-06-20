@@ -9,8 +9,8 @@ class Tag extends StatelessWidget {
   const Tag({
     Key? key,
     required this.text,
-    this.tagColor = ColorConstants.semiLightColor,
-    this.textColor = ColorConstants.whiteColor
+    this.tagColor = ColorConstants.semiLight,
+    this.textColor = ColorConstants.white
   }) : super(key: key);
 
   @override

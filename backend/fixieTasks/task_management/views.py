@@ -57,7 +57,7 @@ class PathByTitleView(APIView):
         title = request.GET.get("title")
         print(title)
         if not title:
-            return Response({"error": "Brak parametru 'title'"}, status=400)
+            return JsonResponse({"error": "Brak parametru 'title'"}, status=400)
         try:
             path = Path.objects.get(title = title)
             path_tasks = [path_task.task for path_task in TaskPath.objects.filter(path_id = path.id)]

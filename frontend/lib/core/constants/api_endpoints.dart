@@ -32,6 +32,10 @@ class EndpointConstants {
 
   static const String getUserAvatarOptionsEndpoint =
       "http://$clusterIP:$avatarManagementPort/avatar_management/get_user_avatar_elem/";
+  static const String getAvatarStateEndpoint =
+      "http://$clusterIP:$avatarManagementPort/avatar_management/get_avatar_state/";
+  static const String putAvatarStateEndpoint =
+      "http://$clusterIP:$avatarManagementPort/avatar_management/put_avatar_state/";
 
   static const String baseUserEndpoint =
       "http://$clusterIP:$userManagementPort/user_management/";

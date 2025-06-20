@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/services/avatar_service.dart';
 import 'package:frontend/features/avatar/data/avatar_state.dart';
 
 class AvatarCubit extends Cubit<AvatarState>{
@@ -15,40 +16,57 @@ class AvatarCubit extends Cubit<AvatarState>{
     )
   );
 
+  Future<void> loadAvatar() async {
+    try {
+      final fetchedState = await AvatarService.getAvatarState();
+      emit(fetchedState);
+    } catch (e) {
+      print("Error loading avatar: $e");
+    }
+  }
 
-  void updatePart(String part, String value) {
+  void updatePart(String part, String value) async {
+    AvatarState newState;
     switch (part) {
       case "skinColor":
-        emit(state.copyWith(skinColor: value));
+        newState = state.copyWith(skinColor: value);
         break;
       case "eyesColor":
-        emit(state.copyWith(eyesColor: value));
+        newState = state.copyWith(eyesColor: value);
         break;
       case "hair":
-        emit(state.copyWith(hair: value.split("-")[0]));
+        newState = state.copyWith(hair: value.split("-")[0]);
         break;
       case "hairColor":
-        emit(state.copyWith(hairColor: value.split("-")[1]));
+        newState = state.copyWith(hairColor: value.split("-")[1]);
         break;
       case "topClothes":
-        emit(state.copyWith(topClothes: value.split("-")[0]));
+        newState = state.copyWith(topClothes: value.split("-")[0]);
         break;
       case "topClothesColor":
-        emit(state.copyWith(topClothesColor: value.split("-")[1]));
+        newState = state.copyWith(topClothesColor: value.split("-")[1]);
         break;
       case "bottomClothes":
-        emit(state.copyWith(bottomClothes: value.split("-")[0]));
+        newState = state.copyWith(bottomClothes: value.split("-")[0]);
         break;
       case "bottomClothesColor":
-        emit(state.copyWith(bottomClothesColor: value.split("-")[1]));
+        newState = state.copyWith(bottomClothesColor: value.split("-")[1]);
         break;
       case "lipstick":
-        emit(state.copyWith(lipstick: value));
+        newState = state.copyWith(lipstick: value);
         break;
       case "blush":
-        emit(state.copyWith(blush: value));
+        newState = state.copyWith(blush: value);
         break;
+      default:
+        return;
     }
-    emit(state);
+    emit(newState);
+
+    try {
+      await AvatarService.updateAvatarState(newState);
+    } catch (e) {
+      print("Error updating avatar: $e");
+    }
   }
 }

@@ -21,7 +21,7 @@ class CardItem extends StatelessWidget{
     this.borderRadius = 15,
     this.backgroundDarkening = 0.5,
     required this.routeName,
-    this.textColor = ColorConstants.whiteColor
+    this.textColor = ColorConstants.white
   });
 
 
@@ -45,7 +45,7 @@ class CardItem extends StatelessWidget{
             child: imageUrl != null
                 ? ColorFiltered(
               colorFilter: ColorFilter.mode(
-                ColorConstants.blackColor.withValues(alpha: backgroundDarkening),
+                ColorConstants.black.withValues(alpha: backgroundDarkening),
                 BlendMode.darken,
               ),
               child: Image.network(
@@ -59,7 +59,7 @@ class CardItem extends StatelessWidget{
               width: double.infinity,
               height: height,
               decoration: BoxDecoration(
-                color: backgroundColor ?? ColorConstants.blackColor,
+                color: backgroundColor ?? ColorConstants.black,
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
             ),

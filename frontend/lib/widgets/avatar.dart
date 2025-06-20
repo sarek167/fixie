@@ -14,7 +14,7 @@ class AvatarWidget extends StatelessWidget {
       width: 300,
       height: 300,
       decoration: BoxDecoration(
-        color: ColorConstants.whiteColor,
+        color: ColorConstants.white,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(

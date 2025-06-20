@@ -13,8 +13,8 @@ class CircleButton extends StatelessWidget {
       right: 8,
       child: FloatingActionButton(
         mini: true,
-        backgroundColor: ColorConstants.darkColor,
-        child: Icon(Icons.edit, color: ColorConstants.whiteColor,),
+        backgroundColor: ColorConstants.dark,
+        child: Icon(Icons.edit, color: ColorConstants.white,),
         onPressed: () {
           Navigator.pushNamed(
             context,

@@ -14,11 +14,11 @@ class CustomImageCarousel extends StatefulWidget {
   const CustomImageCarousel({
     super.key,
     required this.slides,
-    this.slideBackgroundColor = ColorConstants.darkColor,
-    this.slideTextColor = ColorConstants.whiteColor,
+    this.slideBackgroundColor = ColorConstants.dark,
+    this.slideTextColor = ColorConstants.white,
     required this.text,
     this.height = 250,
-    this.indicatorColor = ColorConstants.lightColor
+    this.indicatorColor = ColorConstants.light
   });
 
   @override
@@ -91,7 +91,7 @@ class _CustomImageCarouselState extends State<CustomImageCarousel> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(4),
-            color: _currentIndex == index ? widget.indicatorColor : ColorConstants.whiteColor,
+            color: _currentIndex == index ? widget.indicatorColor : ColorConstants.white,
           ),
         );
       }).toList(),

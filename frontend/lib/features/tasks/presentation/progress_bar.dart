@@ -29,7 +29,7 @@ class ProgressBar extends StatelessWidget {
                 widthFactor: Progress().calculateProgress(nodes),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: ColorConstants.semiLightColor,
+                    color: ColorConstants.semiLight,
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -41,7 +41,7 @@ class ProgressBar extends StatelessWidget {
         Text(
           "PROGRES",
           style: TextStyle(
-            color: ColorConstants.whiteColor,
+            color: ColorConstants.white,
             fontWeight: FontWeight.bold,
             fontSize: FontConstants.headerFontSize,
           ),

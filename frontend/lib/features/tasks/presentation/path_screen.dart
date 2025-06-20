@@ -94,7 +94,7 @@ class _PathScreenState extends State<PathScreen> {
               } else {
                 final streak = snapshot.data!.streak;
                 return Scaffold(
-                  backgroundColor: ColorConstants.backgroundColor,
+                  backgroundColor: ColorConstants.background,
                   appBar: CustomAppBar(streak: streak,),
                   body: Center(
                     child: SingleChildScrollView(
@@ -105,7 +105,7 @@ class _PathScreenState extends State<PathScreen> {
                             path.title.toUpperCase(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: ColorConstants.whiteColor,
+                              color: ColorConstants.white,
                               fontSize: FontConstants.largeHeaderFontSize,
                               fontWeight: FontWeight.bold,
                             ),
@@ -118,7 +118,7 @@ class _PathScreenState extends State<PathScreen> {
                                   path.description,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: ColorConstants.whiteColor,
+                                    color: ColorConstants.white,
                                     fontSize: FontConstants.standardFontSize,
                                   )
                               )
@@ -128,7 +128,7 @@ class _PathScreenState extends State<PathScreen> {
                               isPathAdded ? Icons.favorite_rounded : Icons
                                   .favorite_border_rounded,
                               size: 30,
-                              color: ColorConstants.whiteColor,
+                              color: ColorConstants.white,
                             ),
                             onPressed: () => togglePath(path.title),
                             tooltip: isPathAdded

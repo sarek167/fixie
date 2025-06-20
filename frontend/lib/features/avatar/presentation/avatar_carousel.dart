@@ -27,7 +27,7 @@ class AvatarCarousel extends StatelessWidget{
         SizedBox(height: 16),
         Text(title, style: TextStyle(fontWeight: FontWeight.bold,
             fontSize: FontConstants.headerFontSize,
-            color: ColorConstants.whiteColor)),
+            color: ColorConstants.white)),
         SizedBox(height: FontConstants.standardFontSize),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -47,8 +47,8 @@ class AvatarCarousel extends StatelessWidget{
                   height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color:ColorConstants.whiteColor, width: 4),
-                    color: isColor ? option.color : ColorConstants.whiteColor
+                    border: Border.all(color:ColorConstants.white, width: 4),
+                    color: isColor ? option.color : ColorConstants.white
                   ),
                   child: !isColor && option.imageUrl != null
                     ? ClipOval(child: Image.network(option.imageUrl!, fit: BoxFit.cover))

@@ -3,6 +3,13 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Colors(models.Model):
+    name = models.CharField(max_length=20)
+    hex = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = "colors"
+
 class Reward(models.Model):
     TRIGGER_TYPE_CHOICES = [
         ('task_completion', 'Task Completion'),
@@ -10,8 +17,6 @@ class Reward(models.Model):
         ('path_completion', 'Path Completion'),
     ]
 
-    name = models.CharField(max_length=255)
-    description = models.TextField()
     blob_name = models.CharField(max_length=255)
     container_name = models.CharField(max_length=255)
     starter = models.BooleanField()
@@ -22,10 +27,7 @@ class Reward(models.Model):
         blank=True
     )
     trigger_value = models.IntegerField(null=True, blank=True)
-    color_to_display = models.CharField(max_length=255, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
+    color = models.ForeignKey(Colors, on_delete=models.SET_NULL, null=True, related_name='rewards')
 
     class Meta:
         db_table = "rewards"
@@ -37,8 +39,24 @@ class UserReward(models.Model):
     date_awarded = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} - {self.reward.name}"
+        return f"{self.user} - {self.reward.blob_name}"
 
     class Meta:
         db_table = "user_rewards"
+
+class AvatarState(models.Model):
+    user_id = models.IntegerField()
+    skin_color = models.CharField(max_length=20)
+    eyes_color = models.CharField(max_length=20)
+    hair = models.CharField(max_length=50)
+    hair_color = models.CharField(max_length=20)
+    top_clothes = models.CharField(max_length=50)
+    top_clothes_color = models.CharField(max_length=20)
+    bottom_clothes = models.CharField(max_length=50)
+    bottom_clothes_color = models.CharField(max_length=20)
+    lipstick = models.CharField(max_length=10, default="0")
+    blush = models.CharField(max_length=10, default="0")
+
+    class Meta:
+        db_table = "avatar_state"
 

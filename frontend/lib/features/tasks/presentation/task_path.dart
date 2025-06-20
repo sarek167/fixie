@@ -73,7 +73,7 @@ class TaskPathWidget extends StatelessWidget {
             child: Text(
               node.text,
               style: TextStyle(
-                color: ColorConstants.whiteColor,
+                color: ColorConstants.white,
                 fontWeight: FontWeight.bold,
                 fontSize: FontConstants.standardFontSize,
               ),
@@ -147,7 +147,7 @@ class TaskPathPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = ColorConstants.whiteColor
+      ..color = ColorConstants.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

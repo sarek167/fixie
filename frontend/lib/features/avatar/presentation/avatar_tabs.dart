@@ -41,50 +41,50 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 decoration: BoxDecoration(
-                  color: ColorConstants.veryLightColor,
+                  color: ColorConstants.veryLight,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16))
                 ),
-                 child: Icon(Icons.accessibility_new, color: ColorConstants.whiteColor, size: FontConstants.largeHeaderFontSize)
+                 child: Icon(Icons.accessibility_new, color: ColorConstants.white, size: FontConstants.largeHeaderFontSize)
               ),
             ),
             Tab(
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   decoration: BoxDecoration(
-                      color: ColorConstants.lightColor,
+                      color: ColorConstants.light,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(16))
                   ),
-                  child: Icon(Icons.brush, color: ColorConstants.whiteColor, size: FontConstants.largeHeaderFontSize)
+                  child: Icon(Icons.brush, color: ColorConstants.white, size: FontConstants.largeHeaderFontSize)
               ),
             ),
             Tab(
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   decoration: BoxDecoration(
-                      color: ColorConstants.semiLightColor,
+                      color: ColorConstants.semiLight,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(16))
                   ),
-                  child: Icon(Icons.remove_red_eye, color: ColorConstants.whiteColor, size: FontConstants.largeHeaderFontSize)
+                  child: Icon(Icons.remove_red_eye, color: ColorConstants.white, size: FontConstants.largeHeaderFontSize)
               ),
             ),
             Tab(
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   decoration: BoxDecoration(
-                      color: ColorConstants.darkColor,
+                      color: ColorConstants.dark,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(16))
                   ),
-                  child: Icon(Icons.emoji_people, color: ColorConstants.whiteColor, size: FontConstants.largeHeaderFontSize)
+                  child: Icon(Icons.emoji_people, color: ColorConstants.white, size: FontConstants.largeHeaderFontSize)
               ),
             ),
             Tab(
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   decoration: BoxDecoration(
-                      color: ColorConstants.lightBackgroundColor,
+                      color: ColorConstants.lightBackground,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(16))
                   ),
-                  child: Icon(Icons.pets, color: ColorConstants.whiteColor, size: FontConstants.largeHeaderFontSize,)
+                  child: Icon(Icons.pets, color: ColorConstants.white, size: FontConstants.largeHeaderFontSize,)
               ),
             ),
           ],
@@ -103,29 +103,30 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                 final avatarMap = snapshot.data!;
                 final List<AvatarSingleTab> tabs = [
                   AvatarSingleTab(
-                    backgroundColor: ColorConstants.veryLightColor,
+                    backgroundColor: ColorConstants.veryLight,
                     carousels: [
                       AvatarCarousel(title: "SKÓRA", partKey: "skinColor", options: avatarMap["base"] ?? []),
+                      AvatarCarousel(title: "OCZY", partKey: "eyesColor", options: avatarMap["eyes"] ?? []),
                     ],
                   ),
                   AvatarSingleTab(
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     carousels: [
                       AvatarCarousel(title: "WŁOSY", partKey: "hair", options: avatarMap["hair"] ?? [], isColor: false,),
                     ],
                   ),
                   AvatarSingleTab(
-                    backgroundColor: ColorConstants.semiLightColor,
+                    backgroundColor: ColorConstants.semiLight,
                     carousels: [
                       AvatarCarousel(title: "OCZY", partKey: "eyesColor", options: avatarMap["eyes"] ?? []),
                     ],
                   ),
                   const AvatarSingleTab(
-                    backgroundColor: ColorConstants.darkColor,
+                    backgroundColor: ColorConstants.dark,
                     carousels: [],
                   ),
                   const AvatarSingleTab(
-                    backgroundColor: ColorConstants.lightBackgroundColor,
+                    backgroundColor: ColorConstants.lightBackground,
                     carousels: [],
                   ),
                 ];
