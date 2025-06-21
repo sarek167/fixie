@@ -23,7 +23,26 @@ INSERT INTO colors (name, hex) VALUES
   ('skin5', '#AB6E4D'),
   ('skin6', '#96553E'),
   ('skin7', '#784C31'),
-  ('skin8', '#6C3D2D');
+  ('skin8', '#6C3D2D'),
+  ('lipstick1', '#CC6464'),
+  ('lipstick2', '#AD4C44'),
+  ('lipstick3', '#BD5C57'),
+  ('lipstick4', '#963B3B'),
+  ('lipstick5', '#6E2721'),
+  ('blush1', '#D9776A'),
+  ('blush2', '#FA7069'),
+  ('blush3', '#FA8C73'),
+  ('blush4', '#C25151'),
+  ('blush5', '#873D3C'),
+  ('purple', '#745C96'),
+  ('white', '#C5B6A0'),
+  ('blonde', '#B0815A'),
+  ('copper', '#A1624F'),
+  ('emerald', '#2A5C4E'),
+  ('lilac', '#A382B8'),
+  ('navy', '#49486E'),
+  ('turquoise', '#4A7378');
+
 
 
 INSERT INTO rewards (blob_name, container_name, starter, trigger_type, trigger_value, color_id) VALUES
@@ -50,15 +69,9 @@ INSERT INTO rewards (blob_name, container_name, starter, trigger_type, trigger_v
 ('light_grey', 'eyes', FALSE, 'task_completion', 1, 10),
 ('pink', 'eyes', FALSE, 'task_completion', 2, 11),
 ('light_pink', 'eyes', FALSE, 'path_completion', 5, 12),
-('red', 'eyes', FALSE, 'path_completion', 6, 13);
--- ('starter_shirt', 'Podstawowa koszulka dostępna od początku.', 'starter_shirt.png', 'avatars', TRUE, NULL, NULL, '#CCCCCC'),
--- ('starter_pet', 'Twój pierwszy towarzysz!', 'starter_pet.png', 'avatars', TRUE, NULL, NULL, '#CCCCCC');
-
--- Nagrody za zadania, streaki, ścieżki
--- INSERT INTO rewards (name, description, blob_name, container_name, starter, trigger_type, trigger_value, color_to_display) VALUES
--- ('grey eyes', 'Nagroda za wykonanie pięciu zadań', 'grey', 'eyes', FALSE, 'task_completion', 1, '#FFD700'),
--- ('streak5_shoes', 'Buty za 5 dni z rzędu zadań.', 'streak5_shoes.png', 'avatars', FALSE, 'streak', 5, '#00FF00'),
--- ('path_jacket', 'Kurtka za ukończenie ścieżki „Samopoznanie”.', 'path_jacket.png', 'avatars', FALSE, 'path_completion', 1, '#1E90FF');
+('red', 'eyes', FALSE, 'path_completion', 6, 13),
+('buzzcut-black', 'hair', FALSE, 'path_completion', 1, 22),
+('wavy-black', 'hair', FALSE, 'task_completion', 22, 22);
 
 INSERT INTO user_rewards (reward_id, user_id) VALUES
 (20, 6),

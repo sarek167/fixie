@@ -7,6 +7,14 @@ from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from datetime import date, timedelta
+from django.conf import settings
+from kafka import KafkaProducer
+import json
+
+producer = KafkaProducer(
+    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
 
 @method_decorator(jwt_required, name='dispatch')
 class UserPathsView(APIView):
@@ -103,6 +111,21 @@ class UserTaskAnswerView(APIView):
             }
 
         )
+        if status == "completed":
+            # check if task was last in path to complete
+            path_task_assign = TaskPath.objects.get(task=data["task_id"])
+            all_path_tasks = TaskPath.objects.filter(path=path_task_assign.path)
+            all_user_answers = UserTaskAnswer.objects.filter(task__in=[task.id for task in all_path_tasks], user_id=request.user_id)
+            if len(all_path_tasks) == len(all_user_answers) and all([answer.status == "completed" for answer in all_user_answers]):
+                producer.send('path-completed-event', {"user_id": request.user_id, "trigger_value": path_task_assign.path.id})
+            # count all tasks
+            task_num = len(UserTaskAnswer.objects.filter(user_id=request.user_id, status = "completed"))
+            producer.send('task-completed-event', {"user_id": request.user_id, "trigger_value": task_num})
+
+            # count streak
+            # send to broker
+            pass
+
         print(answer)
         return JsonResponse({"id": answer.id, "created": created, "status": "saved"}, status=200)
 

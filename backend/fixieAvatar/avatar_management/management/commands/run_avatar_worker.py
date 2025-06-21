@@ -1,7 +1,7 @@
 import json
 from kafka import KafkaConsumer
 from django.core.management.base import BaseCommand
-from avatar_management.models import AvatarState
+from avatar_management.models import AvatarState, UserReward, Reward
 from django.conf import settings
 
 class Command(BaseCommand):
@@ -10,6 +10,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         consumer = KafkaConsumer(
             'avatar-updates',
+            'path-completed-event',
+            'task-completed-event',
             bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
             group_id='avatar-consumer-group',
             value_deserializer=lambda m: json.loads(m.decode('utf-8')),
@@ -20,6 +22,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Avatar worker started. Listening for avatar updates...'))
 
         for message in consumer:
+            topic = message.topic
             data = message.value
             user_id = data.pop('user_id', None)
 
@@ -28,11 +31,36 @@ class Command(BaseCommand):
                 continue
 
             try:
-                avatar, created = AvatarState.objects.update_or_create(
-                    user_id=user_id,
-                    defaults=data
-                )
-                status = 'created' if created else 'updated'
-                self.stdout.write(f'Avatar {status} for user_id {user_id}')
+                if topic == "avatar-updates":
+                    self.avatar_update(data, user_id)
+                elif topic == "path-completed-event":
+                    self.reward_receive_events(data, user_id, "path_completion")
+                elif topic == "task-completed-event":
+                    self.reward_receive_events(data, user_id, "task_completion")
             except Exception as e:
-                self.stderr.write(f"Error processing message: {e}")
+                self.stderr.write(f"Error processing topic's {topic} message: {e}")
+    
+    def avatar_update(self, data, user_id):
+        _, created = AvatarState.objects.update_or_create(
+            user_id=user_id,
+            defaults=data
+        )
+        status = 'created' if created else 'updated'
+        self.stdout.write(f'Avatar {status} for user_id {user_id}')
+    
+    def reward_receive_events(self, data, user_id, trigger_type):
+        trigger_value = data.get('trigger_value')
+        if not trigger_value:
+            raise Exception(f"No trigger value in event. Payload: {data}")
+        try:
+            reward = Reward.objects.get(trigger_type=trigger_type, trigger_value=trigger_value)
+            if reward:
+                _, created = UserReward.objects.update_or_create(
+                    user_id = user_id,
+                    reward = reward
+                )
+                if created:
+                    self.stdout.write(f"User with ID {user_id} received reward with id {reward.id}")
+        except Reward.DoesNotExist:
+            # there is no reward for this path
+            return
