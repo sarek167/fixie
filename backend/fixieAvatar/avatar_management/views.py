@@ -8,6 +8,14 @@ from collections import defaultdict
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.db.models import F
+from kafka import KafkaProducer
+import json
+from django.conf import settings
+
+producer = KafkaProducer(
+    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
 
 @method_decorator(jwt_required, name='dispatch')
 class UserAvatarElementsView(APIView):
@@ -40,14 +48,20 @@ class AvatarStateView(APIView):
             return JsonResponse({"error": "Avatar state not found."}, status=404)
     
     def put(self, request):
-        try:
-            avatar = AvatarState.objects.get(user_id=request.user_id)
-            serializer = AvatarStateSerializer(avatar, data=request.data, partial=True)
-        except AvatarState.DoesNotExist:
-            serializer = AvatarStateSerializer(data=request.data)
+        avatar_data = request.data.copy()
+        avatar_data['user_id'] = request.user_id
+
+        producer.send('avatar-updates', avatar_data)
+        return JsonResponse({"status": "update enqueued"}, status=202)
+        # try:
+
+        #     avatar = AvatarState.objects.get(user_id=request.user_id)
+        #     serializer = AvatarStateSerializer(avatar, data=request.data, partial=True)
+        # except AvatarState.DoesNotExist:
+        #     serializer = AvatarStateSerializer(data=request.data)
     
-        if serializer.is_valid():
-            avatar = serializer.save(user_id=request.user_id)
-            return JsonResponse(AvatarStateSerializer(avatar).data, status=200)
-        print(serializer)
-        return JsonResponse(serializer.errors, status=400) 
+        # if serializer.is_valid():
+        #     avatar = serializer.save(user_id=request.user_id)
+        #     return JsonResponse(AvatarStateSerializer(avatar).data, status=200)
+        # print(serializer)
+        # return JsonResponse(serializer.errors, status=400) 

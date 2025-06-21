@@ -52,13 +52,13 @@ class AvatarWidget extends StatelessWidget {
               if (avatar.lipstick != "0")
               Transform.scale(
                 scale: 8,
-                child: Image.network('https://fixieavatarimg.blob.core.windows.net/lipstick/3.png', filterQuality: FilterQuality.none,),
+                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/lipstick/${avatar.lipstick}.png', filterQuality: FilterQuality.none,),
               ),
-              // Transform.scale(
-              //   scale: 8,
-              //   scale: 8,
-              //   child: Image.network('https://fixieavatarimg.blob.core.windows.net/accessories/beard-red.png', filterQuality: FilterQuality.none,),
-              // ),
+              if (avatar.beard != "0")
+              Transform.scale(
+                scale: 8,
+                child: Image.network('https://${AvatarStorage.storageName}.blob.core.windows.net/beard/${avatar.beard}.png', filterQuality: FilterQuality.none,),
+              ),
             ],
           )
         )

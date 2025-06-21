@@ -21,6 +21,11 @@ class AvatarCarousel extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     print("CZY JEST KOLOR: $isColor");
+    final displayedOptions = !isColor
+        ? options
+        : {
+      for (var o in options) o.color: o
+    }.values.toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -35,7 +40,7 @@ class AvatarCarousel extends StatelessWidget{
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
-            children: options.map((option) {
+            children: displayedOptions.map((option) {
               print(option.imageUrl);
               return GestureDetector(
                 onTap: () => {

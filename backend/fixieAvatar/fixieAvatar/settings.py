@@ -129,3 +129,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
+
+KAFKA_IP = "localhost"
+KAFKA_PORT = "9092"

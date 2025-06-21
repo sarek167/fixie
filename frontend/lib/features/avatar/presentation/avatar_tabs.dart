@@ -113,6 +113,8 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                     backgroundColor: ColorConstants.light,
                     carousels: [
                       AvatarCarousel(title: "WŁOSY", partKey: "hair", options: avatarMap["hair"] ?? [], isColor: false,),
+                      AvatarCarousel(title: "KOLOR WŁOSÓW", partKey: "hairColor", options: avatarMap["hair"] ?? []),
+
                     ],
                   ),
                   AvatarSingleTab(

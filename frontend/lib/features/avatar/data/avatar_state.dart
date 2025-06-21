@@ -9,6 +9,7 @@ class AvatarState {
   String bottomClothesColor;
   String lipstick;
   String blush;
+  String beard;
 
   AvatarState({
     required this.skinColor,
@@ -20,7 +21,8 @@ class AvatarState {
     required this.bottomClothes,
     required this.bottomClothesColor,
     this.lipstick = "0",
-    this.blush = "0"
+    this.blush = "0",
+    this.beard = "0"
   });
 
   AvatarState copyWith({
@@ -34,6 +36,7 @@ class AvatarState {
     String? bottomClothesColor,
     String? lipstick,
     String? blush,
+    String? beard,
   }) {
     AvatarState state = AvatarState(
       skinColor: skinColor ?? this.skinColor,
@@ -46,6 +49,7 @@ class AvatarState {
       bottomClothesColor: bottomClothesColor ?? this.bottomClothesColor,
       lipstick: lipstick ?? this.lipstick,
       blush: blush ?? this.blush,
+      beard: beard ?? this.beard,
     );
     print(state.hair);
     print(state.eyesColor);
@@ -63,6 +67,7 @@ class AvatarState {
     bottomClothesColor: json['bottom_clothes_color'],
     lipstick: json['lipstick'],
     blush: json['blush'],
+    beard: json['beard'],
   );
 
   Map<String, dynamic> toJson() => {

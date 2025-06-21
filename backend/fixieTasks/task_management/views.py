@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer, Task
 from .serializers import PathSerializer, TaskSerializer, UserTaskAnswerSerializer
-from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
