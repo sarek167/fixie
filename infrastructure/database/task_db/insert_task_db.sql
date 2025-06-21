@@ -100,7 +100,9 @@ INSERT INTO tasks (title, description, category, difficulty, type, date_for_dail
 ('Codzienne zadanie 39', 'To jest opis codziennego zadania numer 27. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-05-09', 'text'),
 ('Codzienne zadanie 40', 'To jest opis codziennego zadania numer 28. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-05-10', 'text'),
 ('Codzienne zadanie 41', 'To jest opis codziennego zadania numer 29. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-05-11', 'checkbox'),
-('Codzienne zadanie 42', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-05-12', 'checkbox');
+('Codzienne zadanie 42', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-05-12', 'checkbox'),
+('Codzienne zadanie 43', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-06-21', 'checkbox');
+
 -- Przypisania zadań do ścieżek
 INSERT INTO task_path (task_id, path_id) VALUES
 (1, 10),

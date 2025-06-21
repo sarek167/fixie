@@ -112,14 +112,20 @@ class UserTaskAnswerView(APIView):
 
         )
         if status == "completed":
-            # check if task was last in path to complete
-            path_task_assign = TaskPath.objects.get(task=data["task_id"])
-            all_path_tasks = TaskPath.objects.filter(path=path_task_assign.path)
-            all_user_answers = UserTaskAnswer.objects.filter(task__in=[task.id for task in all_path_tasks], user_id=request.user_id)
-            if len(all_path_tasks) == len(all_user_answers) and all([answer.status == "completed" for answer in all_user_answers]):
-                producer.send('path-completed-event', {"user_id": request.user_id, "trigger_value": path_task_assign.path.id})
+            print(data)
+            try:
+                # check if task was last in path to complete
+                path_task_assign = TaskPath.objects.get(task=data["task_id"])
+                all_path_tasks = TaskPath.objects.filter(path=path_task_assign.path)
+                all_user_answers = UserTaskAnswer.objects.filter(task__in=[task.id for task in all_path_tasks], user_id=request.user_id)
+                if len(all_path_tasks) == len(all_user_answers) and all([answer.status == "completed" for answer in all_user_answers]):
+                    producer.send('path-completed-event', {"user_id": request.user_id, "trigger_value": path_task_assign.path.id})
+            except TaskPath.DoesNotExist:
+                # task is not from path
+                pass
             # count all tasks
             task_num = len(UserTaskAnswer.objects.filter(user_id=request.user_id, status = "completed"))
+            print(task_num)
             producer.send('task-completed-event', {"user_id": request.user_id, "trigger_value": task_num})
 
             # count streak
@@ -177,6 +183,7 @@ class StreakView(APIView):
                     today -= timedelta(days=1)
                 else:
                     break
+            producer.send("streak-completed-event", {"user_id": request.user_id, "trigger_value": streak})
             return JsonResponse({"streak": streak}, status=200)
         except Exception as e:
             print(e)

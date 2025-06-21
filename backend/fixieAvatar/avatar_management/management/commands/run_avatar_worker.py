@@ -12,6 +12,7 @@ class Command(BaseCommand):
             'avatar-updates',
             'path-completed-event',
             'task-completed-event',
+            'streak-completed-event',
             bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
             group_id='avatar-consumer-group',
             value_deserializer=lambda m: json.loads(m.decode('utf-8')),
@@ -31,12 +32,15 @@ class Command(BaseCommand):
                 continue
 
             try:
+                self.stdout.write(topic)
                 if topic == "avatar-updates":
                     self.avatar_update(data, user_id)
                 elif topic == "path-completed-event":
                     self.reward_receive_events(data, user_id, "path_completion")
                 elif topic == "task-completed-event":
                     self.reward_receive_events(data, user_id, "task_completion")
+                elif topic == "streak-completed-event":
+                    self.reward_receive_events(data, user_id, "streak")
             except Exception as e:
                 self.stderr.write(f"Error processing topic's {topic} message: {e}")
     
@@ -49,6 +53,7 @@ class Command(BaseCommand):
         self.stdout.write(f'Avatar {status} for user_id {user_id}')
     
     def reward_receive_events(self, data, user_id, trigger_type):
+        self.stdout.write(f"PAYLOAD {data}")
         trigger_value = data.get('trigger_value')
         if not trigger_value:
             raise Exception(f"No trigger value in event. Payload: {data}")
@@ -59,6 +64,7 @@ class Command(BaseCommand):
                     user_id = user_id,
                     reward = reward
                 )
+                print(f"CREATED: {created}")
                 if created:
                     self.stdout.write(f"User with ID {user_id} received reward with id {reward.id}")
         except Reward.DoesNotExist:

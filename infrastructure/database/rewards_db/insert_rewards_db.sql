@@ -71,7 +71,8 @@ INSERT INTO rewards (blob_name, container_name, starter, trigger_type, trigger_v
 ('light_pink', 'eyes', FALSE, 'path_completion', 5, 12),
 ('red', 'eyes', FALSE, 'path_completion', 6, 13),
 ('buzzcut-black', 'hair', FALSE, 'path_completion', 1, 22),
-('wavy-black', 'hair', FALSE, 'task_completion', 22, 22);
+('wavy-black', 'hair', FALSE, 'task_completion', 22, 22),
+('curly-black', 'hair', FALSE, 'streak', 1, 22);
 
 INSERT INTO user_rewards (reward_id, user_id) VALUES
 (20, 6),
