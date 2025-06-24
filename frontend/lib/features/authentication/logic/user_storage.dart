@@ -5,14 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserStorage {
   Future<User?> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? id = prefs.getInt("id");
     String? email = prefs.getString("email");
     String? username = prefs.getString("username");
     String? firstName = prefs.getString("first_name");
     String? lastName = prefs.getString("last_name");
     int? streak = prefs.getInt("streak");
 
-    if (email != null && username != null) {
+    if (id != null && email != null && username != null) {
       return User(
+        id: id,
         email: email,
         username: username,
         firstName: firstName,
@@ -25,6 +27,7 @@ class UserStorage {
 
   Future<void> setUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("id", user.id);
     await prefs.setString("email", user.email);
     await prefs.setString("username", user.username);
     await prefs.setInt("streak", user.streak);

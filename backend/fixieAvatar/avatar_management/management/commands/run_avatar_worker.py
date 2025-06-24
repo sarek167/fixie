@@ -1,8 +1,14 @@
 import json
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer, KafkaProducer
 from django.core.management.base import BaseCommand
 from avatar_management.models import AvatarState, UserReward, Reward
 from django.conf import settings
+from avatar_management.serializers import RewardSerializer
+
+producer = KafkaProducer(
+    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
 
 class Command(BaseCommand):
     help = 'Runs Kafka consumer to update avatar in database'
@@ -66,6 +72,15 @@ class Command(BaseCommand):
                 )
                 print(f"CREATED: {created}")
                 if created:
+                    serialized_reward = RewardSerializer(reward).data
+                    producer.send(
+                        'reward-granted', 
+                        {
+                            "user_id": user_id, 
+                            "reward": serialized_reward
+                        }
+                    )
+
                     self.stdout.write(f"User with ID {user_id} received reward with id {reward.id}")
         except Reward.DoesNotExist:
             # there is no reward for this path

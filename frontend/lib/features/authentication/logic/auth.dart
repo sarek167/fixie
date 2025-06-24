@@ -44,6 +44,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         int streakResponse = await TaskService.countStreak();
         print("W AUTH STREAK $streakResponse");
         User user = User(
+            id: response.data["id"],
             email: response.data["email"],
             username: response.data["username"],
             firstName: response.data["first_name"],
@@ -74,6 +75,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           await _secureStorage.write(key: 'access_token', value: accessToken);
           await _secureStorage.write(key: 'refresh_token', value: refreshToken);
           User user = User(
+            id: response.data["id"],
             email: response.data["email"],
             username: response.data["username"],
             firstName: response.data["first_name"],

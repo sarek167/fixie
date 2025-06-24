@@ -3,6 +3,7 @@ import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
 import 'package:frontend/core/services/task_service.dart';
+import 'package:frontend/core/services/websocket_service.dart';
 import 'package:frontend/core/utils/hex_color.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
@@ -12,8 +13,34 @@ import 'package:frontend/widgets/carousel.dart';
 import 'package:frontend/widgets/circle_button.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final WebSocketService _webSocketService = WebSocketService();
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    UserStorage().getUser().then((user) {
+      if (user != null) {
+        setState(() {
+          _user = user;
+        });
+
+        _webSocketService.connect(user.id.toString(), (data) {
+            print(data);
+        });
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -34,3 +34,18 @@ kubectl get services
 kubectl logs <nazwa-poda>\
 kubectl get service
 ```
+
+**Kafka locally**
+```bash
+bin/kafka-server-start.sh config/server.properties
+bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+
+**Kafka workers**
+```bash
+# avatar worker
+python3 manage.py run_avatar_worker
+
+# notification worker
+python3 manage.py run_notification_worker
+```
