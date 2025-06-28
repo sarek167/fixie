@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _user = user;
         });
 
-        _webSocketService.connect(user.id.toString(), (data) {
+        _webSocketService.connect(user.id, (data) {
             print(data);
         });
       }

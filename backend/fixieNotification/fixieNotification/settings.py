@@ -139,3 +139,7 @@ PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
 
 KAFKA_IP = "localhost"
 KAFKA_PORT = "9092"
+
+PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
+
+ASGI_APPLICATION = "fixieNotification.asgi.application"

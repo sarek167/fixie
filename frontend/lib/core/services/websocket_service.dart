@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:frontend/core/services/token_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 typedef OnNotificationCallback = void Function(Map<String, dynamic> data);
@@ -6,9 +7,10 @@ typedef OnNotificationCallback = void Function(Map<String, dynamic> data);
 class WebSocketService {
   WebSocketChannel? _channel;
 
-  void connect(String userId, OnNotificationCallback onNotification) {
+  Future<void> connect(int userId, OnNotificationCallback onNotification) async {
+    final userToken = await TokenClient.getUserToken(userId);
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://10.0.2.2:8003/ws/notifications/$userId')
+        Uri.parse('ws://10.0.2.2:8003/ws/notifications/?token=$userToken')
     );
 
     _channel!.stream.listen(

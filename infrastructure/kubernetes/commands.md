@@ -49,3 +49,8 @@ python3 manage.py run_avatar_worker
 # notification worker
 python3 manage.py run_notification_worker
 ```
+
+**Notifications microservice**
+```bash
+daphne -b 0.0.0.0 -p 8003 fixieNotification.asgi:application
+```
