@@ -77,7 +77,10 @@ class Command(BaseCommand):
                         'reward-granted', 
                         {
                             "user_id": user_id, 
-                            "reward": serialized_reward
+                            "title": "Gratulacje!",
+                            "message": "W ramach nagrody otrzymujesz element wyglądu avatara!",
+                            "container_name": serialized_reward["container_name"],
+                            "blob_name": serialized_reward["blob_name"]
                         }
                     )
 

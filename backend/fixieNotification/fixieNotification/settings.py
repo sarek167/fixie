@@ -78,8 +78,12 @@ WSGI_APPLICATION = "fixieNotification.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "notifications_db",
+        "USER": "notifications_admin",
+        "PASSWORD": "Lemonade_notifications_123!",
+        "HOST": "localhost",
+        "PORT": "3307",
     }
 }
 

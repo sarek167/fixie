@@ -4,6 +4,8 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from notification_management.models import Notification
+from datetime import datetime
 
 
 class Command(BaseCommand):
@@ -31,16 +33,27 @@ class Command(BaseCommand):
                 continue
             self.stdout.write(f"TOPIC: {topic}")
             self.stdout.write(f"MESSAGE: {message}")
+            self.stdout.write(f"USER ID {user_id}")
+            self.stdout.write(f"DATA: {data}")
             channel_layer = get_channel_layer()
 
             try:
+                # if channel_layer is None or not hasattr(channel_layer, "groups") or not async_to_sync(channel_layer.group_send):
+                #     raise RuntimeError("No active channels to send notification")
+
                 async_to_sync(channel_layer.group_send)(
                     f"user_{user_id}",
                     {
                         "type": "send_notification",
-                        "message": data
+                        "title": data.get("title"),
+                        "container_name": data.get("container_name"),
+                        "blob_name": data.get("blob_name"),
+                        "message": data.get("message")
                     }
                 )
+                Notification.objects.create(user_id=user_id, payload=data, delivered = True, delivered_at = datetime.now())
+
             except Exception as e:
-                self.stderr.write(f"Error processing topic's {topic} message: {e}")
+                self.stderr.write(f"User is offline or error processing topic's {topic} message: {e}. Saving notification to DB.")
+                Notification.objects.create(user_id=user_id, payload=data, delivered = False)
     

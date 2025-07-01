@@ -14,6 +14,8 @@ import 'package:frontend/features/tasks/presentation/path_screen.dart';
 import 'package:frontend/features/tasks/presentation/task_screen.dart';
 import 'package:frontend/features/tasks/presentation/single_task_screen.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   runApp(
     MultiBlocProvider(
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('pl', 'PL')
       ],
+      navigatorKey: navigatorKey,
       title: 'Fixie',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

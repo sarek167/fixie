@@ -7,6 +7,7 @@ typedef OnNotificationCallback = void Function(Map<String, dynamic> data);
 class WebSocketService {
   WebSocketChannel? _channel;
 
+
   Future<void> connect(int userId, OnNotificationCallback onNotification) async {
     final userToken = await TokenClient.getUserToken(userId);
     _channel = WebSocketChannel.connect(
@@ -16,6 +17,8 @@ class WebSocketService {
     _channel!.stream.listen(
         (message) {
           final data = jsonDecode(message);
+          print("DOSTAŁO WIADOMOŚĆ");
+          print(message);
           onNotification(data);
         },
       onError: (error) {

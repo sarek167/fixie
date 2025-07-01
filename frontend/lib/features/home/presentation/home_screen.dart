@@ -7,6 +7,7 @@ import 'package:frontend/core/services/websocket_service.dart';
 import 'package:frontend/core/utils/hex_color.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/notification/logic/show_dialog.dart';
 import 'package:frontend/widgets/avatar.dart';
 import 'package:frontend/widgets/card.dart';
 import 'package:frontend/widgets/carousel.dart';
@@ -22,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final WebSocketService _webSocketService = WebSocketService();
-  User? _user;
+  final notificationManager = NotificationManager();
 
   @override
   void initState() {
@@ -30,12 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     UserStorage().getUser().then((user) {
       if (user != null) {
-        setState(() {
-          _user = user;
-        });
 
         _webSocketService.connect(user.id, (data) {
-            print(data);
+          notificationManager.show(data);
+          print(data);
         });
       }
     });
