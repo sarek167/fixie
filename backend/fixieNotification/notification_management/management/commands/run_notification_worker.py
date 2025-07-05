@@ -38,8 +38,9 @@ class Command(BaseCommand):
             channel_layer = get_channel_layer()
 
             try:
-                # if channel_layer is None or not hasattr(channel_layer, "groups") or not async_to_sync(channel_layer.group_send):
-                #     raise RuntimeError("No active channels to send notification")
+                if channel_layer is None or not async_to_sync(channel_layer.group_send):
+                    raise RuntimeError("No active channels to send notification")
+
 
                 async_to_sync(channel_layer.group_send)(
                     f"user_{user_id}",
