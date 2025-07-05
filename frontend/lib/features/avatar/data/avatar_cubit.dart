@@ -58,6 +58,9 @@ class AvatarCubit extends Cubit<AvatarState>{
       case "blush":
         newState = state.copyWith(blush: value);
         break;
+      case "beard":
+        newState = state.copyWith(beard: value);
+        break;
       default:
         return;
     }

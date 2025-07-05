@@ -120,12 +120,20 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                   AvatarSingleTab(
                     backgroundColor: ColorConstants.semiLight,
                     carousels: [
-                      AvatarCarousel(title: "OCZY", partKey: "eyesColor", options: avatarMap["eyes"] ?? []),
+                      AvatarCarousel(title: "SZMINKA", partKey: "lipstick", options: avatarMap["lipstick"] ?? [], hasEmpty: true,),
+                      AvatarCarousel(title: "RUMIENIEC", partKey: "blush", options: avatarMap["blush"] ?? [], hasEmpty: true,),
+                      AvatarCarousel(title: "BRODA", partKey: "beard", options: avatarMap["beard"] ?? [], isColor: true, hasEmpty: true,),
                     ],
                   ),
-                  const AvatarSingleTab(
+                  AvatarSingleTab(
                     backgroundColor: ColorConstants.dark,
-                    carousels: [],
+                    carousels: [
+                      AvatarCarousel(title: "GÓRNE UBRANIE", partKey: "topClothes", options: avatarMap["top-clothes"] ?? [], isColor: false,),
+                      AvatarCarousel(title: "KOLOR", partKey: "topClothesColor", options: avatarMap["top-clothes"] ?? []),
+                      AvatarCarousel(title: "DOLNE UBRANIE", partKey: "bottomClothes", options: avatarMap["bottom-clothes"] ?? [], isColor: false,),
+                      AvatarCarousel(title: "KOLOR", partKey: "bottomClothesColor", options: avatarMap["bottom-clothes"] ?? []),
+
+                    ],
                   ),
                   const AvatarSingleTab(
                     backgroundColor: ColorConstants.lightBackground,
@@ -145,7 +153,8 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                             title: carousel.title,
                             partKey: carousel.partKey,
                             options: carousel.options,
-                            isColor: carousel.isColor
+                            isColor: carousel.isColor,
+                            hasEmpty: carousel.hasEmpty,
                           )
                           ).toList(),
                         ),

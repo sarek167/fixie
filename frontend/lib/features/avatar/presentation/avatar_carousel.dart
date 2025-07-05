@@ -9,23 +9,26 @@ class AvatarCarousel extends StatelessWidget{
   final String partKey;
   final List<AvatarOptionItem> options;
   final bool isColor;
+  final bool hasEmpty;
 
   const AvatarCarousel({
     super.key,
     required this.title,
     required this.partKey,
     required this.options,
-    this.isColor = true
+    this.isColor = true,
+    this.hasEmpty = false
   });
 
   @override
   Widget build(BuildContext context) {
-    print("CZY JEST KOLOR: $isColor");
     final displayedOptions = !isColor
-        ? options
+        ? {
+          for (var o in options.reversed) o.label.split("-")[0]: o
+        }.values.toList()
         : {
-      for (var o in options) o.color: o
-    }.values.toList();
+          for (var o in options) o.color: o
+        }.values.toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -40,27 +43,46 @@ class AvatarCarousel extends StatelessWidget{
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
-            children: displayedOptions.map((option) {
-              print(option.imageUrl);
-              return GestureDetector(
-                onTap: () => {
-                  context.read<AvatarCubit>().updatePart(partKey, option.label)
-              },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color:ColorConstants.white, width: 4),
-                    color: isColor ? option.color : ColorConstants.white
+            children: [
+              if (hasEmpty)
+                GestureDetector(
+                  onTap: () {
+                    context.read<AvatarCubit>().updatePart(partKey, "0");
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorConstants.white,
+                    ),
+                    child: Center(
+                      child: Icon(Icons.close, color: ColorConstants.dark, size: FontConstants.largeHeaderFontSize)
+                    )
                   ),
-                  child: !isColor && option.imageUrl != null
-                    ? ClipOval(child: Image.network(option.imageUrl!, fit: BoxFit.cover))
-                    : null,
-                )
-              );
-            }).toList(),
+                ),
+              ...displayedOptions.map((option) {
+                return GestureDetector(
+                    onTap: () => {
+                      context.read<AvatarCubit>().updatePart(partKey, option.label)
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color:ColorConstants.white, width: 4),
+                          color: isColor ? option.color : ColorConstants.white
+                      ),
+                      child: !isColor && option.imageUrl != null
+                          ? ClipOval(child: Image.network(option.imageUrl!, fit: BoxFit.cover))
+                          : null,
+                    )
+                );
+              }),
+            ]
             ),
           )
         ),

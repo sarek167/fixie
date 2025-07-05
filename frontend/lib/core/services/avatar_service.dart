@@ -34,8 +34,7 @@ class AvatarService {
       EndpointConstants.putAvatarStateEndpoint,
       data: state.toJson()
     );
-
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 202) {
       throw Exception("Error while updating AvatarState");
     }
   }

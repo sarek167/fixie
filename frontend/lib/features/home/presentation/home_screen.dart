@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         } else if (snapshot.hasError) {
         return Scaffold(
-          appBar: const CustomAppBar(streak: 0),
+          appBar: CustomAppBar(streak: snapshot.data?.streak ?? 0),
           body: Center(
             child: Text("Error while loading streak: ${snapshot.error}"))
           );

@@ -81,5 +81,6 @@ class AvatarState {
     'bottom_clothes_color': bottomClothesColor,
     'lipstick': lipstick,
     'blush': blush,
+    'beard': beard,
   };
 }
