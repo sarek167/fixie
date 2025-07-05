@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/constants/avatar_storage.dart';
+import 'package:frontend/widgets/button.dart';
 
 class CustomAlert extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -14,7 +15,13 @@ class CustomAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(data['title'] ?? "Powiadomienie"),
+      title: Text(
+        data['title'] ?? "Powiadomienie",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: FontConstants.largeHeaderFontSize
+        )
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -32,13 +39,21 @@ class CustomAlert extends StatelessWidget {
             ),
 
           SizedBox(height: 10),
-          Text(data['message'] ?? 'Otrzymałeś powiadomienie!'),
+          Text(
+            data['message'] ?? 'Otrzymałeś powiadomienie!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: FontConstants.standardFontSize,
+            ),
+          ),
         ],
       ),
       actions: [
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK')
+        CustomButton(
+          text: "OK",
+          width: 100,
+          backgroundColor: ColorConstants.semiLight,
+          onPressed: () => Navigator.of(context).pop()
         )
       ],
     );
