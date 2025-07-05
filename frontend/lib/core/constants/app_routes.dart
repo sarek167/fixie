@@ -6,4 +6,5 @@ class AppRouteConstants {
   static const String singleTaskRoute = "/task";
   static const String pathRoute = "/path";
   static const String calendarRoute = "/calendar";
+  static const String avatarRoute = "/avatar";
 }

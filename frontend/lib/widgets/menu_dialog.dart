@@ -18,7 +18,7 @@ class CustomMenu extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: ColorConstants.blackColor.withOpacity(0.5),
+        color: ColorConstants.black.withOpacity(0.5),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Container(
@@ -26,7 +26,7 @@ class CustomMenu extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             decoration: BoxDecoration(
-              color: ColorConstants.backgroundColor,
+              color: ColorConstants.background,
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(20),
                 bottomRight: Radius.circular(20)
@@ -46,7 +46,7 @@ class CustomMenu extends StatelessWidget {
                       return const Text(
                         "Nieznany użytkownik",
                         style: TextStyle(
-                          color: ColorConstants.whiteColor,
+                          color: ColorConstants.white,
                           fontSize: FontConstants.largeHeaderFontSize,
                           fontWeight: FontWeight.bold,
                         ),
@@ -55,7 +55,7 @@ class CustomMenu extends StatelessWidget {
                     return Text(
                       snapshot.data!.username,
                       style: TextStyle(
-                        color: ColorConstants.whiteColor,
+                        color: ColorConstants.white,
                         fontSize: FontConstants.largeHeaderFontSize,
                         fontWeight: FontWeight.bold,
                       ),
@@ -65,15 +65,15 @@ class CustomMenu extends StatelessWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                   text: "AVATAR",
-                  backgroundColor: ColorConstants.lightColor,
+                  backgroundColor: ColorConstants.light,
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                    Navigator.pushNamed(context, AppRouteConstants.avatarRoute);
                   }
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
                     text: "KALENDARZ ZADAŃ",
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     onPressed: () {
                       Navigator.pushNamed(context, AppRouteConstants.calendarRoute);
                     }
@@ -81,7 +81,7 @@ class CustomMenu extends StatelessWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                     text: "ŚCIEŻKI ZADAŃ",
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     onPressed: () {
                       Navigator.pushNamed(context, AppRouteConstants.taskRoute);
                     }
@@ -89,7 +89,7 @@ class CustomMenu extends StatelessWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                     text: "MÓJ DZIENNIK",
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     onPressed: () {
                       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                     }
@@ -97,7 +97,7 @@ class CustomMenu extends StatelessWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                     text: "STUDNIA WIEDZY",
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     onPressed: () {
                       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                     }
@@ -105,7 +105,7 @@ class CustomMenu extends StatelessWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                     text: "SEKCJA SOS",
-                    backgroundColor: ColorConstants.lightColor,
+                    backgroundColor: ColorConstants.light,
                     onPressed: () {
                       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                     }
@@ -115,7 +115,7 @@ class CustomMenu extends StatelessWidget {
                     const SizedBox(height: 100),
                     CustomButton(
                         text: "KONTO",
-                        backgroundColor: ColorConstants.semiLightColor,
+                        backgroundColor: ColorConstants.semiLight,
                         onPressed: () {
                           Navigator.pushNamed(context, AppRouteConstants.homeRoute);
                         }
@@ -123,7 +123,7 @@ class CustomMenu extends StatelessWidget {
                     const SizedBox(height: 20),
                     CustomButton(
                         text: "WYLOGUJ SIĘ",
-                        backgroundColor: ColorConstants.darkColor,
+                        backgroundColor: ColorConstants.dark,
                         onPressed: () {
                           BlocProvider.of<AuthenticationCubit>(context).logout();
                           Navigator.pushNamedAndRemoveUntil(

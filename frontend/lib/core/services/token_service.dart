@@ -11,6 +11,13 @@ class TokenClient {
     contentType: 'application/json',
   ));
 
+  static final Dio _refreshDio = Dio(BaseOptions(
+    baseUrl:EndpointConstants.baseUserEndpoint,
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
+    contentType: 'application/json'
+  ));
+
   static final _storage = FlutterSecureStorage();
 
   static Dio get client {
@@ -43,9 +50,17 @@ class TokenClient {
     return _dio;
   }
 
+  static Future<String?> getUserToken(int userId) async {
+    final token = await _storage.read(key: "access_token");
+    if (token == null) {
+      throw Exception("No token for user $userId was found.");
+    }
+    return token;
+  }
+
   static Future<String?> _refreshToken(String refreshToken) async {
     try {
-      final response = await _dio.post(EndpointConstants.refreshTokenSuffix, data: jsonEncode({'refresh': refreshToken}));
+      final response = await _refreshDio.post(EndpointConstants.refreshTokenSuffix, data: jsonEncode({'refresh': refreshToken}));
       if (response.statusCode == 200) {
         final access = response.data['access'];
         final newRefresh = response.data['refresh'];

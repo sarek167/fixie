@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/constants/app_routes.dart';
 import 'dart:math';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/features/tasks/presentation/single_task_screen.dart';
@@ -74,7 +73,7 @@ class TaskPathWidget extends StatelessWidget {
             child: Text(
               node.text,
               style: TextStyle(
-                color: ColorConstants.whiteColor,
+                color: ColorConstants.white,
                 fontWeight: FontWeight.bold,
                 fontSize: FontConstants.standardFontSize,
               ),
@@ -148,7 +147,7 @@ class TaskPathPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = ColorConstants.whiteColor
+      ..color = ColorConstants.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

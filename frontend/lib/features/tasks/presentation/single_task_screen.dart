@@ -40,7 +40,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
           );
         } else {
           return Scaffold(
-            backgroundColor: ColorConstants.backgroundColor,
+            backgroundColor: ColorConstants.background,
             appBar: CustomAppBar(streak: snapshot.data!.streak),
             body: Center(
                 child: Padding(
@@ -52,7 +52,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                           task.title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: ColorConstants.whiteColor,
+                            color: ColorConstants.white,
                             fontSize: FontConstants.largeHeaderFontSize,
                             fontWeight: FontWeight.bold,
                           ),
@@ -61,7 +61,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tag(text: task.category, tagColor: ColorConstants.lightColor,),
+                            Tag(text: task.category, tagColor: ColorConstants.light,),
                             const SizedBox(width: 10),
                             Tag(text: "Trudność: ${task.difficulty}"),
                           ],
@@ -71,7 +71,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                           task.description,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: ColorConstants.whiteColor,
+                              color: ColorConstants.white,
                               fontSize: FontConstants.standardFontSize
                           ),
                         ),
@@ -81,7 +81,7 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                               child: Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                      color: ColorConstants.whiteColor,
+                                      color: ColorConstants.white,
                                       borderRadius: BorderRadius.circular(16)
                                   ),
                                   child: TextField(
@@ -89,14 +89,14 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                                       maxLines: null,
                                       expands: true,
                                       style: TextStyle(
-                                          color: ColorConstants.blackColor,
+                                          color: ColorConstants.black,
                                           fontSize: FontConstants.standardFontSize
                                       ),
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Zapisz swoją odpowiedź...',
                                           hintStyle: TextStyle(
-                                              color: ColorConstants.blackColor
+                                              color: ColorConstants.black
                                           )
                                       )
                                   )
@@ -112,13 +112,13 @@ class _SingleTaskScreenState extends State<SingleTaskScreen> {
                                     checkboxValue = newValue ?? false;
                                   });
                                 },
-                                activeColor: ColorConstants.darkColor, // np. niebieski/zielony
-                                checkColor: ColorConstants.whiteColor,
+                                activeColor: ColorConstants.dark, // np. niebieski/zielony
+                                checkColor: ColorConstants.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 side: BorderSide(
-                                  color: ColorConstants.whiteColor,
+                                  color: ColorConstants.white,
                                   width: 2,
                                 ),
                               )

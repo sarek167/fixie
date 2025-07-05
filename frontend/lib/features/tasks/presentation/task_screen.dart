@@ -34,7 +34,7 @@ class TaskScreen extends StatelessWidget {
             );
           } else {
             return Scaffold(
-              backgroundColor: ColorConstants.backgroundColor,
+              backgroundColor: ColorConstants.background,
               appBar: CustomAppBar(streak: snapshot.data!.streak),
             body: Center(
               child: SingleChildScrollView(
@@ -45,7 +45,7 @@ class TaskScreen extends StatelessWidget {
                       "CODZIENNE\nZADANIA",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: ColorConstants.whiteColor,
+                        color: ColorConstants.white,
                         fontSize: FontConstants.largeHeaderFontSize,
                         fontWeight: FontWeight.bold,
                       ),
@@ -90,12 +90,12 @@ class TaskScreen extends StatelessWidget {
                         } else {
                           return CustomImageCarousel(
                             text: "ZNAJDŹ SWOJE ŚCIEŻKI",
-                            slideBackgroundColor: ColorConstants.lightColor,
-                            indicatorColor: ColorConstants.darkColor,
+                            slideBackgroundColor: ColorConstants.light,
+                            indicatorColor: ColorConstants.dark,
                             slides: [
                               ...snapshot.data!.map((path) => CardItem(
                                 routeName: AppRouteConstants.pathRoute,
-                                textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                                textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
                                 text: path.title,
                                 imageUrl: path.isImage ? path.backgroundValue : null,
                                 backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
@@ -122,7 +122,7 @@ class TaskScreen extends StatelessWidget {
                             initialCards: [
                               ...snapshot.data!.map((path) => CardItem(
                                 routeName: AppRouteConstants.pathRoute,
-                                textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                                textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
                                 text: path.title,
                                 imageUrl: path.isImage ? path.backgroundValue : null,
                                 backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,

@@ -1,13 +1,20 @@
 from django.http import JsonResponse
 from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer, Task
 from .serializers import PathSerializer, TaskSerializer, UserTaskAnswerSerializer
-from utils.jwt_utils import decode_jwt
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from datetime import date, timedelta
+from django.conf import settings
+from kafka import KafkaProducer
+import json
+
+producer = KafkaProducer(
+    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
 
 @method_decorator(jwt_required, name='dispatch')
 class UserPathsView(APIView):
@@ -57,7 +64,7 @@ class PathByTitleView(APIView):
         title = request.GET.get("title")
         print(title)
         if not title:
-            return Response({"error": "Brak parametru 'title'"}, status=400)
+            return JsonResponse({"error": "Brak parametru 'title'"}, status=400)
         try:
             path = Path.objects.get(title = title)
             path_tasks = [path_task.task for path_task in TaskPath.objects.filter(path_id = path.id)]
@@ -104,6 +111,27 @@ class UserTaskAnswerView(APIView):
             }
 
         )
+        if status == "completed":
+            print(data)
+            try:
+                # check if task was last in path to complete
+                path_task_assign = TaskPath.objects.get(task=data["task_id"])
+                all_path_tasks = TaskPath.objects.filter(path=path_task_assign.path)
+                all_user_answers = UserTaskAnswer.objects.filter(task__in=[task.id for task in all_path_tasks], user_id=request.user_id)
+                if len(all_path_tasks) == len(all_user_answers) and all([answer.status == "completed" for answer in all_user_answers]):
+                    producer.send('path-completed-event', {"user_id": request.user_id, "trigger_value": path_task_assign.path.id})
+            except TaskPath.DoesNotExist:
+                # task is not from path
+                pass
+            # count all tasks
+            task_num = len(UserTaskAnswer.objects.filter(user_id=request.user_id, status = "completed"))
+            print(task_num)
+            producer.send('task-completed-event', {"user_id": request.user_id, "trigger_value": task_num})
+
+            # count streak
+            # send to broker
+            pass
+
         print(answer)
         return JsonResponse({"id": answer.id, "created": created, "status": "saved"}, status=200)
 
@@ -155,6 +183,7 @@ class StreakView(APIView):
                     today -= timedelta(days=1)
                 else:
                     break
+            producer.send("streak-completed-event", {"user_id": request.user_id, "trigger_value": streak})
             return JsonResponse({"streak": streak}, status=200)
         except Exception as e:
             print(e)

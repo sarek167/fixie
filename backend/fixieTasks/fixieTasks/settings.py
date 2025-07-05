@@ -78,8 +78,8 @@ DATABASES = {
         "NAME": "tasks_db",
         "USER": "tasks_admin",
         "PASSWORD": "Lemonade_tasks_123!",
-        "HOST": "fixietasks-mysql",
-        "PORT": "3306",
+        "HOST": "localhost",
+        "PORT": "3307",
     }
 }
 
@@ -126,3 +126,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
+
+KAFKA_IP = "localhost"
+KAFKA_PORT = "9092"

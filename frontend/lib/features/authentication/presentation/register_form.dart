@@ -28,7 +28,7 @@ class _RegisterFormState extends State<RegisterForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Hasła się nie zgadzają!"),
-            backgroundColor: ColorConstants.darkColor,
+            backgroundColor: ColorConstants.dark,
           ),
         );
         return;
@@ -75,7 +75,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 decoration: InputDecoration(
                   labelText: "Powtórz hasło",
                   filled: true,
-                  fillColor: ColorConstants.whiteColor,
+                  fillColor: ColorConstants.white,
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
                 ),
                 validator: (value) {
@@ -94,10 +94,10 @@ class _RegisterFormState extends State<RegisterForm> {
                 onPressed: () {
                   _register();
                 },
-                backgroundColor: ColorConstants.darkColor,
+                backgroundColor: ColorConstants.dark,
                 width: 250,
                 height: 50,
-                textColor: ColorConstants.whiteColor,
+                textColor: ColorConstants.white,
                 fontSize: FontConstants.buttonFontSize,
               ),
             ],

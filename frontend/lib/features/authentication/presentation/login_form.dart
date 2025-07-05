@@ -48,10 +48,10 @@ class _LoginFormState extends State<LoginForm> {
                     BlocProvider.of<AuthenticationCubit>(context)
                         .login(email, password);
                   },
-                  backgroundColor: ColorConstants.darkColor,
+                  backgroundColor: ColorConstants.dark,
                   width: 250,
                   height: 50,
-                  textColor: ColorConstants.whiteColor,
+                  textColor: ColorConstants.white,
                   fontSize: FontConstants.buttonFontSize,
                 ),
               ],

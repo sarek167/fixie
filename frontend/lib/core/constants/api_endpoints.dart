@@ -1,7 +1,8 @@
 class EndpointConstants {
-  static const String clusterIP = "192.168.49.2";
-  static const String userManagementPort = "30000";
-  static const String taskManagementPort = "30001";
+  static const String clusterIP = "10.0.2.2";
+  static const String userManagementPort = "8000";
+  static const String taskManagementPort = "8001";
+  static const String avatarManagementPort = "8002";
   static const String loginEndpoint =
       "http://$clusterIP:$userManagementPort/user_management/login/";
   static const String registerEndpoint =
@@ -28,6 +29,13 @@ class EndpointConstants {
       "http://$clusterIP:$taskManagementPort/task_management/get_daily_tasks_status/";
   static const String getDailyTaskByDateEndpoint =
       "http://$clusterIP:$taskManagementPort/task_management/post_daily_tasks/";
+
+  static const String getUserAvatarOptionsEndpoint =
+      "http://$clusterIP:$avatarManagementPort/avatar_management/get_user_avatar_elem/";
+  static const String getAvatarStateEndpoint =
+      "http://$clusterIP:$avatarManagementPort/avatar_management/get_avatar_state/";
+  static const String putAvatarStateEndpoint =
+      "http://$clusterIP:$avatarManagementPort/avatar_management/put_avatar_state/";
 
   static const String baseUserEndpoint =
       "http://$clusterIP:$userManagementPort/user_management/";
