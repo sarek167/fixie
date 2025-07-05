@@ -14,10 +14,10 @@ class CustomButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.backgroundColor = ColorConstants.darkColor,
+    this.backgroundColor = ColorConstants.dark,
     this.width = 250,
     this.height = 50,
-    this.textColor = ColorConstants.whiteColor,
+    this.textColor = ColorConstants.white,
     this.fontSize = FontConstants.buttonFontSize,
   }) : super(key: key);
 

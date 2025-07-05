@@ -1,14 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
+import 'package:frontend/core/services/path_service.dart';
 import 'package:frontend/core/services/task_service.dart';
+import 'package:frontend/core/services/websocket_service.dart';
+import 'package:frontend/core/utils/hex_color.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/notification/logic/show_dialog.dart';
+import 'package:frontend/widgets/avatar.dart';
 import 'package:frontend/widgets/card.dart';
 import 'package:frontend/widgets/carousel.dart';
+import 'package:frontend/widgets/circle_button.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final WebSocketService _webSocketService = WebSocketService();
+  final notificationManager = NotificationManager();
+
+  @override
+  void initState() {
+    super.initState();
+
+    UserStorage().getUser().then((user) {
+      if (user != null) {
+
+        _webSocketService.connect(user.id, (data) {
+          notificationManager.show(data);
+          print(data);
+        });
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,44 +58,65 @@ class HomeScreen extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            backgroundColor: ColorConstants.backgroundColor,
+            backgroundColor: ColorConstants.background,
             appBar: CustomAppBar(streak: snapshot.data!.streak),
             body: Center(
               child: SingleChildScrollView(
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomImageCarousel(
-                    text: "ZNAJDŹ SWOJE ŚCIEŻKI",
-                    slideBackgroundColor: ColorConstants.semiLightColor,
-                    indicatorColor: ColorConstants.blackColor,
-                    slides: [
-                      CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/id/237/500/300', text: "Zdjęcie 1"),
-                      CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                  Stack(
+                    children: [
+                      AvatarWidget(),
+                      CircleButton()
                     ],
                   ),
+                  SizedBox(height: 30,),
+                  FutureBuilder(
+                      future: PathService.getUserPaths(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          return CustomImageCarousel(
+                            text: "ZNAJDŹ SWOJE ŚCIEŻKI",
+                            slideBackgroundColor: ColorConstants.dark,
+                            indicatorColor: ColorConstants.light,
+                            slides: [
+                              ...snapshot.data!.map((path) => CardItem(
+                                routeName: AppRouteConstants.pathRoute,
+                                textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
+                                text: path.title,
+                                imageUrl: path.isImage ? path.backgroundValue : null,
+                                backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
+                                // backgroundDarkening: 0.2,
+                              )),
+                            ],
+                          );
+                        }
+                      }),
                   CustomImageCarousel(
                     text: "CO CHODZI CI PO GŁOWIE",
-                    slideBackgroundColor: ColorConstants.lightColor,
-                    indicatorColor: ColorConstants.blackColor,
+                    slideBackgroundColor: ColorConstants.light,
+                    indicatorColor: ColorConstants.black,
                     slides: [
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=3', text: "Zdjęcie 1"),
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=4', text: "Zdjęcie 2"),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor czerwony", backgroundDarkening: 0,),
                     ],
                   ),
                   CustomImageCarousel(
                     text: "DOWIEDZ SIĘ WIĘCEJ",
-                    slideBackgroundColor: ColorConstants.veryLightColor,
-                    indicatorColor: ColorConstants.blackColor,
+                    slideBackgroundColor: ColorConstants.veryLight,
+                    indicatorColor: ColorConstants.black,
                     slides: [
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=5', text: "Zdjęcie 1"),
                       CardItem(routeName: "/login", imageUrl: 'https://picsum.photos/500/300?random=6', text: "Zdjęcie 2"),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                      CardItem(routeName: "/login", backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                      CardItem(routeName: "/login", backgroundColor: ColorConstants.white, textColor: ColorConstants.black, text: "Kolor czerwony", backgroundDarkening: 0,),
                     ],
                     ),
                   ],

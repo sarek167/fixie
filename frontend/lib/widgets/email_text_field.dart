@@ -14,7 +14,7 @@ class EmailTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: "Email",
         filled: true,
-        fillColor: ColorConstants.whiteColor,
+        fillColor: ColorConstants.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
       ),
       validator: (value) {

@@ -23,7 +23,7 @@ class RegisterView(APIView):
             print(user)
             response = Response({
                 "message": "User registered successfuly", 
-                "user_id": user.id,
+                "id": user.id,
                 "access_token": access_token,
                 "refresh_token": str(refresh),
                 "email": user.email,
@@ -48,10 +48,12 @@ class LoginView(APIView):
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
                 print(user)
+                print(user.id)
                 return Response({
                     "message": "Login succesful",
                     "access_token": access_token,
                     "refresh_token": str(refresh),
+                    "id": user.id,
                     "email": user.email,
                     "username": user.username,
                     "first_name": user.first_name,

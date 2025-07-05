@@ -43,7 +43,7 @@ class _ExpandableCardGridState extends State<ExpandableCardGrid>{
           Text(
             widget.title.toUpperCase(),
             style: TextStyle(
-              color: ColorConstants.whiteColor,
+              color: ColorConstants.white,
               fontSize: FontConstants.headerFontSize,
               fontWeight: FontWeight.bold,
             ),
@@ -75,7 +75,7 @@ class _ExpandableCardGridState extends State<ExpandableCardGrid>{
 
                 List<CardItem> newCards = newPaths.map((path) => CardItem(
                   routeName: AppRouteConstants.pathRoute,
-                  textColor: path.isImage ? ColorConstants.whiteColor : ColorConstants.blackColor,
+                  textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
                   text: path.title,
                   imageUrl: path.isImage ? path.backgroundValue : null,
                   backgroundColor: path.isColor || path.isDefault

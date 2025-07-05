@@ -10,11 +10,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     print("W CUSTOM APP BAR ${streak}");
     return AppBar(
-      backgroundColor: ColorConstants.backgroundColor,
+      backgroundColor: ColorConstants.background,
       elevation: 0,
       leading: IconButton(
         icon: const Icon(
-          Icons.menu, color: ColorConstants.whiteColor, size: 32,),
+          Icons.menu, color: ColorConstants.white, size: 32,),
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -30,14 +30,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Text(
               streak.toString(),
               style: TextStyle(
-                color: ColorConstants.whiteColor,
+                color: ColorConstants.white,
                 fontSize: FontConstants.headerFontSize,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(width: 5),
             const Icon(Icons.local_fire_department,
-                color: ColorConstants.whiteColor, size: 32),
+                color: ColorConstants.white, size: 32),
             const SizedBox(width: 15),
           ],
         ),

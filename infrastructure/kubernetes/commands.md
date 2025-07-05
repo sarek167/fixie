@@ -34,3 +34,25 @@ kubectl get services
 kubectl logs <nazwa-poda>\
 kubectl get service
 ```
+
+**Kafka locally**
+```bash
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
+```
+
+**Kafka workers**
+```bash
+# avatar worker
+python3 manage.py run_avatar_worker
+
+# notification worker
+python3 manage.py run_notification_worker
+```
+
+**Notifications microservice**
+```bash
+export DJANGO_SETTINGS_MODULE=fixieNotification.settings
+daphne -b 0.0.0.0 -p 8003 fixieNotification.asgi:application
+```
