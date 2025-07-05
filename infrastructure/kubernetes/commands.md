@@ -37,8 +37,9 @@ kubectl get service
 
 **Kafka locally**
 ```bash
-bin/kafka-server-start.sh config/server.properties
 bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
 ```
 
 **Kafka workers**
@@ -52,5 +53,6 @@ python3 manage.py run_notification_worker
 
 **Notifications microservice**
 ```bash
+export DJANGO_SETTINGS_MODULE=fixieNotification.settings
 daphne -b 0.0.0.0 -p 8003 fixieNotification.asgi:application
 ```
