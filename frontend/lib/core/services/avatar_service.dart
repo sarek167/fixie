@@ -23,6 +23,8 @@ class AvatarService {
 
     if (response.statusCode == 200) {
       final avatar = AvatarState.fromJson(response.data as Map<String, dynamic>);
+      print("W SERVICE");
+      print("$avatar");
       return avatar;
     } else {
       throw Exception("Error while getting AvatarState");

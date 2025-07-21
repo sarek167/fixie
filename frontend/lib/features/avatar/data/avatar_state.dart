@@ -56,19 +56,22 @@ class AvatarState {
     return state;
   }
 
-  factory AvatarState.fromJson(Map<String, dynamic> json) => AvatarState(
-    skinColor: json['skin_color'],
-    eyesColor: json['eyes_color'],
-    hair: json['hair'],
-    hairColor: json['hair_color'],
-    topClothes: json['top_clothes'],
-    topClothesColor: json['top_clothes_color'],
-    bottomClothes: json['bottom_clothes'],
-    bottomClothesColor: json['bottom_clothes_color'],
-    lipstick: json['lipstick'],
-    blush: json['blush'],
-    beard: json['beard'],
-  );
+  factory AvatarState.fromJson(Map<String, dynamic> json) {
+    return AvatarState(
+      skinColor: json['skinColor'] ?? "",
+      eyesColor: json['eyesColor'] ?? "",
+      hair: json['hair'] ?? "",
+      hairColor: json['hairColor'] ?? "",
+      topClothes: json['topClothes'] ?? "",
+      topClothesColor: json['topClothesColor'] ?? "",
+      bottomClothes: json['bottomClothes'] ?? "",
+      bottomClothesColor: json['bottomClothesColor'] ?? "",
+      lipstick: json['lipstick'] ?? "",
+      blush: json['blush'] ?? "",
+      beard: json['beard'] ?? "",
+    );
+  }
+
 
   Map<String, dynamic> toJson() => {
     'skin_color': skinColor,

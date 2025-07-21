@@ -74,12 +74,17 @@ WSGI_APPLICATION = "fixieTasks.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "mssql",
         "NAME": "tasks_db",
         "USER": "tasks_admin",
-        "PASSWORD": "Lemonade_tasks_123!",
-        "HOST": "localhost",
-        "PORT": "3307",
+        "PASSWORD": "Lemonade001!",
+        "HOST": "sql-server-fixie.database.windows.net",
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'encrypt': True,
+            'trust_server_certificate': False,
+        },
     }
 }
 

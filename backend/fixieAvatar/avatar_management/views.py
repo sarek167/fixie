@@ -53,15 +53,3 @@ class AvatarStateView(APIView):
 
         producer.send('avatar-updates', avatar_data)
         return JsonResponse({"status": "update enqueued"}, status=202)
-        # try:
-
-        #     avatar = AvatarState.objects.get(user_id=request.user_id)
-        #     serializer = AvatarStateSerializer(avatar, data=request.data, partial=True)
-        # except AvatarState.DoesNotExist:
-        #     serializer = AvatarStateSerializer(data=request.data)
-    
-        # if serializer.is_valid():
-        #     avatar = serializer.save(user_id=request.user_id)
-        #     return JsonResponse(AvatarStateSerializer(avatar).data, status=200)
-        # print(serializer)
-        # return JsonResponse(serializer.errors, status=400) 
