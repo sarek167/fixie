@@ -13,7 +13,7 @@ class AvatarCubit extends Cubit<AvatarState?>{
     try {
       final fetchedState = await AvatarService.getAvatarState();
       print("POBRANY STAN ${fetchedState}");
-      if (isEmptyAvatar(fetchedState)) {
+      if (fetchedState == null) {
         final defaultAvatar = AvatarState(
             skinColor: "1",
             eyesColor: "blue",

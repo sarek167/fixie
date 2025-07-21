@@ -18,7 +18,7 @@ class AvatarService {
     });
   }
 
-  static Future<AvatarState> getAvatarState() async {
+  static Future<AvatarState?> getAvatarState() async {
     final response = await TokenClient.client.get(EndpointConstants.getAvatarStateEndpoint);
 
     if (response.statusCode == 200) {
@@ -26,6 +26,8 @@ class AvatarService {
       print("W SERVICE");
       print("$avatar");
       return avatar;
+    } else if (response.statusCode == 204) {
+      return null;
     } else {
       throw Exception("Error while getting AvatarState");
     }

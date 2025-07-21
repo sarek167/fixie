@@ -45,7 +45,7 @@ class AvatarStateView(APIView):
             serializer = AvatarStateSerializer(avatar)
             return JsonResponse(serializer.data)
         except AvatarState.DoesNotExist:
-            return JsonResponse({"error": "Avatar state not found."}, status=404)
+            return JsonResponse({"status": "Avatar state not found."}, status=204)
     
     def put(self, request):
         avatar_data = request.data.copy()
