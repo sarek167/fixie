@@ -32,8 +32,6 @@ ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', '192.168.49.2']
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -44,10 +42,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -63,7 +59,6 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
         },
@@ -78,12 +73,17 @@ WSGI_APPLICATION = "fixieNotification.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "mssql",
         "NAME": "notifications_db",
-        "USER": "notifications_admin",
-        "PASSWORD": "Lemonade_notifications_123!",
-        "HOST": "localhost",
-        "PORT": "3307",
+        "USER": "tasks_admin",
+        "PASSWORD": "Lemonade001!",
+        "HOST": "sql-server-fixie.database.windows.net",
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'encrypt': True,
+            'trust_server_certificate': False,
+        },
     }
 }
 
