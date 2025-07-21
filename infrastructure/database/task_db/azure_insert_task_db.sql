@@ -82,7 +82,7 @@ INSERT INTO tasks (title, description, category, difficulty, type, date_for_dail
 ('Codzienne zadanie 12', 'To jest opis codziennego zadania numer 12. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-04-09', 'checkbox'),
 ('Codzienne zadanie 13', 'To jest opis codziennego zadania numer 13. Wykonaj je uważnie.', 'DailyKategoria 2', 4, 'daily', '2025-04-10', 'text'),
 ('Codzienne zadanie 14', 'To jest opis codziennego zadania numer 14. Wykonaj je uważnie.', 'DailyKategoria 3', 2, 'daily', '2025-04-11', 'checkbox'),
-('Codzienne zadanie 15', 'To jest opis codziennego zadania numer 15. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-04-12', 'checkbox');
+('Codzienne zadanie 15', 'To jest opis codziennego zadania numer 15. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-04-12', 'checkbox'),
 ('Codzienne zadanie 25', 'To jest opis codziennego zadania numer 25. Wykonaj je uważnie.', 'DailyKategoria 4', 2, 'daily', '2025-04-25', 'text'),
 ('Codzienne zadanie 26', 'To jest opis codziennego zadania numer 26. Wykonaj je uważnie.', 'DailyKategoria 0', 1, 'daily', '2025-04-26', 'checkbox'),
 ('Codzienne zadanie 27', 'To jest opis codziennego zadania numer 27. Wykonaj je uważnie.', 'DailyKategoria 1', 1, 'daily', '2025-04-27', 'checkbox'),
@@ -165,17 +165,15 @@ INSERT INTO task_path (task_id, path_id) VALUES
 
 
 -- Przykładowe odpowiedzi użytkowników na taski (tekstowe i checkboxowe)
-INSERT INTO user_task_answers (user_id, task_id, text_answer, checkbox_answer, status)
-VALUES
-(1, 3, NULL, TRUE, 'completed'),
+INSERT INTO user_task_answers (user_id, task_id, text_answer, checkbox_answer, status) VALUES
+(1, 3, NULL, 1, 'completed'),
 (1, 5, 'Czułem się dziś spokojny i zrelaksowany.', NULL, 'completed'),
-(2, 10, NULL, FALSE, 'in_progress'),
+(2, 10, NULL, 0, 'in_progress'),
 (3, 12, 'Dzisiaj byłem wdzięczny za rodzinę i dobrą kawę.', NULL, 'completed'),
 (1, 16, 'Poświęciłam 15 minut na spacer, słuchałam śpiewu ptaków.', NULL, 'completed');
 
 
-INSERT INTO user_paths (user_id, path_id, started_at, completed_at)
-VALUES
+INSERT INTO user_paths (user_id, path_id, started_at, completed_at) VALUES
 (1, 2, '2025-03-01 10:00:00', NULL),
 (2, 3, '2025-02-10 09:30:00', '2025-03-01 12:00:00'),
 (1, 1, '2025-03-03 08:45:00', '2025-03-08 20:00:00'),
@@ -192,3 +190,4 @@ VALUES
 (5),
 (7),
 (8);
+
