@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fixienotification-service
+spec:
+  selector:
+    app: fixienotification
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8003
+      nodePort: 30003
+  type: NodePort

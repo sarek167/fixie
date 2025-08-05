@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixienotification-worker
+  labels:
+    app: fixienotification-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fixienotification-worker
+  template:
+    metadata:
+      labels:
+        app: fixienotification-worker
+    spec:
+      containers:
+        - name: fixienotification-worker
+          image: fixienotification:latest
+          command: ["python", "manage.py", "run_notification_worker"]
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+      restartPolicy: Always

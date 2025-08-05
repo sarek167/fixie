@@ -17,6 +17,13 @@ docker build -t fixietasks-image .
 ```bash
 kubectl rollout restart deployment fixieauth
 kubectl rollout restart deployment fixietasks
+kubectl rollout restart deployment fixieavatar
+kubectl rollout restart deployment fixienotification
+```
+
+**Logs if not present**
+```bash
+kubectl describe pod
 ```
 
 **Start microservices**
@@ -25,6 +32,14 @@ kubectl apply -f fixieAuth-deployment.yaml
 kubectl apply -f fixieAuth-service.yaml
 kubectl apply -f fixieTasks-deployment.yaml
 kubectl apply -f fixieTasks-service.yaml
+kubectl apply -f fixieAvatar-deployment.yaml
+kubectl apply -f fixieAvatar-service.yaml
+kubectl apply -f fixieNotification-deployment.yaml
+kubectl apply -f fixieNotification-service.yaml
+kubectl apply -f fixieAvatar-worker-deployment.yaml
+kubectl apply -f fixieNotification-worker-deployment.yaml
+kubectl apply -f fixieNotification-rmOld-cronJob.yaml
+
 ```
 
 **Check microservices**

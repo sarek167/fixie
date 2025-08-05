@@ -1,5 +1,6 @@
 djangorestframework
 djangorestframework-simplejwt
-mysqlclient
 gunicorn==23.0.0
 cryptography
+mssql-django
+pyodbc
