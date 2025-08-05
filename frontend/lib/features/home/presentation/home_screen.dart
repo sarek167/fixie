@@ -15,32 +15,8 @@ import 'package:frontend/widgets/circle_button.dart';
 import 'package:frontend/widgets/day_task_card.dart';
 import 'package:frontend/widgets/menu_bar.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final WebSocketService _webSocketService = WebSocketService();
-  final notificationManager = NotificationManager();
-
-  @override
-  void initState() {
-    super.initState();
-
-    UserStorage().getUser().then((user) {
-      if (user != null) {
-
-        _webSocketService.connect(user.id, (data) {
-          notificationManager.show(data);
-          print(data);
-        });
-      }
-    });
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-        return Scaffold(
-          appBar: CustomAppBar(streak: snapshot.data?.streak ?? 0),
-          body: Center(
-            child: Text("Error while loading streak: ${snapshot.error}"))
+          return Scaffold(
+            appBar: CustomAppBar(streak: 0),
+            body: Center(
+                child: Text("Error while loading streak: ${snapshot.error}")
+            ),
           );
         } else {
           return Scaffold(
             backgroundColor: ColorConstants.background,
-            appBar: CustomAppBar(streak: snapshot.data!.streak),
+            appBar: CustomAppBar(streak: snapshot.data?.streak ?? 0),
             body: Center(
               child: SingleChildScrollView(
                 child: Column(

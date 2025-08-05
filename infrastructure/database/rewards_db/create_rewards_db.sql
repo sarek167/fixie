@@ -21,7 +21,7 @@ CREATE TABLE user_rewards (
 
 CREATE TABLE avatar_state (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,  -- UWAGA: brak FOREIGN KEY
+    user_id INT NOT NULL,
     skin_color VARCHAR(20) NOT NULL,
     eyes_color VARCHAR(20) NOT NULL,
     hair VARCHAR(50) NOT NULL,
@@ -30,8 +30,6 @@ CREATE TABLE avatar_state (
     top_clothes_color VARCHAR(20) NOT NULL,
     bottom_clothes VARCHAR(50) NOT NULL,
     bottom_clothes_color VARCHAR(20) NOT NULL,
-    -- all_clothes VARCHAR(50),
-    -- all_clothes_color VARCHAR(20),
     lipstick VARCHAR(10) DEFAULT '0',
     blush VARCHAR(10) DEFAULT '0',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

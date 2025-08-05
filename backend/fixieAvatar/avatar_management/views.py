@@ -34,7 +34,7 @@ class UserAvatarElementsView(APIView):
         for elem in elements:
             serialized = RewardSerializer(elem).data
             grouped[elem.container_name].append(serialized)
-        print(grouped)
+        # print(grouped)
         return JsonResponse(grouped)
 
 @method_decorator(jwt_required, name='dispatch')

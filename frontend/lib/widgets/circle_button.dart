@@ -19,6 +19,7 @@ class CircleButton extends StatelessWidget {
       bottom: 8,
       right: 8,
       child: FloatingActionButton(
+        heroTag: route,
         mini: true,
         backgroundColor: ColorConstants.dark,
         child: Icon(icon, color: ColorConstants.white,),

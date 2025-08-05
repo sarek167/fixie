@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/services/auth_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/core/services/task_service.dart';
+import 'package:frontend/core/services/websocket_service.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/notification/logic/show_dialog.dart';
+import 'package:frontend/main.dart';
 
 abstract class AuthenticationState {}
 
@@ -42,17 +45,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         await _secureStorage.write(key: 'refresh_token', value: refreshToken);
 
         int streakResponse = await TaskService.countStreak();
-        print("W AUTH STREAK $streakResponse");
-        User user = User(
-            id: response.data["id"],
-            email: response.data["email"],
-            username: response.data["username"],
-            firstName: response.data["first_name"],
-            lastName: response.data["last_name"],
-            streak: streakResponse
-        );
-        UserStorage().setUser(user);
+        final data = response.data;
+        data["streak"] =  streakResponse;
+        final user = User.fromJson(data);
+        await UserStorage().setUser(user);
 
+        WebSocketService().connect(user.id, (message) {
+          NotificationManager().show(message);
+        });
         print('Logowanie udane, token: $accessToken'); // Debugging
         emit(AuthenticationAuthenticated(accessToken));
       } else {

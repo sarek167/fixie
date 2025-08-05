@@ -92,7 +92,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)]
+            "hosts": [(f"rediss://:Q6s9pmAh88dBAiZrYEswWJBotX1DLmnuRAzCaIOecxQ=@fixie-kafka-redis-db.redis.cache.windows.net:6380")]
         }
     }
 }

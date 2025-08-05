@@ -54,6 +54,7 @@ class AvatarState(models.Model):
     top_clothes_color = models.CharField(max_length=20)
     bottom_clothes = models.CharField(max_length=50)
     bottom_clothes_color = models.CharField(max_length=20)
+    beard = models.CharField(max_length=50)
     lipstick = models.CharField(max_length=10, default="0")
     blush = models.CharField(max_length=10, default="0")
 

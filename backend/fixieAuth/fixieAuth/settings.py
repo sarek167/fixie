@@ -82,15 +82,19 @@ WSGI_APPLICATION = "fixieAuth.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "fixie_db",
-        "USER": "fixie_user",
-        "PASSWORD": "Lemonade123!",
-        "HOST": "localhost",
-        "PORT": "3306",
+        "ENGINE": "mssql",
+        "NAME": "users_db",
+        "USER": "tasks_admin",
+        "PASSWORD": "Lemonade001!",
+        "HOST": "sql-server-fixie.database.windows.net",
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'encrypt': True,
+            'trust_server_certificate': False,
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
