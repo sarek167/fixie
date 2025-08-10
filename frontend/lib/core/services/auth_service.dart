@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/core/constants/api_endpoints.dart';
+import 'package:frontend/core/services/token_service.dart';
 
 class AuthService {
   final Dio _dio = Dio();
@@ -44,4 +45,24 @@ class AuthService {
     );
     return response;
   }
+  
+  Future<bool> changeUserData(Map<String, String> userData) async {
+    try {
+      final response = await TokenClient.client.patch(
+          EndpointConstants.patchUserDataEndpoint,
+          data: userData
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 202) {
+        return true;
+      } else {
+        print("Error ${response.statusCode}: ${response.data}");
+        return false;
+      }
+    } catch (e) {
+      print("Dio error $e");
+      return false;
+    }
+  }
+  
 }

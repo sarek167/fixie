@@ -125,7 +125,7 @@ class CustomMenu extends StatelessWidget {
                         text: "KONTO",
                         backgroundColor: ColorConstants.semiLight,
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, AppRouteConstants.homeRoute);
+                          Navigator.pushReplacementNamed(context, AppRouteConstants.userRoute);
                         }
                     ),
                     const SizedBox(height: 20),

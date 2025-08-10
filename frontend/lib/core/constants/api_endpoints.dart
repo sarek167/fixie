@@ -11,6 +11,8 @@ class EndpointConstants {
       "http://$clusterIP:$userManagementPort/user_management/logout/";
   static const String refreshTokenEndpoint =
       "http://$clusterIP:$userManagementPort/user_management/token_refresh/";
+  static const String patchUserDataEndpoint =
+      "http://$clusterIP:$userManagementPort/user_management/change_user_data/";
   static const String getUserPathsEndpoint =
       "http://$clusterIP:$taskManagementPort/task_management/get_user_paths/";
   static const String getPopularPathsEndpoint =

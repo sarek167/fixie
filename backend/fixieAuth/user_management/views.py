@@ -77,3 +77,40 @@ class LoginView(APIView):
         except Exception as e:
             print(e)
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+        
+class ChangeUserDataView(APIView):
+    @authentication_classes([JWTAuthentication])
+    @permission_classes([IsAuthenticated])
+    def patch(self, request):
+        try:
+            user = request.user
+            email = request.data.get("email")
+            new_password = request.data.get("new_password")
+            password = request.data.get("password")
+            first_name = request.data.get("first_name")
+            last_name = request.data.get("last_name")
+            print(f"DATA: {request.data}")
+            print(f"USER: {request.user}")
+            if new_password:
+                if not password:
+                    return Response(
+                        {"error": "Podaj aktualne hasło."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if not user.check_password(password):
+                    return Response(
+                        {"error": "Aktualne hasło jest nieprawidłowe."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                user.set_password(new_password)
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            user.save()
+            return Response({"message": "Dane zaktualizowane."}, status=status.HTTP_200_OK)
+            
+
+        except Exception as e:
+            print(e)
+            return Response({"error": "Error while changing user's data."}, status=status.HTTP_400_BAD_REQUEST)

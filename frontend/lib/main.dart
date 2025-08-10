@@ -5,6 +5,7 @@ import 'package:frontend/core/services/auth_service.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
+import 'package:frontend/features/authentication/presentation/user_screen.dart';
 import 'package:frontend/features/avatar/data/avatar_cubit.dart';
 import 'package:frontend/features/avatar/presentation/avatar_screen.dart';
 import 'package:frontend/features/home/presentation/home_screen.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           AppRouteConstants.taskRoute: (context) => TaskScreen(),
           AppRouteConstants.pathRoute: (context) => PathScreen(),
           AppRouteConstants.calendarRoute: (context) => CalendarScreen(),
-          AppRouteConstants.avatarRoute: (context) => AvatarScreen()
+          AppRouteConstants.avatarRoute: (context) => AvatarScreen(),
+          AppRouteConstants.userRoute: (context) => UserScreen()
         },
         home: LoginScreen()
       ),
