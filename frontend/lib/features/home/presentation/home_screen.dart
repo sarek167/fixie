@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/constants/app_routes.dart';
 import 'package:frontend/core/constants/app_theme.dart';
 import 'package:frontend/core/services/path_service.dart';
@@ -7,6 +8,7 @@ import 'package:frontend/core/services/websocket_service.dart';
 import 'package:frontend/core/utils/hex_color.dart';
 import 'package:frontend/features/authentication/data/user_model.dart';
 import 'package:frontend/features/authentication/logic/user_storage.dart';
+import 'package:frontend/features/avatar/data/avatar_cubit.dart';
 import 'package:frontend/features/notification/logic/show_dialog.dart';
 import 'package:frontend/widgets/avatar.dart';
 import 'package:frontend/widgets/card.dart';
@@ -35,6 +37,9 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<AvatarCubit>().loadAvatar();
+          });
           return Scaffold(
             backgroundColor: ColorConstants.background,
             appBar: CustomAppBar(streak: snapshot.data?.streak ?? 0),

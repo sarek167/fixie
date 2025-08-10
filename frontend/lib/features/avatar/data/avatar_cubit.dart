@@ -6,7 +6,6 @@ import 'package:frontend/features/avatar/logic/is_empty_avatar.dart';
 class AvatarCubit extends Cubit<AvatarState?>{
   AvatarCubit() : super(null) {
     print("AvatarCubit initialized");
-    loadAvatar();
   }
 
   Future<void> loadAvatar() async {
@@ -34,6 +33,11 @@ class AvatarCubit extends Cubit<AvatarState?>{
       print("Error loading avatar: $e");
     }
   }
+
+  void clearAvatar() {
+    emit(null);
+  }
+
   void updatePart(String part, String value) async {
     AvatarState newState;
     switch (part) {

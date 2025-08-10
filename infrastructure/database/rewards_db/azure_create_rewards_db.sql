@@ -41,6 +41,7 @@ CREATE TABLE avatar_state (
     bottom_clothes_color VARCHAR(20) NOT NULL,
     lipstick VARCHAR(10) DEFAULT '0',
     blush VARCHAR(10) DEFAULT '0',
+    beard VARCHAR(25) DEFAULT '0',
     updated_at DATETIME2 DEFAULT GETDATE()
 );
 GO

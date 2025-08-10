@@ -57,20 +57,31 @@ class AvatarState {
   }
 
   factory AvatarState.fromJson(Map<String, dynamic> json) {
+    String read(List<String> keys, {String fallback = ""}) {
+      for (final k in keys) {
+        final v = json[k];
+        if (v == null) continue;
+        final s = v.toString().trim();
+        if (s.isNotEmpty && s != "-") return s; // odfiltruj "-"
+      }
+      return fallback;
+    }
+
     return AvatarState(
-      skinColor: json['skinColor'] ?? "",
-      eyesColor: json['eyesColor'] ?? "",
-      hair: json['hair'] ?? "",
-      hairColor: json['hairColor'] ?? "",
-      topClothes: json['topClothes'] ?? "",
-      topClothesColor: json['topClothesColor'] ?? "",
-      bottomClothes: json['bottomClothes'] ?? "",
-      bottomClothesColor: json['bottomClothesColor'] ?? "",
-      lipstick: json['lipstick'] ?? "",
-      blush: json['blush'] ?? "",
-      beard: json['beard'] ?? "",
+      skinColor:         read(['skinColor', 'skin_color']),
+      eyesColor:         read(['eyesColor', 'eyes_color']),
+      hair:              read(['hair']),
+      hairColor:         read(['hairColor', 'hair_color']),
+      topClothes:        read(['topClothes', 'top_clothes']),
+      topClothesColor:   read(['topClothesColor', 'top_clothes_color']),
+      bottomClothes:     read(['bottomClothes', 'bottom_clothes']),
+      bottomClothesColor:read(['bottomClothesColor', 'bottom_clothes_color']),
+      lipstick:          read(['lipstick'],  fallback: "0"),
+      blush:             read(['blush'],     fallback: "0"),
+      beard:             read(['beard'],     fallback: "0"),
     );
   }
+
 
 
   Map<String, dynamic> toJson() => {
