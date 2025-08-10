@@ -5,6 +5,7 @@ import 'package:frontend/core/services/auth_service.dart';
 import 'package:frontend/features/authentication/logic/auth.dart';
 import 'package:frontend/features/authentication/presentation/login_screen.dart';
 import 'package:frontend/features/authentication/presentation/register_screen.dart';
+import 'package:frontend/features/authentication/presentation/user_screen.dart';
 import 'package:frontend/features/avatar/data/avatar_cubit.dart';
 import 'package:frontend/features/avatar/presentation/avatar_screen.dart';
 import 'package:frontend/features/home/presentation/home_screen.dart';
@@ -17,15 +18,7 @@ import 'package:frontend/features/tasks/presentation/single_task_screen.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => AuthenticationCubit(authService: AuthService())),
-        BlocProvider(create: (_) => AvatarCubit()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,31 +26,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: const[
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthenticationCubit(authService: AuthService())),
+        BlocProvider(create: (_) => AvatarCubit()),
       ],
-      supportedLocales: const [
-        Locale('pl', 'PL')
-      ],
-      navigatorKey: navigatorKey,
-      title: 'Fixie',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+          locale: const Locale('pl', 'PL'),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('pl', 'PL'),
+          ],
+        navigatorKey: navigatorKey,
+        title: 'Fixie',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        routes: {
+          AppRouteConstants.loginRoute: (context) => LoginScreen(),
+          AppRouteConstants.registerRoute: (context) => RegisterScreen(),
+          AppRouteConstants.homeRoute: (context) => HomeScreen(),
+          AppRouteConstants.taskRoute: (context) => TaskScreen(),
+          AppRouteConstants.pathRoute: (context) => PathScreen(),
+          AppRouteConstants.calendarRoute: (context) => CalendarScreen(),
+          AppRouteConstants.avatarRoute: (context) => AvatarScreen(),
+          AppRouteConstants.userRoute: (context) => UserScreen()
+        },
+        home: LoginScreen()
       ),
-      routes: {
-        AppRouteConstants.loginRoute: (context) => LoginScreen(),
-        AppRouteConstants.registerRoute: (context) => RegisterScreen(),
-        AppRouteConstants.homeRoute: (context) => HomeScreen(),
-        AppRouteConstants.taskRoute: (context) => TaskScreen(),
-        // AppRouteConstants.singleTaskRoute: (context) => SingleTaskScreen(),
-        AppRouteConstants.pathRoute: (context) => PathScreen(),
-        AppRouteConstants.calendarRoute: (context) => CalendarScreen(),
-        AppRouteConstants.avatarRoute: (context) => AvatarScreen()
-      },
-      home: LoginScreen()
     );
   }
 }

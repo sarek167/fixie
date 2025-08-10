@@ -1,4 +1,3 @@
-CREATE DATABASE notifications_db;
 USE notifications_db;
 
 CREATE TABLE notifications (

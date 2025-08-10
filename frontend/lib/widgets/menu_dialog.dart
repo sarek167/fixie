@@ -64,10 +64,18 @@ class CustomMenu extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
+                    text: "STRONA GŁÓWNA",
+                    backgroundColor: ColorConstants.light,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, AppRouteConstants.homeRoute);
+                    }
+                ),
+                const SizedBox(height: 20),
+                CustomButton(
                   text: "AVATAR",
                   backgroundColor: ColorConstants.light,
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRouteConstants.avatarRoute);
+                    Navigator.pushReplacementNamed(context, AppRouteConstants.avatarRoute);
                   }
                 ),
                 const SizedBox(height: 20),
@@ -75,7 +83,7 @@ class CustomMenu extends StatelessWidget {
                     text: "KALENDARZ ZADAŃ",
                     backgroundColor: ColorConstants.light,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.calendarRoute);
+                      Navigator.pushReplacementNamed(context, AppRouteConstants.calendarRoute);
                     }
                 ),
                 const SizedBox(height: 20),
@@ -83,41 +91,41 @@ class CustomMenu extends StatelessWidget {
                     text: "ŚCIEŻKI ZADAŃ",
                     backgroundColor: ColorConstants.light,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.taskRoute);
+                      Navigator.pushReplacementNamed(context, AppRouteConstants.taskRoute);
                     }
                 ),
-                const SizedBox(height: 20),
-                CustomButton(
-                    text: "MÓJ DZIENNIK",
-                    backgroundColor: ColorConstants.light,
-                    onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
-                    }
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                    text: "STUDNIA WIEDZY",
-                    backgroundColor: ColorConstants.light,
-                    onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
-                    }
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                    text: "SEKCJA SOS",
-                    backgroundColor: ColorConstants.light,
-                    onPressed: () {
-                      Navigator.pushNamed(context, AppRouteConstants.homeRoute);
-                    }
-                ),
+                // const SizedBox(height: 20),
+                // CustomButton(
+                //     text: "MÓJ DZIENNIK",
+                //     backgroundColor: ColorConstants.light,
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                //     }
+                // ),
+                // const SizedBox(height: 20),
+                // CustomButton(
+                //     text: "STUDNIA WIEDZY",
+                //     backgroundColor: ColorConstants.light,
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                //     }
+                // ),
+                // const SizedBox(height: 20),
+                // CustomButton(
+                //     text: "SEKCJA SOS",
+                //     backgroundColor: ColorConstants.light,
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                //     }
+                // ),
                 Column(
                   children: [
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 200),
                     CustomButton(
                         text: "KONTO",
                         backgroundColor: ColorConstants.semiLight,
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRouteConstants.homeRoute);
+                          Navigator.pushReplacementNamed(context, AppRouteConstants.userRoute);
                         }
                     ),
                     const SizedBox(height: 20),

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixieavatar-worker
+  labels:
+    app: fixieavatar-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fixieavatar-worker
+  template:
+    metadata:
+      labels:
+        app: fixieavatar-worker
+    spec:
+      containers:
+        - name: fixieavatar-worker
+          image: fixieavatar:latest
+          command: ["python", "manage.py", "run_avatar_worker"]
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+      restartPolicy: Always

@@ -19,8 +19,6 @@ class AvatarOptionItem {
   }
 
   factory AvatarOptionItem.fromSingleJson(Map<String, dynamic> json) {
-    print("W AVATAR OPTION ITEM");
-    print(json);
     return AvatarOptionItem(
         label: json['blob_name'],
         color: json["color_to_display"] != null

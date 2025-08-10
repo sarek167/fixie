@@ -1,26 +1,35 @@
-CREATE DATABASE rewards_db;
 USE rewards_db;
+GO
+
+CREATE TABLE colors (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    hex VARCHAR(10) NOT NULL
+);
+GO
 
 CREATE TABLE rewards (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     blob_name VARCHAR(255) NOT NULL,
     container_name VARCHAR(255) NOT NULL,
-    starter BOOLEAN NOT NULL,
-    trigger_type ENUM('task_completion', 'streak', 'path_completion'),
+    starter BIT NOT NULL,
+    trigger_type VARCHAR(50) CHECK (trigger_type IN ('task_completion', 'streak', 'path_completion')),
     trigger_value INT,
-    color_id INTEGER REFERENCES colors(id)
+    color_id INT FOREIGN KEY REFERENCES colors(id)
 );
+GO
 
 CREATE TABLE user_rewards (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    reward_id INT UNSIGNED NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
-    date_awarded TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    reward_id INT NOT NULL,
+    user_id INT NOT NULL,
+    date_awarded DATETIME2 NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (reward_id) REFERENCES rewards(id)
 );
+GO
 
 CREATE TABLE avatar_state (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     user_id INT NOT NULL,
     skin_color VARCHAR(20) NOT NULL,
     eyes_color VARCHAR(20) NOT NULL,
@@ -32,11 +41,6 @@ CREATE TABLE avatar_state (
     bottom_clothes_color VARCHAR(20) NOT NULL,
     lipstick VARCHAR(10) DEFAULT '0',
     blush VARCHAR(10) DEFAULT '0',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at DATETIME2 DEFAULT GETDATE()
 );
-
-CREATE TABLE colors (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(20) UNIQUE NOT NULL,
-  hex VARCHAR(10) NOT NULL
-);
+GO

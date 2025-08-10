@@ -18,12 +18,16 @@ class AvatarService {
     });
   }
 
-  static Future<AvatarState> getAvatarState() async {
+  static Future<AvatarState?> getAvatarState() async {
     final response = await TokenClient.client.get(EndpointConstants.getAvatarStateEndpoint);
 
     if (response.statusCode == 200) {
       final avatar = AvatarState.fromJson(response.data as Map<String, dynamic>);
+      print("W SERVICE");
+      print("$avatar");
       return avatar;
+    } else if (response.statusCode == 204) {
+      return null;
     } else {
       throw Exception("Error while getting AvatarState");
     }
@@ -34,8 +38,7 @@ class AvatarService {
       EndpointConstants.putAvatarStateEndpoint,
       data: state.toJson()
     );
-
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 202) {
       throw Exception("Error while updating AvatarState");
     }
   }

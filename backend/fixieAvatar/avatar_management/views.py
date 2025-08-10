@@ -34,7 +34,7 @@ class UserAvatarElementsView(APIView):
         for elem in elements:
             serialized = RewardSerializer(elem).data
             grouped[elem.container_name].append(serialized)
-
+        # print(grouped)
         return JsonResponse(grouped)
 
 @method_decorator(jwt_required, name='dispatch')
@@ -45,7 +45,7 @@ class AvatarStateView(APIView):
             serializer = AvatarStateSerializer(avatar)
             return JsonResponse(serializer.data)
         except AvatarState.DoesNotExist:
-            return JsonResponse({"error": "Avatar state not found."}, status=404)
+            return JsonResponse({"status": "Avatar state not found."}, status=204)
     
     def put(self, request):
         avatar_data = request.data.copy()
@@ -53,15 +53,3 @@ class AvatarStateView(APIView):
 
         producer.send('avatar-updates', avatar_data)
         return JsonResponse({"status": "update enqueued"}, status=202)
-        # try:
-
-        #     avatar = AvatarState.objects.get(user_id=request.user_id)
-        #     serializer = AvatarStateSerializer(avatar, data=request.data, partial=True)
-        # except AvatarState.DoesNotExist:
-        #     serializer = AvatarStateSerializer(data=request.data)
-    
-        # if serializer.is_valid():
-        #     avatar = serializer.save(user_id=request.user_id)
-        #     return JsonResponse(AvatarStateSerializer(avatar).data, status=200)
-        # print(serializer)
-        # return JsonResponse(serializer.errors, status=400) 
