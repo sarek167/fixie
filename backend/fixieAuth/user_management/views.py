@@ -59,24 +59,26 @@ class LoginView(APIView):
                     "first_name": user.first_name,
                     "last_name": user.last_name,
                 }, status=status.HTTP_200_OK)
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             print(e)
     
-    @api_view(['POST'])
+
+
+class LogoutView(APIView):
     @authentication_classes([JWTAuthentication])
     @permission_classes([IsAuthenticated])
-    def logout(request):
+    def post(self, request):
         try:
             refresh_token = request.data['refresh_token']
             if not refresh_token:
-                return Response({"error": "Refresh token missing"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Refresh token missing"}, status=status.HTTP_401_UNAUTHORIZED)
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
-            return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Invalid token"}, status=status.HTTP_401_UNAUTHORIZED)
         
 class ChangeUserDataView(APIView):
     @authentication_classes([JWTAuthentication])
@@ -100,7 +102,7 @@ class ChangeUserDataView(APIView):
                 if not user.check_password(password):
                     return Response(
                         {"error": "Aktualne hasło jest nieprawidłowe."},
-                        status=status.HTTP_400_BAD_REQUEST,
+                        status=status.HTTP_401_UNAUTHORIZED,
                     )
                 user.set_password(new_password)
             if first_name:
