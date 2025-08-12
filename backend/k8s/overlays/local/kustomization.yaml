@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# namespace: fixie
+
+resources:
+  - ../../base/fixieAuth/fixieAuth-deployment.yaml
+
+secretGenerator:
+  - name: fixieauth-secrets
+    envs:
+      - .env.fixieauth.local
+  - name: fixieauth-keys
+    files:
+      - private.pem=../../secrets/private.pem
+      - public.pem=../../secrets/public.pem
+
+configMapGenerator:
+  - name: fixieauth-config
+    literals:
+      - AUTH_ENV=local
+      - AUTH_ISSUER=http://api.127-0-0-1.nip.io/auth
+      - ALLOWED_HOSTS=fixieauth,fixieauth.default.svc,fixieauth.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
+
+
+generatorOptions:
+  disableNameSuffixHash: true

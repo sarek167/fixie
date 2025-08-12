@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-r!@u*@32mc^#-m+e4!r2^s)kr&_sh=*c*pr8a=bmzve7l=j@jf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1", "192.168.49.2"]
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,10.0.2.2,::1").split(",") if h.strip()]
 
 PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
 
@@ -85,10 +85,10 @@ WSGI_APPLICATION = "fixieAuth.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "users_db",
-        "USER": "tasks_admin",
-        "PASSWORD": "Lemonade001!",
-        "HOST": "sql-server-fixie.database.windows.net",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',

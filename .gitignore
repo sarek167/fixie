@@ -7,3 +7,4 @@ backend/*/__pycache__
 backend/*/.hypothesis
 backend/*/.pytest_cache
 backend/*/.benchmarks
+backend/k8s/overlays/local/.env*

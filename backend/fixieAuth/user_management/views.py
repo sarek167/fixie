@@ -11,56 +11,54 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class RegisterView(APIView):
-    @api_view(['POST'])
-    def register(request):
-        serializer = RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
+    authentication_classes = []
+    permission_classes = []
 
-            refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            print(user)
-            response = Response({
-                "message": "User registered successfuly", 
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        return Response(
+            {
+                "message": "User registered successfully",
                 "id": user.id,
-                "access_token": access_token,
+                "access_token": str(refresh.access_token),
                 "refresh_token": str(refresh),
                 "email": user.email,
                 "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-            }, status=status.HTTP_201_CREATED)
-
-            return response
-        print(serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            },
+            status=status.HTTP_201_CREATED,
+        )
         
-
 class LoginView(APIView):
-    @api_view(['POST'])
-    def login(request):
-        try:
-            serializer = LoginSerializer(data = request.data)
-            if serializer.is_valid():
-                data = serializer.verify(request.data)
-                user = data["user"]
-                refresh = RefreshToken.for_user(user)
-                access_token = str(refresh.access_token)
-                print(user)
-                print(user.id)
-                return Response({
-                    "message": "Login succesful",
-                    "access_token": access_token,
-                    "refresh_token": str(refresh),
-                    "id": user.id,
-                    "email": user.email,
-                    "username": user.username,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
-                }, status=status.HTTP_200_OK)
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-        except Exception as e:
-            print(e)
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.validated_data["user"]
+        refresh = RefreshToken.for_user(user)
+        return Response(
+            {
+                "message": "Login successful",
+                "access_token": str(refresh.access_token),
+                "refresh_token": str(refresh),
+                "id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+            },
+            status=status.HTTP_200_OK,
+        )
+
     
 
 class LogoutView(APIView):

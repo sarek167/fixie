@@ -49,7 +49,27 @@ ENV PYTHONNUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y unixodbc
+# RUN apt-get update && apt-get install -y unixodbc
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl gnupg ca-certificates apt-transport-https \
+    unixodbc unixodbc-dev build-essential \
+  && rm -rf /var/lib/apt/lists/*
+
+# repo Microsoft + instalacja msodbcsql18 i narzędzi
+RUN set -eux; \
+  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg; \
+  . /etc/os-release; \
+  echo "deb [arch=amd64,arm64 signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/${ID}/${VERSION_ID}/prod ${VERSION_CODENAME} main" \
+    > /etc/apt/sources.list.d/mssql-release.list; \
+  apt-get update; \
+  ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql18 mssql-tools18; \
+  rm -rf /var/lib/apt/lists/*; \
+  echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' > /etc/profile.d/mssql-tools.sh
+
+# (opcjonalnie) pyodbc – obecnie ma binary wheels, ale bywa, że wymaga unixodbc-dev/gcc:
+RUN pip install --no-cache-dir pyodbc mssql-django  # dostosuj do swoich requirements
+
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt

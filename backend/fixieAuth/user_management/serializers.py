@@ -25,10 +25,20 @@ class LoginSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('email', 'password')
 
-    def verify(self, data):
-        user = authenticate(email=data['email'], password=data['password'])
-        if user and user.is_active:
-            data['user'] = user
-            print("POPRAWNIE W SERIAL")
-            return data
-        raise serializers.ValidationError("Incorrect password or email")
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+        if not email or not password:
+            raise serializers.ValidationError({"detail": "email and password are required"})
+
+        user = authenticate(
+            request=self.context.get("request"),
+            email=email,
+            password=password,
+        )
+
+        if not user or not user.is_active:
+            raise serializers.ValidationError({"detail": "Incorrect email or password"})
+
+        attrs["user"] = user
+        return attrs
