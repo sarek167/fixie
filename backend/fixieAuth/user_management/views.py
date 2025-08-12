@@ -5,7 +5,6 @@ from django.contrib.auth import login
 from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
@@ -64,10 +63,7 @@ class LoginView(APIView):
             print(e)
     
 
-
 class LogoutView(APIView):
-    @authentication_classes([JWTAuthentication])
-    @permission_classes([IsAuthenticated])
     def post(self, request):
         try:
             refresh_token = request.data['refresh_token']

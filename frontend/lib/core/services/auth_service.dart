@@ -32,7 +32,7 @@ class AuthService {
   }
 
   Future<Response> logout(String accessToken, String refreshToken) async {
-    final response = await TokenClient.client.patch(
+    final response = await TokenClient.client.post(
         EndpointConstants.logoutEndpoint,
         data: {'refresh_token': refreshToken},
     );

@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1", "192.168.49.2"]
 
+PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
+
 
 # Application definition
 
@@ -149,7 +151,7 @@ SIMPLE_JWT = {
     "ALGORITHM": "RS256",
     "SIGNING_KEY": open(os.path.join(BASE_DIR, "secrets/private.pem")).read(),
     "VERIFYING_KEY": open(os.path.join(BASE_DIR, "secrets/public.pem")).read(),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
