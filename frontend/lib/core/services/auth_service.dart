@@ -32,17 +32,11 @@ class AuthService {
   }
 
   Future<Response> logout(String accessToken, String refreshToken) async {
-    final response = await _dio.post(
-      EndpointConstants.logoutEndpoint,
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': "Bearer $accessToken",
-        },
-      ),
-      data: {'refresh_token': refreshToken},
+    final response = await TokenClient.client.patch(
+        EndpointConstants.logoutEndpoint,
+        data: {'refresh_token': refreshToken},
     );
+
     return response;
   }
   

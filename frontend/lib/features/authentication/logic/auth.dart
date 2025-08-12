@@ -46,12 +46,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
         int streakResponse = await TaskService.countStreak();
         final data = response.data;
-        data["streak"] =  streakResponse;
+        data["streak"] = streakResponse;
         final user = User.fromJson(data);
         await UserStorage().setUser(user);
 
-        WebSocketService().connect(user.id, (message) {
+        WebSocketService().connect(user.id, (message, ack) {
           NotificationManager().show(message);
+          ack();
         });
         print('Logowanie udane, token: $accessToken'); // Debugging
         emit(AuthenticationAuthenticated(accessToken));
@@ -67,24 +68,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future register(String email, String username, String password) async {
     try {
       emit(AuthenticationLoading());
-      Response response = await _authService.register(email, username, password);
+      Response response = await _authService.register(
+        email,
+        username,
+        password,
+      );
       if (response.statusCode == 201) {
         final String accessToken = response.data['access_token'];
-          final String refreshToken = response.data['refresh_token'];
+        final String refreshToken = response.data['refresh_token'];
 
-          await _secureStorage.write(key: 'access_token', value: accessToken);
-          await _secureStorage.write(key: 'refresh_token', value: refreshToken);
-          User user = User(
-            id: response.data["id"],
-            email: response.data["email"],
-            username: response.data["username"],
-            firstName: response.data["first_name"],
-            lastName: response.data["last_name"],
-            streak: 0
-          );
-          UserStorage().setUser(user);
-          print('Rejestracja udana, token: $accessToken'); // Debugging
-          emit(AuthenticationAuthenticated(accessToken));
+        await _secureStorage.write(key: 'access_token', value: accessToken);
+        await _secureStorage.write(key: 'refresh_token', value: refreshToken);
+        User user = User(
+          id: response.data["id"],
+          email: response.data["email"],
+          username: response.data["username"],
+          firstName: response.data["first_name"],
+          lastName: response.data["last_name"],
+          streak: 0,
+        );
+        UserStorage().setUser(user);
+        print('Rejestracja udana, token: $accessToken'); // Debugging
+        emit(AuthenticationAuthenticated(accessToken));
       } else {
         emit(AuthenticationFailure("Błąd rejestracji: ${response.statusCode}"));
       }
@@ -99,7 +104,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       // emit(AuthenticationLoading());
       String? accessToken = await _secureStorage.read(key: 'access_token');
       String? refreshToken = await _secureStorage.read(key: 'refresh_token');
-      Response response = await _authService.logout(accessToken!, refreshToken!);
+      Response response = await _authService.logout(
+        accessToken!,
+        refreshToken!,
+      );
       print(response);
       if (response.statusCode == 200) {
         await _secureStorage.delete(key: 'access_token');
@@ -115,5 +123,4 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(AuthenticationFailure(e.toString()));
     }
   }
-
 }
