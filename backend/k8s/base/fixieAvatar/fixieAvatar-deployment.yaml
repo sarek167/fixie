@@ -18,4 +18,22 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8002
-
+        envFrom:
+          - secretRef:
+              name: fixieavatar-secrets
+          - configMapRef:
+              name: fixieavatar-config
+        env:
+          - name: PUBLIC_KEY_PATH
+            value: /etc/secrets/jwt/public.pem
+        volumeMounts:
+          - name: jwt-public
+            mountPath: /etc/secrets/jwt
+            readOnly: true
+      volumes:
+        - name: jwt-public
+          secret:
+            secretName: fixieavatar-keys
+            items:
+              - key: public.pem 
+                path: public.pem

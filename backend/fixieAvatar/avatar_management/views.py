@@ -11,9 +11,21 @@ from django.db.models import F
 from kafka import KafkaProducer
 import json
 from django.conf import settings
+import os
+
+bootstrap = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
+security_protocol = os.getenv("KAFKA_SECURITY_PROTOCOL")
+sasl_mech         = os.getenv("KAFKA_SASL_MECHANISM")
+sasl_user         = os.getenv("KAFKA_SASL_USERNAME")
+sasl_pass         = os.getenv("KAFKA_SASL_PASSWORD") 
+
 
 producer = KafkaProducer(
-    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    bootstrap_servers=bootstrap,
+    security_protocol=security_protocol,
+    sasl_mechanism=sasl_mech,
+    sasl_plain_username=sasl_user,
+    sasl_plain_password=sasl_pass,
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 

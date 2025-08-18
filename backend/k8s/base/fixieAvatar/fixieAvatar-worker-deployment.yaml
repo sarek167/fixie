@@ -16,13 +16,12 @@ spec:
     spec:
       containers:
         - name: fixieavatar-worker
-          image: fixieavatar:latest
+          image: fixieavatar-image
+          imagePullPolicy: Never
+          envFrom:
+            - secretRef:
+                name: fixieavatar-secrets
+            - configMapRef:
+                name: fixieavatar-config
           command: ["python", "manage.py", "run_avatar_worker"]
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
       restartPolicy: Always
