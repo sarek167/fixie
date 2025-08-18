@@ -3,16 +3,25 @@ from .models import UserPath, Path, PopularPath, TaskPath, UserTaskAnswer, Task
 from .serializers import PathSerializer, TaskSerializer, UserTaskAnswerSerializer
 from utils.decorators import jwt_required
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from datetime import date, timedelta
-from django.conf import settings
 from kafka import KafkaProducer
+import os
 import json
 
+bootstrap = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
+security_protocol = os.getenv("KAFKA_SECURITY_PROTOCOL")
+sasl_mech         = os.getenv("KAFKA_SASL_MECHANISM")
+sasl_user         = os.getenv("KAFKA_SASL_USERNAME")
+sasl_pass         = os.getenv("KAFKA_SASL_PASSWORD") 
+
 producer = KafkaProducer(
-    bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    bootstrap_servers=bootstrap,
+    security_protocol=security_protocol,
+    sasl_mechanism=sasl_mech,
+    sasl_plain_username=sasl_user,
+    sasl_plain_password=sasl_pass,
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
@@ -183,7 +192,10 @@ class StreakView(APIView):
                     today -= timedelta(days=1)
                 else:
                     break
-            producer.send("streak-completed-event", {"user_id": request.user_id, "trigger_value": streak})
+            try:
+                producer.send("streak-completed-event", {"user_id": request.user_id, "trigger_value": streak})
+            except Exception as e:
+                print(f"Error sending streak event: {e}")
             return JsonResponse({"streak": streak}, status=200)
         except Exception as e:
             print(e)

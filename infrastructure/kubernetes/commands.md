@@ -11,6 +11,8 @@ eval $(minikube docker-env)
 docker build -t fixieauth-image .
 
 docker build -t fixietasks-image .
+
+docker system prune
 ```
 
 **Restart deployment**
@@ -79,7 +81,8 @@ kubectl get deploy,po,svc,cm,secret -n default
 kubectl describe secret fixieauth-secrets
 
 
-kubectl  port-forward service/fixieauth-service 8000:80
+kubectl  port-forward service/fixieauth 8000:80
+kubectl  port-forward service/fixietasks 8001:80
 ```
 
 
@@ -131,4 +134,22 @@ kubectl run mssql-cli --rm -it --image=mcr.microsoft.com/mssql-tools --restart=N
 ```bash
 kustomize build --load-restrictor=LoadRestrictionsNone k8s/overlays/local | kubectl apply -f -
 kubectl -n default rollout restart deploy/fixieauth
+```
+
+
+**Kafka**
+```bash
+kubectl create ns messaging
+kubectl create ns cert-manager
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager -n cert-manager --set crds.enabled=true
+# po chwili:
+helm install rp redpanda/redpanda -n messaging \
+  --set statefulset.replicas=1 \
+  --set storage.persistentVolume.enabled=false \
+  --set external.enabled=false
+
+# sprawdź usługi i nazwę bootstrapu
+kubectl -n messaging get svc
 ```

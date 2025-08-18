@@ -13,6 +13,14 @@ secretGenerator:
     files:
       - private.pem=../../secrets/private.pem
       - public.pem=../../secrets/public.pem
+  - name: fixietasks-secrets
+    literals:
+
+    envs:
+      - .env.fixietasks.local
+  - name: fixietasks-keys
+    files:
+      - public.pem=../../secrets/public.pem
 
 configMapGenerator:
   - name: fixieauth-config
@@ -21,6 +29,14 @@ configMapGenerator:
       - AUTH_ISSUER=http://api.127-0-0-1.nip.io/auth
       - ALLOWED_HOSTS=fixieauth,fixieauth.default.svc,fixieauth.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
 
+  - name: fixietasks-config
+    literals:
+      - AUTH_ENV=local
+      - AUTH_ISSUER=http://api.127-0-0-1.nip.io/auth
+      - ALLOWED_HOSTS=fixietasks,fixietasks.default.svc,fixietasks.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
+      - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
+      - KAFKA_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_SASL_MECHANISM=PLAIN
 
 generatorOptions:
   disableNameSuffixHash: true
