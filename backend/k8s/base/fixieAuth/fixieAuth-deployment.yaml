@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: fixieauth
-          image: fixieauth-image
-          imagePullPolicy: Never
+          image: fixieacr.azurecr.io/fixieauth:v1
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           envFrom:

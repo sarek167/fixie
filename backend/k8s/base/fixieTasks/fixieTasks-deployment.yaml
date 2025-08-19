@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: fixietasks
-          image: fixietasks-image
-          imagePullPolicy: Always
+          image: fixieacr.azurecr.io/fixietasks:v1
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8001
           envFrom:
@@ -27,13 +27,13 @@ spec:
             - name: PUBLIC_KEY_PATH
               value: /etc/secrets/jwt/public.pem
           volumeMounts:
-            - name: jwt-public                 # <-- ta sama nazwa co w volumes
+            - name: jwt-public
               mountPath: /etc/secrets/jwt
               readOnly: true
       volumes:
-        - name: jwt-public                     # <-- dopasowane do volumeMount
+        - name: jwt-public
           secret:
-            secretName: fixietasks-keys        # <-- nazwa Secretu z kustomize
+            secretName: fixietasks-keys
             items:
               - key: public.pem
                 path: public.pem

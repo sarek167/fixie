@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: fixieavatar-worker
-          image: fixieavatar-image
-          imagePullPolicy: Never
+          image: fixieacr.azurecr.io/fixieavatar:v1
+          imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
                 name: fixieavatar-secrets

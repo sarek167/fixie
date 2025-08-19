@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: fixienotification
-        image: fixienotification-image
-        imagePullPolicy: Never
+        image: fixieacr.azurecr.io/fixienotification:v1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8003
         envFrom:
