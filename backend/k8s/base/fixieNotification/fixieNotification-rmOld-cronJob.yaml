@@ -24,4 +24,3 @@ spec:
               - configMapRef:
                   name: fixienotification-config
             command: ["python", "manage.py", "clear_old_notifications"]
-          restartPolicy: OnFailure

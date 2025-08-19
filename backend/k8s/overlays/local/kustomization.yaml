@@ -1,69 +1,72 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-# namespace: fixie
 
+# Bazowe kustomizacje per mikroserwis:
 resources:
-  - ../../base/fixieAuth/fixieAuth-deployment.yaml
+  - ../../base/fixieAuth
+  - ../../base/fixieTasks
+  - ../../base/fixieAvatar
+  - ../../base/fixieNotification
+  - ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 secretGenerator:
   - name: fixieauth-secrets
-    envs:
-      - .env.fixieauth.local
+    envs: [env/.env.fixieauth.local]
   - name: fixieauth-keys
     files:
-      - private.pem=../../secrets/private.pem
-      - public.pem=../../secrets/public.pem
+      - private.pem=keys/private.pem
+      - public.pem=keys/public.pem
+
   - name: fixietasks-secrets
-    envs:
-      - .env.fixietasks.local
+    envs: [env/.env.fixietasks.local]
   - name: fixietasks-keys
     files:
-      - public.pem=../../secrets/public.pem
+      - public.pem=keys/public.pem
+
   - name: fixieavatar-secrets
-    envs:
-      - .env.fixieavatar.local
+    envs: [env/.env.fixieavatar.local]
   - name: fixieavatar-keys
     files:
-      - public.pem=../../secrets/public.pem
+      - public.pem=keys/public.pem
+
   - name: fixienotification-secrets
-    envs:
-      - .env.fixienotification.local
+    envs: [env/.env.fixienotification.local]
   - name: fixienotification-keys
     files:
-      - public.pem=../../secrets/public.pem
+      - public.pem=keys/public.pem
 
+# ConfigMapy (hosty .nip.io itd.)
 configMapGenerator:
   - name: fixieauth-config
     literals:
       - AUTH_ENV=local
-      - AUTH_ISSUER=http://api.127-0-0-1.nip.io/auth
-      - ALLOWED_HOSTS=fixieauth,fixieauth.default.svc,fixieauth.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
+      - AUTH_ISSUER=http://api.192.168.49.2.nip.io/auth
+      - ALLOWED_HOSTS=fixieauth,fixieauth.default.svc,fixieauth.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2,api.192.168.49.2.nip.io
 
   - name: fixietasks-config
     literals:
       - AUTH_ENV=local
-      - AUTH_ISSUER=http://api.127-0-0-1.nip.io/auth
-      - ALLOWED_HOSTS=fixietasks,fixietasks.default.svc,fixietasks.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
+      - AUTH_ISSUER=http://api.192.168.49.2.nip.io/auth
+      - ALLOWED_HOSTS=fixietasks,fixietasks.default.svc,fixietasks.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2,api.192.168.49.2.nip.io
       - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
       - KAFKA_SECURITY_PROTOCOL=SASL_SSL
       - KAFKA_SASL_MECHANISM=PLAIN
 
   - name: fixieavatar-config
     literals:
-      - ALLOWED_HOSTS=fixieavatar,fixieavatar.default.svc,fixieavatar.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2
+      - ALLOWED_HOSTS=fixieavatar,fixieavatar.default.svc,fixieavatar.default.svc.cluster.local,localhost,127.0.0.1,10.0.2.2,api.192.168.49.2.nip.io
       - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
       - KAFKA_SECURITY_PROTOCOL=SASL_SSL
       - KAFKA_SASL_MECHANISM=PLAIN
 
   - name: fixienotification-config
     literals:
-      - ALLOWED_HOSTS=fixienotification,fixienotification.default.svc,fixienotification.default.svc.cluster.local,localhost,
+      - ALLOWED_HOSTS=fixienotification,fixienotification.default.svc,fixienotification.default.svc.cluster.local,localhost,10.0.2.2,api.192.168.49.2.nip.io
       - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
       - KAFKA_SECURITY_PROTOCOL=SASL_SSL
       - KAFKA_SASL_MECHANISM=PLAIN
       - REDIS_HOST=fixie-websocket-redis-db.redis.cache.windows.net
       - REDIS_PORT=6380
-
-
-generatorOptions:
-  disableNameSuffixHash: true
