@@ -28,9 +28,11 @@ class AuthenticationFailure extends AuthenticationState {
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   final AuthService _authService;
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  final WebSocketService _ws;
 
-  AuthenticationCubit({required AuthService authService})
+  AuthenticationCubit({required AuthService authService, WebSocketService? ws,})
     : _authService = authService,
+      _ws = ws ?? WebSocketService.instance,
       super(AuthenticationInitial());
 
   Future login(String email, String password) async {
@@ -50,10 +52,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         final user = User.fromJson(data);
         await UserStorage().setUser(user);
 
-        WebSocketService().connect(user.id, (message, ack) {
+        await _ws.connect(user.id, (message, ack) {
           NotificationManager().show(message);
           ack();
         });
+
         print('Logowanie udane, token: $accessToken'); // Debugging
         emit(AuthenticationAuthenticated(accessToken));
       } else {
@@ -102,12 +105,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future logout() async {
     try {
       // emit(AuthenticationLoading());
+      await _ws.disconnect();
+
       String? accessToken = await _secureStorage.read(key: 'access_token');
       String? refreshToken = await _secureStorage.read(key: 'refresh_token');
       Response response = await _authService.logout(
         accessToken!,
         refreshToken!,
       );
+
       print(response);
       if (response.statusCode == 200) {
         await _secureStorage.delete(key: 'access_token');
@@ -122,5 +128,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       print(e.toString());
       emit(AuthenticationFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() async {
+    await _ws.disconnect();
+    return super.close();
   }
 }

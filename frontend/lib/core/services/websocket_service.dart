@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:frontend/core/services/token_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -6,12 +7,18 @@ typedef OnNotificationCallback =
     void Function(Map<String, dynamic> data, void Function() ack);
 
 class WebSocketService {
+  WebSocketService._();
+  static final WebSocketService instance = WebSocketService._();
+
   WebSocketChannel? _channel;
+  StreamSubscription? _subscription;
 
   Future<void> connect(
     int userId,
     OnNotificationCallback onNotification,
   ) async {
+    await disconnect();
+
     final userToken = await TokenClient.getUserToken(userId);
     _channel = WebSocketChannel.connect(
       Uri.parse('ws://10.0.2.2:8003/ws/notifications/?token=$userToken'),
@@ -47,7 +54,10 @@ class WebSocketService {
     );
   }
 
-  void disconnect() {
-    _channel?.sink.close();
+  Future<void> disconnect({int? code, String? reason}) async {
+    await _subscription?.cancel();
+    _subscription = null;
+    await _channel?.sink.close(code,reason);
+    _channel = null;
   }
 }

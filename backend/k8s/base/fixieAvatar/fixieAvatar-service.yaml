@@ -11,3 +11,4 @@ spec:
       targetPort: 8002
       nodePort: 30002
   type: NodePort
+`

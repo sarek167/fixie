@@ -83,6 +83,8 @@ kubectl describe secret fixieauth-secrets
 
 kubectl  port-forward service/fixieauth 8000:80
 kubectl  port-forward service/fixietasks 8001:80
+kubectl  port-forward service/fixieavatar 8002:80
+kubectl  port-forward service/fixienotification 8003:80
 ```
 
 

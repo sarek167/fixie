@@ -82,10 +82,6 @@ DATABASES = {
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
-        # "NAME": "tasks_db",
-        # "USER": "adminadmin",
-        # "PASSWORD": "Password123",
-        # "HOST": "sql-fixie.database.windows.net",
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',

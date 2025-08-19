@@ -25,6 +25,12 @@ secretGenerator:
   - name: fixieavatar-keys
     files:
       - public.pem=../../secrets/public.pem
+  - name: fixienotification-secrets
+    envs:
+      - .env.fixienotification.local
+  - name: fixienotification-keys
+    files:
+      - public.pem=../../secrets/public.pem
 
 configMapGenerator:
   - name: fixieauth-config
@@ -48,6 +54,16 @@ configMapGenerator:
       - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
       - KAFKA_SECURITY_PROTOCOL=SASL_SSL
       - KAFKA_SASL_MECHANISM=PLAIN
+
+  - name: fixienotification-config
+    literals:
+      - ALLOWED_HOSTS=fixienotification,fixienotification.default.svc,fixienotification.default.svc.cluster.local,localhost,
+      - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
+      - KAFKA_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_SASL_MECHANISM=PLAIN
+      - REDIS_HOST=fixie-websocket-redis-db.redis.cache.windows.net
+      - REDIS_PORT=6380
+
 
 generatorOptions:
   disableNameSuffixHash: true

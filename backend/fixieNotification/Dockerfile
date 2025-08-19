@@ -1,7 +1,7 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONNUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
@@ -22,10 +22,9 @@ RUN set -eux; \
   rm -rf /var/lib/apt/lists/*; \
   echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' > /etc/profile.d/mssql-tools.sh
 
-RUN pip install --no-cache-dir pyodbc mssql-django  # dostosuj do swoich requirements
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
-CMD ["gunicorn", "fixieNotification.wsgi:application", "--bind", "0.0.0.0:8003"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8003", "fixieNotification.asgi:application"]

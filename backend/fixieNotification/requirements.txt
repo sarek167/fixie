@@ -4,3 +4,7 @@ asgiref==3.7.2
 gunicorn==23.0.0
 mssql-django
 pyodbc
+cryptography
+daphne
+PyJWT
+kafka-python

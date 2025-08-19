@@ -6,20 +6,39 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from notification_management.models import Notification
 from django.utils import timezone
+import os
+
+def _kafka_cfg():
+    return {
+        "bootstrap_servers": os.getenv("KAFKA_BOOTSTRAP_SERVERS"),
+        "security_protocol": os.getenv("KAFKA_SECURITY_PROTOCOL", "PLAINTEXT"),
+        "sasl_mechanism": os.getenv("KAFKA_SASL_MECHANISM"),
+        "sasl_plain_username": os.getenv("KAFKA_SASL_USERNAME"),
+        "sasl_plain_password": os.getenv("KAFKA_SASL_PASSWORD"),
+    }
 
 
 class Command(BaseCommand):
     help = 'Runs Kafka consumer to listen for notifications to show'
 
-    def handle(self, *args, **options):
-        consumer = KafkaConsumer(
-            'reward-granted',
-            bootstrap_servers=f'{settings.KAFKA_IP}:{settings.KAFKA_PORT}',
+    def _mk_consumer(self, cfg, topics):
+        return KafkaConsumer(
+            *topics,
+            **{k: v for k, v in cfg.items() if v},
             group_id='notification-consumer-group',
             value_deserializer=lambda m: json.loads(m.decode('utf-8')),
             auto_offset_reset='earliest',
-            enable_auto_commit=True
+            enable_auto_commit=True,
+            api_version_auto_timeout_ms=10000,
         )
+
+    def handle(self, *args, **options):
+        cfg = _kafka_cfg() 
+        if not cfg["bootstrap_servers"]:
+            self.stderr.write("KAFKA_BOOTSTRAP_SERVERS is empty")
+            return
+        
+        consumer = self._mk_consumer(cfg, ['reward-granted'])
 
         self.stdout.write(self.style.SUCCESS('Notification worker started. Listening for notifications to show...'))
 

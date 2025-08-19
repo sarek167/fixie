@@ -6,6 +6,7 @@ from django.conf import settings
 from avatar_management.serializers import RewardSerializer
 import os
 import logging
+import time
 
 log = logging.getLogger(__name__)
 
@@ -77,11 +78,11 @@ class Command(BaseCommand):
                     if topic == "avatar-updates":
                         self.avatar_update(data, user_id)
                     elif topic == "path-completed-event":
-                        self.reward_receive_events(data, user_id, "path_completion")
+                        self.reward_receive_events(producer, data, user_id, "path_completion")
                     elif topic == "task-completed-event":
-                        self.reward_receive_events(data, user_id, "task_completion")
+                        self.reward_receive_events(producer, data, user_id, "task_completion")
                     elif topic == "streak-completed-event":
-                        self.reward_receive_events(data, user_id, "streak")
+                        self.reward_receive_events(producer, data, user_id, "streak")
                 except Exception as e:
                     self.stderr.write(f"Error processing topic's {topic} message: {e}")
 
@@ -101,7 +102,7 @@ class Command(BaseCommand):
         status = 'created' if created else 'updated'
         self.stdout.write(f'Avatar {status} for user_id {user_id}')
     
-    def reward_receive_events(self, data, user_id, trigger_type):
+    def reward_receive_events(self, producer, data, user_id, trigger_type):
         self.stdout.write(f"PAYLOAD {data}")
         trigger_value = data.get('trigger_value')
         if not trigger_value:
