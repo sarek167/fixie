@@ -21,6 +21,8 @@ kubectl rollout restart deployment fixieauth
 kubectl rollout restart deployment fixietasks
 kubectl rollout restart deployment fixieavatar
 kubectl rollout restart deployment fixienotification
+kubectl rollout restart deployment fixieavatar-worker
+kubectl rollout restart deployment fixienotification-worker
 ```
 
 **Logs if not present**
@@ -155,3 +157,47 @@ helm install rp redpanda/redpanda -n messaging \
 # sprawdź usługi i nazwę bootstrapu
 kubectl -n messaging get svc
 ```
+
+**Sekret do obrazów**
+```bash
+kubectl create secret docker-registry acr-pull-secret \
+  --docker-server=$ACR \
+  --docker-username=fixieacr \
+  --docker-password=RrrpKAWDyepd6Kl9RuD3wWBc6xBFWawPmlK/VsQWc9+ACRDLIJbO \
+  --docker-email=none
+
+
+kubectl patch serviceaccount default \
+  -p '{"imagePullSecrets":[{"name":"acr-pull-secret"}]}'
+
+
+```
+
+**push images**
+```bash
+ACR=fixieacr.azurecr.io
+IMG=fixieauth
+TAG=v2
+
+# tag z pełnym repo ACR
+docker tag fixieauth-image $ACR/$IMG:$TAG
+
+# zaloguj się do rejestru dockerem
+docker login $ACR -u <username> -p <password>
+
+# push
+docker push $ACR/$IMG:$TAG
+
+az acr repository list -n fixieacr -o table
+az acr repository show-tags -n fixieacr --repository $IMG -o table
+
+
+```
+
+az aks nodepool add \
+  -g fixie -n amdpool -c 2 \
+  --cluster-name fixieaks \
+  --node-vm-size Standard_D2s_v5 \
+  --mode User
+
+<!-- IP 192.168.49.2 -->

@@ -1,5 +1,5 @@
 class EndpointConstants {
-  static const String base = "api.192.168.49.2.nip.io";
+  static const String base = "72.144.98.53.nip.io";
   // static const String clusterIP = "10.0.2.2";
   // static const String userManagementPort = "8000";
   // static const String taskManagementPort = "8001";
@@ -45,6 +45,6 @@ class EndpointConstants {
 
   static const String refreshTokenSuffix = "token_refresh/";
 
-  static const String wsNotificationsBase = "ws://api.192.168.49.2.nip.io/ws/notifications/";
+  static const String wsNotificationsBase = "ws://72.144.98.53.nip.io/ws/notifications/";
 
 }
