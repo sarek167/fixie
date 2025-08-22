@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixienotification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fixienotification
+  template:
+    metadata:
+      labels:
+        app: fixienotification
+    spec:
+      containers:
+      - name: fixienotification
+        image: fixieacr.azurecr.io/fixienotification:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8003
+        envFrom:
+          - secretRef:
+              name: fixienotification-secrets
+          - configMapRef:
+              name: fixienotification-config
+        env:
+          - name: PUBLIC_KEY_PATH
+            value: /etc/secrets/jwt/public.pem
+        volumeMounts:
+          - name: jwt-public
+            mountPath: /etc/secrets/jwt
+            readOnly: true
+      volumes:
+        - name: jwt-public
+          secret:
+            secretName: fixienotification-keys
+            items:
+              - key: public.pem 
+                path: public.pem

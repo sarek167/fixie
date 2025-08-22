@@ -16,13 +16,12 @@ spec:
     spec:
       containers:
         - name: fixienotification-worker
-          image: fixienotification:latest
+          image: fixieacr.azurecr.io/fixienotification:v1
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: fixienotification-secrets
+            - configMapRef:
+                name: fixienotification-config
           command: ["python", "manage.py", "run_notification_worker"]
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
       restartPolicy: Always

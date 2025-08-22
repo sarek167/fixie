@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fixie-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout:  "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: 72.144.98.53.nip.io
+    http:
+      paths:
+      - path: /user_management
+        pathType: Prefix
+        backend: { service: { name: fixieauth,         port: { number: 80 }  } }
+      - path: /task_management
+        pathType: Prefix
+        backend: { service: { name: fixietasks,        port: { number: 80 } } }
+      - path: /avatar_management
+        pathType: Prefix
+        backend: { service: { name: fixieavatar,       port: { number: 80 } } }
+      - path: /ws
+        pathType: Prefix
+        backend: { service: { name: fixienotification, port: { number: 80 } } }

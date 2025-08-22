@@ -1,0 +1,85 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/fixieAuth
+  - ../../base/fixieTasks
+  - ../../base/fixieAvatar
+  - ../../base/fixieNotification
+  - ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+images:
+  - name: fixieauth-image
+    newName: fixieacr.azurecr.io/fixieauth
+    newTag: v1
+  - name: fixietasks-image
+    newName: fixieacr.azurecr.io/fixietasks
+    newTag: v1
+  - name: fixieavatar-image
+    newName: fixieacr.azurecr.io/fixieavatar
+    newTag: v1
+  - name: fixienotification-image
+    newName: fixieacr.azurecr.io/fixienotification
+    newTag: v1
+
+secretGenerator:
+  - name: fixieauth-secrets
+    envs: [env/.env.fixieauth.aks]
+  - name: fixieauth-keys
+    files:
+      - private.pem=keys/private.pem
+      - public.pem=keys/public.pem
+
+  - name: fixietasks-secrets
+    envs: [env/.env.fixietasks.aks]
+  - name: fixietasks-keys
+    files:
+      - public.pem=keys/public.pem
+
+  - name: fixieavatar-secrets
+    envs: [env/.env.fixieavatar.aks]
+  - name: fixieavatar-keys
+    files:
+      - public.pem=keys/public.pem
+
+  - name: fixienotification-secrets
+    envs: [env/.env.fixienotification.aks]
+  - name: fixienotification-keys
+    files:
+      - public.pem=keys/public.pem
+
+
+configMapGenerator:
+  - name: fixieauth-config
+    literals:
+      - AUTH_ENV=aks
+      - AUTH_ISSUER=https://api.131.189.24.106.nip.io/auth
+      - ALLOWED_HOSTS=fixieauth,fixieauth.default.svc,fixieauth.default.svc.cluster.local,api.131.189.24.106.com,api.131.189.24.106.nip.io,72.144.98.53.nip.io
+
+  - name: fixietasks-config
+    literals:
+      - AUTH_ENV=aks
+      - AUTH_ISSUER=https://api.131.189.24.106.nip.io/auth
+      - ALLOWED_HOSTS=fixietasks,fixietasks.default.svc,fixietasks.default.svc.cluster.local,api.131.189.24.106.com,api.131.189.24.106.nip.io,72.144.98.53.nip.io
+      - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
+      - KAFKA_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_SASL_MECHANISM=PLAIN
+
+  - name: fixieavatar-config
+    literals:
+      - ALLOWED_HOSTS=fixieavatar,fixieavatar.default.svc,fixieavatar.default.svc.cluster.local,api.131.189.24.106.com,api.131.189.24.106.nip.io,72.144.98.53.nip.io
+      - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
+      - KAFKA_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_SASL_MECHANISM=PLAIN
+
+  - name: fixienotification-config
+    literals:
+      - ALLOWED_HOSTS=fixienotification,fixienotification.default.svc,fixienotification.default.svc.cluster.local,api.131.189.24.106.com,api.131.189.24.106.nip.io,72.144.98.53.nip.io
+      - KAFKA_BOOTSTRAP_SERVERS=messagefixie.servicebus.windows.net:9093
+      - KAFKA_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_SASL_MECHANISM=PLAIN
+      - REDIS_HOST=fixie-websocket-redis-db.redis.cache.windows.net
+      - REDIS_PORT=6380

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixietasks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fixietasks
+  template:
+    metadata:
+      labels:
+        app: fixietasks
+    spec:
+      containers:
+        - name: fixietasks
+          image: fixieacr.azurecr.io/fixietasks:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - secretRef:
+                name: fixietasks-secrets
+            - configMapRef:
+                name: fixietasks-config
+          env:
+            - name: PUBLIC_KEY_PATH
+              value: /etc/secrets/jwt/public.pem
+          volumeMounts:
+            - name: jwt-public
+              mountPath: /etc/secrets/jwt
+              readOnly: true
+      volumes:
+        - name: jwt-public
+          secret:
+            secretName: fixietasks-keys
+            items:
+              - key: public.pem
+                path: public.pem

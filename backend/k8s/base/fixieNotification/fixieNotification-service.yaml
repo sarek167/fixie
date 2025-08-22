@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fixienotification-service
+  name: fixienotification
 spec:
   selector:
     app: fixienotification
@@ -9,5 +9,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8003
-      nodePort: 30003
-  type: NodePort
+  type: ClusterIP

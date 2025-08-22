@@ -4,3 +4,4 @@ mssql-django
 pyodbc
 gunicorn==23.0.0
 kafka-python
+cryptography

@@ -24,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-txwcf*i$fgkg6dgfwmvbv^f+k5#zoq71@#hx08j#ezz^3bvur5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', '192.168.49.2']
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,10.0.2.2,::1").split(",") if h.strip()]
 
+def _read(path):
+    with open(path, "r") as f:
+        return f.read()
 
 # Application definition
 
@@ -44,7 +47,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -75,10 +78,10 @@ WSGI_APPLICATION = "fixieTasks.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "tasks_db",
-        "USER": "tasks_admin",
-        "PASSWORD": "Lemonade001!",
-        "HOST": "sql-server-fixie.database.windows.net",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
@@ -130,7 +133,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
-
-KAFKA_IP = "localhost"
-KAFKA_PORT = "9092"
+PUBLIC_KEY_PATH = os.getenv("PUBLIC_KEY_PATH", "/etc/secrets/jwt/public.pem")
+# PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")

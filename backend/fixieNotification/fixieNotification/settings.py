@@ -15,7 +15,6 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-AZURE_REDIS_KEY = os.environ["AZURE_REDIS_KEY"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -26,15 +25,15 @@ SECRET_KEY = "django-insecure-b3*^@kcnxcf(95m)d%%p34nd&rjxl8=um&14o-4kl$n4euc7$8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', '192.168.49.2']
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,10.0.2.2,::1").split(",") if h.strip()]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
+    # "django.contrib.sessions",
+    # "django.contrib.messages",
     "django.contrib.staticfiles",
     "channels",
     "notification_management",
@@ -42,9 +41,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    # "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -59,7 +59,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
-                "django.contrib.messages.context_processors.messages",
+                # "django.contrib.messages.context_processors.messages",
             ],
         },
     },
@@ -74,10 +74,10 @@ WSGI_APPLICATION = "fixieNotification.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "notifications_db",
-        "USER": "tasks_admin",
-        "PASSWORD": "Lemonade001!",
-        "HOST": "sql-server-fixie.database.windows.net",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
@@ -92,7 +92,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(f"rediss://:Q6s9pmAh88dBAiZrYEswWJBotX1DLmnuRAzCaIOecxQ=@fixie-kafka-redis-db.redis.cache.windows.net:6380")]
+            "hosts": [(f"rediss://:{os.environ.get('REDIS_PASSWORD')}@{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT', 6380)}")]
         }
     }
 }
@@ -139,11 +139,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
+PUBLIC_KEY_PATH = os.getenv("PUBLIC_KEY_PATH", "/etc/secrets/jwt/public.pem")
 
-KAFKA_IP = "localhost"
-KAFKA_PORT = "9092"
-
-PUBLIC_KEY_PATH = os.path.join(BASE_DIR, "secrets", "public.pem")
 
 ASGI_APPLICATION = "fixieNotification.asgi.application"

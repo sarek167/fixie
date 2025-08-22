@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fixieavatar-service
+  name: fixieavatar
 spec:
   selector:
     app: fixieavatar
@@ -9,5 +9,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8002
-      nodePort: 30002
-  type: NodePort
+  type: ClusterIP

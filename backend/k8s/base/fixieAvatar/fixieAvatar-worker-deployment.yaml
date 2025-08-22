@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixieavatar-worker
+  labels:
+    app: fixieavatar-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fixieavatar-worker
+  template:
+    metadata:
+      labels:
+        app: fixieavatar-worker
+    spec:
+      containers:
+        - name: fixieavatar-worker
+          image: fixieacr.azurecr.io/fixieavatar:v1
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: fixieavatar-secrets
+            - configMapRef:
+                name: fixieavatar-config
+          env:
+            - name: PUBLIC_KEY_PATH
+              value: /etc/secrets/jwt/public.pem
+          volumeMounts:
+            - name: jwt-public
+              mountPath: /etc/secrets/jwt
+              readOnly: true
+
+          command: ["python", "manage.py", "run_avatar_worker"]
+      volumes:
+        - name: jwt-public
+          secret:
+            secretName: fixieavatar-keys
+            items:
+              - key: public.pem 
+                path: public.pem
+      restartPolicy: Always

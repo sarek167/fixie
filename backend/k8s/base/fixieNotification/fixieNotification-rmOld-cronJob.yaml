@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-job
+spec:
+  schedule: "0 3 * * *"
+  concurrencyPolicy: Forbid 
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: cleanup
+            image: fixieacr.azurecr.io/fixienotification:v1
+            imagePullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: fixienotification-secrets
+              - configMapRef:
+                  name: fixienotification-config
+            command: ["python", "manage.py", "clear_old_notifications"]

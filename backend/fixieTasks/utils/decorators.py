@@ -1,6 +1,7 @@
 from functools import wraps
 from django.http import JsonResponse
 from utils.jwt_utils import decode_jwt
+import logging
 
 def jwt_required(view_func):
     @wraps(view_func)
@@ -14,6 +15,8 @@ def jwt_required(view_func):
             payload = decode_jwt(token)
             request.user_id = payload.get("user_id") or payload.get("sub")
         except ValueError as e:
+            print(e)
+            logging.error(f"JWT decoding error: {e}")
             return JsonResponse({"error": str(e)}, status=401)
         return view_func(request, *args, **kwargs)
     return wrapper

@@ -33,14 +33,19 @@ class TokenClient {
         return handler.next(options);
       },
       onError: (e, handler) async {
-        if (e.response?.statusCode == 401) {
+        final retries = e.requestOptions.extra["refresh_retries"] ?? 0;
+
+        if (e.response?.statusCode == 401 && retries < 1) {
+          print("RESPONSE FROM TOKEN SERVICE");
+          print(e.response?.data);
           final refreshToken = await _storage.read(key: 'refresh_token');
           if (refreshToken != null) {
             final refreshed = await _refreshToken(refreshToken);
             if (refreshed != null) {
-              e.requestOptions.headers['Authorization'] = 'Bearer $refreshed';
-              final clonedRequest = await _dio.fetch(e.requestOptions);
-              return handler.resolve(clonedRequest);
+              final newOptions = e.requestOptions..headers['Authorization'] = 'Bearer $refreshed';
+              newOptions.extra["refresh_retries"] = retries + 1;
+              final clonedResponse = await _dio.fetch(newOptions);
+              return handler.resolve(clonedResponse);
             }
           }
         }

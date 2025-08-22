@@ -25,9 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-r!@u*@32mc^#-m+e4!r2^s)kr&_sh=*c*pr8a=bmzve7l=j@jf"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1", "192.168.49.2"]
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,10.0.2.2,::1").split(",") if h.strip()]
+
+PRIVATE_KEY_PATH = os.getenv("PRIVATE_KEY_PATH", "/etc/secrets/auth/private.pem")
+PUBLIC_KEY_PATH  = os.getenv("PUBLIC_KEY_PATH",  "/etc/secrets/auth/public.pem")
 
 
 # Application definition
@@ -83,10 +86,10 @@ WSGI_APPLICATION = "fixieAuth.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "users_db",
-        "USER": "tasks_admin",
-        "PASSWORD": "Lemonade001!",
-        "HOST": "sql-server-fixie.database.windows.net",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
@@ -147,8 +150,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ALGORITHM": "RS256",
-    "SIGNING_KEY": open(os.path.join(BASE_DIR, "secrets/private.pem")).read(),
-    "VERIFYING_KEY": open(os.path.join(BASE_DIR, "secrets/public.pem")).read(),
+    "SIGNING_KEY":  os.getenv("SIGNING_KEY")  or Path(PRIVATE_KEY_PATH).read_text(),
+    "VERIFYING_KEY": os.getenv("VERIFYING_KEY") or Path(PUBLIC_KEY_PATH).read_text(),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': True,
