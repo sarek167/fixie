@@ -13,6 +13,7 @@ import importlib
 import types
 import sys
 import asyncio
+import time
 
 pytestmark = [pytest.mark.django_db(transaction=True)]
 
@@ -210,6 +211,7 @@ def test_kafka_worker_fallback_to_db_when_error(monkeypatch):
 
     call_command("run_notification_worker")
 
+    time.sleep(1)
     n = Notification.objects.get(user_id=42)
     assert n.delivered is False and n.delivered_at is None
 

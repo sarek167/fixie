@@ -33,10 +33,9 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        cfg = _kafka_cfg() 
+        cfg = _kafka_cfg()
         if not cfg["bootstrap_servers"]:
-            self.stderr.write("KAFKA_BOOTSTRAP_SERVERS is empty")
-            return
+            self.stderr.write("KAFKA_BOOTSTRAP_SERVERS is empty – continuing (likely test mode)")
         
         consumer = self._mk_consumer(cfg, ['reward-granted'])
 

@@ -58,7 +58,8 @@ def test_register_success(mock_reg_serializer, mock_refresh, rf):
 
     req = rf.post("/register", {"email": "e@e.com", "username": "eu", "password": "secret123"}, format="json")
 
-    resp = RegisterView.register(req)
+    resp = RegisterView.as_view()
+    resp = resp(req)
 
     assert resp.status_code == status.HTTP_201_CREATED
     body = resp.data
@@ -79,7 +80,8 @@ def test_register_invalid_returns_400(mock_reg_serializer, rf):
     mock_reg_serializer.return_value = serializer
 
     req = rf.post("/register", {"username": "u"}, format="json")
-    resp = RegisterView.register(req)
+    resp = RegisterView.as_view()
+    resp = resp(req)
 
     assert resp.status_code == status.HTTP_400_BAD_REQUEST
     assert "email" in resp.data
@@ -103,7 +105,8 @@ def test_register_success_property(email, username, password):
         req = api_rf.post("/register",
                           {"email": email, "username": username, "password": password},
                           format="json")
-        resp = RegisterView.register(req)
+        resp = RegisterView.as_view()
+        resp = resp(req)
 
     assert resp.status_code == 201
     assert resp.data["email"] == email
@@ -117,12 +120,13 @@ def test_login_success(mock_login_serializer, mock_refresh, rf):
     user = _mock_user()
     serializer = MagicMock()
     serializer.is_valid.return_value = True
-    serializer.verify.return_value = {"user": user}
+    serializer.validated_data = {"user": user}
     mock_login_serializer.return_value = serializer
     mock_refresh.for_user.return_value = _FakeRefresh()
 
     req = rf.post("/login", {"email": "e@e.com", "password": "secret123"}, format="json")
-    resp = LoginView.login(req)
+    resp = LoginView.as_view()
+    resp = resp(req)
 
     assert resp.status_code == status.HTTP_200_OK
     assert resp.data["id"] == user.id
@@ -139,7 +143,8 @@ def test_login_invalid_returns_401(mock_login_serializer, rf):
     mock_login_serializer.return_value = serializer
 
     req = rf.post("/login", {"email": "bad", "password": "x"}, format="json")
-    resp = LoginView.login(req)
+    resp = LoginView.as_view()
+    resp = resp(req)
 
     assert resp.status_code == status.HTTP_401_UNAUTHORIZED
     assert resp.data["error"] == "Invalid credentials"
@@ -248,20 +253,32 @@ def test_register_serializer_creates_user(monkeypatch):
     assert user.username == "u"
 
 
-def test_login_serializer_verify_calls_authenticate():
+def test_login_serializer_calls_authenticate():
     from user_management.serializers import LoginSerializer
+
+    rf = APIRequestFactory()
+    req = rf.post("/login", {"email": "e@e.com", "password": "secret123"}, format="json")
 
     fake_user = MagicMock()
     with patch("user_management.serializers.authenticate") as fake_auth:
         fake_auth.return_value = fake_user
 
         email, password = "e@e.com", "secret123"
-        ser = LoginSerializer(data={"email": email, "password": password})
+        ser = LoginSerializer(
+            data={"email": email, "password": password},
+            context={"request": req},
+        )
+
         assert ser.is_valid(), ser.errors
 
-        data = ser.verify({"email": email, "password": password})
+        fake_auth.assert_called_once()
+        kwargs = fake_auth.call_args.kwargs
+        assert kwargs["email"] == email
+        assert kwargs["password"] == password
+        assert kwargs["request"] is req
+
+        data = ser.validated_data
         assert data["user"] is fake_user
-        fake_auth.assert_called_once_with(email=email, password=password)
 
 @pytest.mark.django_db
 def test_custom_user_manager_requires_data():

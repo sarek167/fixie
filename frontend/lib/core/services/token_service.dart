@@ -20,7 +20,10 @@ class TokenClient {
 
   static final _storage = FlutterSecureStorage();
 
+  static Dio? _testClient;
+
   static Dio get client {
+    if (_testClient != null) return _testClient!;
     _dio.interceptors.clear();
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
@@ -53,6 +56,9 @@ class TokenClient {
       },
     ));
     return _dio;
+  }
+  static void setTestClient(Dio? dio) {
+    _testClient = dio;
   }
 
   static Future<String?> getUserToken(int userId) async {

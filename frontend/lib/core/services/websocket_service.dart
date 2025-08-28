@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:meta/meta.dart';
 import 'package:frontend/core/constants/api_endpoints.dart';
 import 'package:frontend/core/services/token_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -14,18 +15,24 @@ class WebSocketService {
   WebSocketChannel? _channel;
   StreamSubscription? _subscription;
 
+  @visibleForTesting
+  WebSocketChannel? debugOverrideChannel;
+
   Future<void> connect(
     int userId,
     OnNotificationCallback onNotification,
   ) async {
     await disconnect();
 
-    final userToken = await TokenClient.getUserToken(userId);
-    _channel = WebSocketChannel.connect(
-      Uri.parse('${EndpointConstants.wsNotificationsBase}?token=$userToken'),
-    );
-
-    _channel!.stream.listen(
+    if (debugOverrideChannel != null) {
+      _channel = debugOverrideChannel;
+    } else {
+      final userToken = await TokenClient.getUserToken(userId);
+      _channel = WebSocketChannel.connect(
+        Uri.parse('${EndpointConstants.wsNotificationsBase}?token=$userToken'),
+      );
+    }
+    _subscription = _channel!.stream.listen(
       (message) {
         try {
           final dynamic decoded = jsonDecode(message);
