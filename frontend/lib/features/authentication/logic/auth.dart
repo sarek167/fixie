@@ -60,11 +60,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         print('Logowanie udane, token: $accessToken'); // Debugging
         emit(AuthenticationAuthenticated(accessToken));
       } else {
-        emit(AuthenticationFailure("Błąd logowania: ${response.statusCode}"));
+        // emit(AuthenticationFailure("Błąd logowania: ${response.statusCode}"));
+        emit(AuthenticationFailure("Niepoprawne login lub hasło."));
       }
     } catch (e) {
       print(e.toString());
-      emit(AuthenticationFailure(e.toString()));
+      // emit(AuthenticationFailure(e.toString()));
+      emit(AuthenticationFailure("Niepoprawne login lub hasło."));
     }
   }
 
@@ -91,14 +93,21 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           streak: 0,
         );
         UserStorage().setUser(user);
+
+        await _ws.connect(user.id, (message, ack) {
+          NotificationManager().show(message);
+          ack();
+        });
         print('Rejestracja udana, token: $accessToken'); // Debugging
         emit(AuthenticationAuthenticated(accessToken));
       } else {
-        emit(AuthenticationFailure("Błąd rejestracji: ${response.statusCode}"));
+        // emit(AuthenticationFailure("Błąd rejestracji: ${response.statusCode}"));
+        emit(AuthenticationFailure(""));
       }
     } catch (e) {
       print(e.toString());
-      emit(AuthenticationFailure(e.toString()));
+      // emit(AuthenticationFailure(e.toString()));
+      emit(AuthenticationFailure("Błąd rejestracji"));
     }
   }
 

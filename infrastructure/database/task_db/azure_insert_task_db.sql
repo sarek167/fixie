@@ -110,6 +110,18 @@ INSERT INTO tasks (title, description, category, difficulty, type, date_for_dail
 ('Codzienne zadanie 49', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-07-24', 'checkbox'),
 ('Codzienne zadanie 50', 'To jest opis codziennego zadania numer 30. Wykonaj je uważnie.', 'DailyKategoria 4', 3, 'daily', '2025-07-25', 'checkbox');
 
+INSERT INTO tasks (title, description, category, difficulty, type, date_for_daily, answer_type) VALUES
+('Dziennik wdzięczności', 'Zapisz trzy rzeczy, za które jesteś dziś wdzięczny. Ćwiczenie wdzięczności pomaga zmieniać sposób postrzegania rzeczywistości.', 'DailyKategoria 0', 2, 'daily', '2025-09-01', 'text'),
+('Monitorowanie emocji', 'Zaznacz, które z poniższych emocji dziś odczuwałeś (radość, smutek, złość, lęk, spokój). Monitorowanie emocji pomaga zauważyć wzorce.', 'DailyKategoria 1', 3, 'daily', '2025-09-02', 'checkbox'),
+('Restrukturyzacja myśli', 'Opisz jedną automatyczną negatywną myśl, która pojawiła się dziś, i spróbuj zaproponować dla niej bardziej wspierającą alternatywę.', 'DailyKategoria 2', 3, 'daily', '2025-09-03', 'text'),
+('Ćwiczenie uważności oddechu', 'Znajdź 5 minut na uważny oddech. Skup się na swoim oddechu, obserwując jego rytm.', 'DailyKategoria 3', 1, 'daily', '2025-09-04', 'text'),
+('Mały krok dla siebie', 'Zapisz jedno małe zadanie na dziś, które możesz wykonać, aby zadbać o siebie (np. krótki spacer, rozmowa z przyjacielem).', 'DailyKategoria 4', 2, 'daily', '2025-09-05', 'text'),
+('Aktywność fizyczna', 'Zaznacz, czy udało Ci się dziś znaleźć chwilę na aktywność fizyczną (spacer, ćwiczenia, rozciąganie).', 'DailyKategoria 0', 4, 'daily', '2025-09-06', 'checkbox'),
+('Przeformułowanie myśli', 'Zaznacz, czy udało Ci się przeformułować negatywną myśl na bardziej wspierającą.', 'DailyKategoria 1', 4, 'daily', '2025-09-07', 'checkbox'),
+('Działania relaksacyjne', 'Zaznacz, które z działań relaksacyjnych udało Ci się dziś wykonać (czytanie, muzyka, kąpiel, rozmowa).', 'DailyKategoria 2', 1, 'daily', '2025-09-08', 'checkbox'),
+('Analiza sytuacji trudnej', 'Opisz jedną sytuację z dzisiejszego dnia, która była dla Ciebie wyzwaniem, i zapisz, jak sobie z nią poradziłeś.', 'DailyKategoria 3', 3, 'daily', '2025-09-09', 'text');
+
+
 -- Przypisania zadań do ścieżek
 INSERT INTO task_path (task_id, path_id) VALUES
 (1, 10),

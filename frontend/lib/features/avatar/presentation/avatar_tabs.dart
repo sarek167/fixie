@@ -137,7 +137,9 @@ class _AvatarCustomizationTabsState extends State<AvatarCustomizationTabs> with 
                   ),
                   const AvatarSingleTab(
                     backgroundColor: ColorConstants.lightBackground,
-                    carousels: [],
+                    carousels: [
+                      AvatarCarousel(title: "ZWIERZĘ", partKey: "lipstick", options: [], hasEmpty: true,),
+                    ],
                   ),
                 ];
                 return Expanded(

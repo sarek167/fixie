@@ -88,25 +88,43 @@ class TaskScreen extends StatelessWidget {
                         } else if (snapshot.hasError) {
                           return Text("Error: ${snapshot.error}");
                         } else {
-                          return CustomImageCarousel(
-                            text: "ZNAJDŹ SWOJE ŚCIEŻKI",
-                            slideBackgroundColor: ColorConstants.light,
-                            indicatorColor: ColorConstants.dark,
-                            slides: [
-                              ...snapshot.data!.map((path) => CardItem(
-                                routeName: AppRouteConstants.pathRoute,
-                                textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
-                                text: path.title,
-                                imageUrl: path.isImage ? path.backgroundValue : null,
-                                backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
-                                // backgroundDarkening: 0.2,
-                              )),
-                              // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
-                              // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
-                              // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
-                              // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
-                            ],
-                          );
+                          if (snapshot.data!.isEmpty) {
+                            return CustomImageCarousel(
+                              text: "ZNAJDŹ SWOJE ŚCIEŻKI",
+                              slideBackgroundColor: ColorConstants.dark,
+                              indicatorColor: ColorConstants.light,
+                              slides: [
+                                CardItem(
+                                  routeName: AppRouteConstants.taskRoute,
+                                  textColor: ColorConstants.white,
+                                  text: "Odkryj ścieżki",
+                                  imageUrl: null,
+                                  backgroundColor: HexColor.fromHex("#2E2E2E"),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return CustomImageCarousel(
+                              text: "ZNAJDŹ SWOJE ŚCIEŻKI",
+                              slideBackgroundColor: ColorConstants.light,
+                              indicatorColor: ColorConstants.dark,
+                              slides: [
+                                ...snapshot.data!.map((path) => CardItem(
+                                  routeName: AppRouteConstants.pathRoute,
+                                  textColor: path.isImage ? ColorConstants.white : ColorConstants.black,
+                                  text: path.title,
+                                  imageUrl: path.isImage ? path.backgroundValue : null,
+                                  backgroundColor: path.isColor || path.isDefault ? HexColor.fromHex(path.backgroundValue) : null,
+                                  // backgroundDarkening: 0.2,
+                                )),
+                                // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=1', text: "Zdjęcie 1"),
+                                // CardItem(routeName: AppRouteConstants.pathRoute, imageUrl: 'https://picsum.photos/500/300?random=2', text: "Zdjęcie 2"),
+                                // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor niebieski", backgroundDarkening: 0.5,),
+                                // CardItem(routeName: AppRouteConstants.pathRoute, backgroundColor: ColorConstants.whiteColor, textColor: ColorConstants.blackColor, text: "Kolor czerwony", backgroundDarkening: 0,),
+                              ],
+                            );
+                          }
+
                         }
                       }),
                       FutureBuilder(
